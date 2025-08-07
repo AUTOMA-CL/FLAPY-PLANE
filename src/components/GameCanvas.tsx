@@ -22,6 +22,10 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
   const lastTimeRef = useRef<number>(0);
   const imagesRef = useRef<{ plane?: HTMLImageElement; background?: HTMLImageElement }>({});
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  
+  // Para animaciones
+  const scoreAnimationRef = useRef<{ show: boolean; time: number }>({ show: false, time: 0 });
+  const lastScoreRef = useRef(0);
 
   // Cargar imágenes
   useEffect(() => {
@@ -57,6 +61,12 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
   const render = useCallback((ctx: CanvasRenderingContext2D, state: GameState) => {
     const canvasWidth = GAME_CONFIG.canvasSize.width;
     const canvasHeight = GAME_CONFIG.canvasSize.height;
+    
+    // Detectar cambio de score para animación
+    if (state.score > lastScoreRef.current) {
+      scoreAnimationRef.current = { show: true, time: performance.now() };
+      lastScoreRef.current = state.score;
+    }
 
     // SIEMPRE rellenar toda la pantalla primero con color de fondo
     const gradient = ctx.createLinearGradient(0, 0, 0, canvasHeight);
@@ -106,15 +116,29 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       ctx.strokeRect(obstacle.x, bottomY, obstacle.width, bottomHeight);
     });
 
-    // Dibujar avión
+    // Dibujar avión con efectos de viento
     if (imagesRef.current.plane) {
       const angle = Math.min(state.velocity * 0.05, Math.PI / 6);
+      const planeX = state.planePosition.x + GAME_CONFIG.planeSize.width / 2;
+      const planeY = state.planePosition.y + GAME_CONFIG.planeSize.height / 2;
       
+      // Efectos de viento (líneas de velocidad detrás del avión)
+      if (state.isPlaying && !state.gameOver) {
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.lineWidth = 2;
+        for (let i = 0; i < 3; i++) {
+          const offsetX = -20 - (i * 8);
+          const offsetY = (i - 1) * 4 + Math.sin(performance.now() * 0.01 + i) * 2;
+          ctx.beginPath();
+          ctx.moveTo(planeX + offsetX, planeY + offsetY);
+          ctx.lineTo(planeX + offsetX - 15, planeY + offsetY);
+          ctx.stroke();
+        }
+      }
+      
+      // Dibujar el avión
       ctx.save();
-      ctx.translate(
-        state.planePosition.x + GAME_CONFIG.planeSize.width / 2,
-        state.planePosition.y + GAME_CONFIG.planeSize.height / 2
-      );
+      ctx.translate(planeX, planeY);
       ctx.rotate(angle);
       ctx.drawImage(
         imagesRef.current.plane,
@@ -133,6 +157,28 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
         GAME_CONFIG.planeSize.width,
         GAME_CONFIG.planeSize.height
       );
+    }
+
+    // Animación de score cuando aumenta
+    if (scoreAnimationRef.current.show) {
+      const elapsed = performance.now() - scoreAnimationRef.current.time;
+      if (elapsed < 800) { // 800ms de duración
+        const progress = elapsed / 800;
+        const opacity = 1 - progress;
+        const scale = 1 + progress * 0.5;
+        const offsetY = -progress * 50;
+        
+        ctx.save();
+        ctx.translate(canvasWidth / 2, 120);
+        ctx.scale(scale, scale);
+        ctx.fillStyle = `rgba(255, 215, 0, ${opacity})`;
+        ctx.font = 'bold 32px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(`+1 PUNTO!`, 0, offsetY);
+        ctx.restore();
+      } else {
+        scoreAnimationRef.current.show = false;
+      }
     }
 
     // Pantalla de inicio
@@ -158,20 +204,30 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       ctx.fillStyle = 'white';
       ctx.font = '32px Arial';
       ctx.textAlign = 'center';
-      ctx.fillText('Game Over', GAME_CONFIG.canvasSize.width / 2, GAME_CONFIG.canvasSize.height / 2 - 50);
+      ctx.fillText('¡Juego Terminado!', GAME_CONFIG.canvasSize.width / 2, GAME_CONFIG.canvasSize.height / 2 - 60);
       
-      ctx.font = '24px Arial';
+      ctx.font = '28px Arial';
+      ctx.fillStyle = '#FFD700';
       ctx.fillText(
-        `Puntuación: ${state.score}`, 
+        `Tu puntuación: ${state.score}`, 
         GAME_CONFIG.canvasSize.width / 2, 
-        GAME_CONFIG.canvasSize.height / 2
+        GAME_CONFIG.canvasSize.height / 2 - 10
       );
       
-      ctx.font = '18px Arial';
+      ctx.font = '20px Arial';
+      ctx.fillStyle = 'white';
       ctx.fillText(
-        'Toca para jugar otra vez', 
+        '¡Gracias por jugar!', 
         GAME_CONFIG.canvasSize.width / 2, 
-        GAME_CONFIG.canvasSize.height / 2 + 50
+        GAME_CONFIG.canvasSize.height / 2 + 40
+      );
+      
+      ctx.font = '16px Arial';
+      ctx.fillStyle = '#87CEEB';
+      ctx.fillText(
+        'Toca la pantalla para que otro jugador pueda jugar', 
+        GAME_CONFIG.canvasSize.width / 2, 
+        GAME_CONFIG.canvasSize.height / 2 + 80
       );
     }
   }, []);
@@ -212,8 +268,8 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
   // Manejar touch/click
   const handleInteraction = useCallback(() => {
     if (gameStateRef.current.gameOver) {
-      // Reiniciar juego
-      gameStateRef.current = resetGame();
+      // VOLVER AL MENU DE REGISTRO para capturar nuevos datos
+      window.location.href = '/';
     } else {
       // Saltar
       gameStateRef.current = jump(gameStateRef.current);
