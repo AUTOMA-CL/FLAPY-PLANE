@@ -4,8 +4,9 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/webp', 'image/avif'],
   },
-  // Optimización para Vercel
-  output: 'standalone',
+  // Configuración para Vercel - sin output standalone
+  trailingSlash: false,
+  skipTrailingSlashRedirect: true,
 };
 
 export default nextConfig;
