@@ -4,10 +4,8 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/webp', 'image/avif'],
   },
-  // Configuración optimizada para Vercel
-  experimental: {
-    optimizePackageImports: ['react', 'react-dom'],
-  },
+  // Optimización para Vercel
+  output: 'standalone',
 };
 
 export default nextConfig;
