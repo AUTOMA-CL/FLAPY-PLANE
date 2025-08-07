@@ -263,11 +263,12 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
   return (
     <canvas
       ref={canvasRef}
-      className="border border-gray-300 cursor-pointer focus:outline-none"
+      className="border border-gray-300 cursor-pointer focus:outline-none w-full h-full object-contain"
       style={{ 
-        maxWidth: '100%', 
-        height: 'auto',
-        imageRendering: 'pixelated' 
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        imageRendering: 'auto',
+        aspectRatio: '4/3' 
       }}
       tabIndex={0}
     />
