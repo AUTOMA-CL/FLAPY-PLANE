@@ -1,13 +1,13 @@
 import { GameState, Obstacle, GameSettings, PlaneCollisionBox } from '@/types';
 
-// Configuraciones del juego - adaptativas
+// Configuraciones del juego - valores por defecto que se actualizan dinámicamente
 export const GAME_CONFIG: GameSettings = {
   gravity: 0.8,
   jumpVelocity: -12,
   obstacleSpeed: 3,
   obstacleGap: 150,
   planeSize: { width: 40, height: 30 },
-  canvasSize: { width: window.innerWidth || 800, height: window.innerHeight || 600 }
+  canvasSize: { width: 800, height: 600 } // Se actualiza dinámicamente en el cliente
 };
 
 // Inicializar estado del juego
