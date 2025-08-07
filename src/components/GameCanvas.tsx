@@ -55,35 +55,34 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
 
   // Función de renderizado
   const render = useCallback((ctx: CanvasRenderingContext2D, state: GameState) => {
-    // Limpiar canvas
-    ctx.clearRect(0, 0, GAME_CONFIG.canvasSize.width, GAME_CONFIG.canvasSize.height);
+    const canvasWidth = GAME_CONFIG.canvasSize.width;
+    const canvasHeight = GAME_CONFIG.canvasSize.height;
 
-    // Dibujar fondo adaptativo al viewport
-    if (imagesRef.current.background) {
+    // SIEMPRE rellenar toda la pantalla primero con color de fondo
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvasHeight);
+    gradient.addColorStop(0, '#87CEEB');
+    gradient.addColorStop(1, '#98FB98');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+    // Luego dibujar la imagen encima si está disponible
+    if (imagesRef.current.background && imagesRef.current.background.complete) {
       const img = imagesRef.current.background;
-      const canvasWidth = GAME_CONFIG.canvasSize.width;
-      const canvasHeight = GAME_CONFIG.canvasSize.height;
       
-      // Calcular escalado para cubrir todo el viewport manteniendo aspecto
+      // Calcular escalado para cubrir TODO el viewport (cover behavior)
       const scaleX = canvasWidth / img.naturalWidth;
       const scaleY = canvasHeight / img.naturalHeight;
-      const scale = Math.max(scaleX, scaleY); // cover, no contain
+      const scale = Math.max(scaleX, scaleY);
       
       const scaledWidth = img.naturalWidth * scale;
       const scaledHeight = img.naturalHeight * scale;
       
-      // Centrar la imagen
+      // Centrar la imagen escalada
       const offsetX = (canvasWidth - scaledWidth) / 2;
       const offsetY = (canvasHeight - scaledHeight) / 2;
       
+      // Dibujar la imagen escalada encima del fondo
       ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
-    } else {
-      // Fondo fallback
-      const gradient = ctx.createLinearGradient(0, 0, 0, GAME_CONFIG.canvasSize.height);
-      gradient.addColorStop(0, '#87CEEB');
-      gradient.addColorStop(1, '#98FB98');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, GAME_CONFIG.canvasSize.width, GAME_CONFIG.canvasSize.height);
     }
 
     // Dibujar obstáculos con gap dinámico
@@ -228,18 +227,29 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
 
     // Configurar canvas para viewport completo
     const updateCanvasSize = () => {
+      // Obtener dimensiones reales del viewport
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
       
-      // Actualizar configuración del juego dinámicamente
-      GAME_CONFIG.canvasSize.width = window.innerWidth;
-      GAME_CONFIG.canvasSize.height = window.innerHeight;
+      // Configurar canvas para alta resolución
+      canvas.width = viewportWidth * dpr;
+      canvas.height = viewportHeight * dpr;
+      
+      // Establecer tamaño CSS
+      canvas.style.width = viewportWidth + 'px';
+      canvas.style.height = viewportHeight + 'px';
+      
+      // Actualizar configuración del juego
+      GAME_CONFIG.canvasSize.width = viewportWidth;
+      GAME_CONFIG.canvasSize.height = viewportHeight;
       
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.scale(dpr, dpr);
       }
+      
+      console.log('Canvas resized:', viewportWidth, 'x', viewportHeight, 'DPR:', dpr);
     };
 
     updateCanvasSize();
