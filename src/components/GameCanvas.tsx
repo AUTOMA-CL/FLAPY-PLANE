@@ -48,7 +48,7 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
     // Cargar imagen de fondo
     const backgroundImg = new Image();
     backgroundImg.onload = onImageLoad;
-    backgroundImg.src = '/images/background.jpeg';
+    backgroundImg.src = `/images/background.jpeg?v=${Date.now()}`;
     imagesRef.current.background = backgroundImg;
 
     return () => {

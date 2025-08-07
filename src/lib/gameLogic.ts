@@ -4,7 +4,7 @@ import { GameState, Obstacle, GameSettings, PlaneCollisionBox } from '@/types';
 export const GAME_CONFIG: GameSettings = {
   gravity: 2.0,
   jumpVelocity: -9,
-  obstacleSpeed: 3,
+  obstacleSpeed: 5,
   obstacleGap: 150,
   planeSize: { width: 120, height: 90 },
   canvasSize: { width: 800, height: 600 } // Se actualiza dinámicamente en el cliente
