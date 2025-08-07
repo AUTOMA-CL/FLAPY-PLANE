@@ -1,0 +1,170 @@
+import { GameState, Obstacle, GameSettings, PlaneCollisionBox } from '@/types';
+
+// Configuraciones del juego
+export const GAME_CONFIG: GameSettings = {
+  gravity: 0.8,
+  jumpVelocity: -12,
+  obstacleSpeed: 3,
+  obstacleGap: 150,
+  planeSize: { width: 40, height: 30 },
+  canvasSize: { width: 800, height: 600 }
+};
+
+// Inicializar estado del juego
+export function initializeGame(): GameState {
+  return {
+    score: 0,
+    isPlaying: false,
+    gameOver: false,
+    planePosition: { 
+      x: GAME_CONFIG.canvasSize.width * 0.2, 
+      y: GAME_CONFIG.canvasSize.height / 2 
+    },
+    velocity: 0,
+    obstacles: []
+  };
+}
+
+// Actualizar estado del juego
+export function updateGameState(state: GameState, deltaTime: number): GameState {
+  if (!state.isPlaying || state.gameOver) {
+    return state;
+  }
+
+  const newState = { ...state };
+
+  // Actualizar posición del avión con física
+  newState.velocity += GAME_CONFIG.gravity * deltaTime;
+  newState.planePosition.y += newState.velocity * deltaTime;
+
+  // Actualizar obstáculos
+  newState.obstacles = updateObstacles(newState.obstacles, deltaTime);
+
+  // Generar nuevos obstáculos si es necesario
+  if (shouldGenerateObstacle(newState.obstacles)) {
+    newState.obstacles.push(generateObstacle());
+  }
+
+  // Verificar colisiones
+  if (checkCollisions(newState)) {
+    newState.gameOver = true;
+    newState.isPlaying = false;
+  }
+
+  // Verificar límites del canvas
+  if (newState.planePosition.y > GAME_CONFIG.canvasSize.height || 
+      newState.planePosition.y < 0) {
+    newState.gameOver = true;
+    newState.isPlaying = false;
+  }
+
+  // Actualizar puntuación
+  newState.score += countPassedObstacles(state.obstacles, newState.obstacles);
+
+  return newState;
+}
+
+// Verificar colisiones
+export function checkCollisions(state: GameState): boolean {
+  const planeBox = getPlaneCollisionBox(state.planePosition);
+  
+  return state.obstacles.some(obstacle => {
+    return isColliding(planeBox, {
+      x: obstacle.x,
+      y: obstacle.y,
+      width: obstacle.width,
+      height: obstacle.height
+    }) || isColliding(planeBox, {
+      x: obstacle.x,
+      y: obstacle.y + obstacle.height + GAME_CONFIG.obstacleGap,
+      width: obstacle.width,
+      height: GAME_CONFIG.canvasSize.height - (obstacle.y + obstacle.height + GAME_CONFIG.obstacleGap)
+    });
+  });
+}
+
+// Obtener caja de colisión del avión (ajustada a la forma real)
+function getPlaneCollisionBox(position: { x: number; y: number }): PlaneCollisionBox {
+  // Reducir la caja de colisión para ser más generoso con el jugador
+  const padding = 4;
+  return {
+    x: position.x + padding,
+    y: position.y + padding,
+    width: GAME_CONFIG.planeSize.width - (padding * 2),
+    height: GAME_CONFIG.planeSize.height - (padding * 2)
+  };
+}
+
+// Verificar colisión entre dos rectángulos
+function isColliding(rect1: PlaneCollisionBox, rect2: { x: number; y: number; width: number; height: number }): boolean {
+  return rect1.x < rect2.x + rect2.width &&
+         rect1.x + rect1.width > rect2.x &&
+         rect1.y < rect2.y + rect2.height &&
+         rect1.y + rect1.height > rect2.y;
+}
+
+// Actualizar posición de obstáculos
+function updateObstacles(obstacles: Obstacle[], deltaTime: number): Obstacle[] {
+  return obstacles
+    .map(obstacle => ({
+      ...obstacle,
+      x: obstacle.x - GAME_CONFIG.obstacleSpeed * deltaTime
+    }))
+    .filter(obstacle => obstacle.x > -obstacle.width);
+}
+
+// Determinar si se debe generar un nuevo obstáculo
+function shouldGenerateObstacle(obstacles: Obstacle[]): boolean {
+  if (obstacles.length === 0) return true;
+  
+  const lastObstacle = obstacles[obstacles.length - 1];
+  return lastObstacle.x < GAME_CONFIG.canvasSize.width - 300;
+}
+
+// Generar nuevo obstáculo
+function generateObstacle(): Obstacle {
+  const minHeight = 50;
+  const maxHeight = GAME_CONFIG.canvasSize.height - GAME_CONFIG.obstacleGap - minHeight;
+  const height = minHeight + Math.random() * (maxHeight - minHeight);
+  
+  return {
+    id: `obstacle_${Date.now()}_${Math.random()}`,
+    x: GAME_CONFIG.canvasSize.width,
+    y: 0,
+    width: 50,
+    height: height,
+    passed: false
+  };
+}
+
+// Contar obstáculos pasados para incrementar puntuación
+function countPassedObstacles(oldObstacles: Obstacle[], newObstacles: Obstacle[]): number {
+  let score = 0;
+  
+  newObstacles.forEach(newObstacle => {
+    const oldObstacle = oldObstacles.find(o => o.id === newObstacle.id);
+    if (oldObstacle && !oldObstacle.passed && 
+        newObstacle.x + newObstacle.width < GAME_CONFIG.canvasSize.width * 0.2) {
+      newObstacle.passed = true;
+      score += 1;
+    }
+  });
+  
+  return score;
+}
+
+// Función para hacer saltar el avión
+export function jump(state: GameState): GameState {
+  if (state.gameOver) return state;
+  
+  return {
+    ...state,
+    velocity: GAME_CONFIG.jumpVelocity,
+    isPlaying: true
+  };
+}
+
+// Reiniciar juego
+export function resetGame(): GameState {
+  return initializeGame();
+}
