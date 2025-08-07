@@ -2,8 +2,8 @@ import { GameState, Obstacle, GameSettings, PlaneCollisionBox } from '@/types';
 
 // Configuraciones del juego - valores por defecto que se actualizan dinámicamente
 export const GAME_CONFIG: GameSettings = {
-  gravity: 0.8,
-  jumpVelocity: -12,
+  gravity: 1.0,
+  jumpVelocity: -9,
   obstacleSpeed: 3,
   obstacleGap: 150,
   planeSize: { width: 60, height: 45 },
