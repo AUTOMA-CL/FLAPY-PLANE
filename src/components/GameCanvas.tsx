@@ -58,12 +58,25 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
     // Limpiar canvas
     ctx.clearRect(0, 0, GAME_CONFIG.canvasSize.width, GAME_CONFIG.canvasSize.height);
 
-    // Dibujar fondo
+    // Dibujar fondo adaptativo al viewport
     if (imagesRef.current.background) {
-      // Fondo scrolling
-      const bgWidth = GAME_CONFIG.canvasSize.width;
-      const bgHeight = GAME_CONFIG.canvasSize.height;
-      ctx.drawImage(imagesRef.current.background, 0, 0, bgWidth, bgHeight);
+      const img = imagesRef.current.background;
+      const canvasWidth = GAME_CONFIG.canvasSize.width;
+      const canvasHeight = GAME_CONFIG.canvasSize.height;
+      
+      // Calcular escalado para cubrir todo el viewport manteniendo aspecto
+      const scaleX = canvasWidth / img.naturalWidth;
+      const scaleY = canvasHeight / img.naturalHeight;
+      const scale = Math.max(scaleX, scaleY); // cover, no contain
+      
+      const scaledWidth = img.naturalWidth * scale;
+      const scaledHeight = img.naturalHeight * scale;
+      
+      // Centrar la imagen
+      const offsetX = (canvasWidth - scaledWidth) / 2;
+      const offsetY = (canvasHeight - scaledHeight) / 2;
+      
+      ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
     } else {
       // Fondo fallback
       const gradient = ctx.createLinearGradient(0, 0, 0, GAME_CONFIG.canvasSize.height);
@@ -73,15 +86,18 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       ctx.fillRect(0, 0, GAME_CONFIG.canvasSize.width, GAME_CONFIG.canvasSize.height);
     }
 
-    // Dibujar obstáculos
+    // Dibujar obstáculos con gap dinámico
     state.obstacles.forEach(obstacle => {
+      const canvasHeight = GAME_CONFIG.canvasSize.height;
+      const gapSize = Math.max(150, canvasHeight * 0.25);
+      
       ctx.fillStyle = '#8B4513';
       // Obstáculo superior
       ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
       
       // Obstáculo inferior
-      const bottomY = obstacle.y + obstacle.height + GAME_CONFIG.obstacleGap;
-      const bottomHeight = GAME_CONFIG.canvasSize.height - bottomY;
+      const bottomY = obstacle.y + obstacle.height + gapSize;
+      const bottomHeight = canvasHeight - bottomY;
       ctx.fillRect(obstacle.x, bottomY, obstacle.width, bottomHeight);
       
       // Bordes de los obstáculos
@@ -210,9 +226,24 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
     const canvas = canvasRef.current;
     if (!canvas || !imagesLoaded) return;
 
-    // Configurar canvas
-    canvas.width = GAME_CONFIG.canvasSize.width;
-    canvas.height = GAME_CONFIG.canvasSize.height;
+    // Configurar canvas para viewport completo
+    const updateCanvasSize = () => {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      
+      // Actualizar configuración del juego dinámicamente
+      GAME_CONFIG.canvasSize.width = window.innerWidth;
+      GAME_CONFIG.canvasSize.height = window.innerHeight;
+      
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.scale(dpr, dpr);
+      }
+    };
+
+    updateCanvasSize();
+    window.addEventListener('resize', updateCanvasSize);
 
     // Eventos de interacción
     const handleTouch = (e: TouchEvent) => {
@@ -246,6 +277,7 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
+      window.removeEventListener('resize', updateCanvasSize);
       canvas.removeEventListener('touchstart', handleTouch);
       canvas.removeEventListener('click', handleClick);
       document.removeEventListener('keydown', handleKeyPress);
@@ -263,12 +295,15 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
   return (
     <canvas
       ref={canvasRef}
-      className="border border-gray-300 cursor-pointer focus:outline-none w-full h-full object-contain"
+      className="cursor-pointer focus:outline-none"
       style={{ 
-        maxWidth: '100vw',
-        maxHeight: '100vh',
-        imageRendering: 'auto',
-        aspectRatio: '4/3' 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        display: 'block',
+        imageRendering: 'auto'
       }}
       tabIndex={0}
     />

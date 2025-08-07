@@ -1,13 +1,13 @@
 import { GameState, Obstacle, GameSettings, PlaneCollisionBox } from '@/types';
 
-// Configuraciones del juego
+// Configuraciones del juego - adaptativas
 export const GAME_CONFIG: GameSettings = {
   gravity: 0.8,
   jumpVelocity: -12,
   obstacleSpeed: 3,
   obstacleGap: 150,
   planeSize: { width: 40, height: 30 },
-  canvasSize: { width: 800, height: 600 }
+  canvasSize: { width: window.innerWidth || 800, height: window.innerHeight || 600 }
 };
 
 // Inicializar estado del juego
@@ -69,6 +69,9 @@ export function checkCollisions(state: GameState): boolean {
   const planeBox = getPlaneCollisionBox(state.planePosition);
   
   return state.obstacles.some(obstacle => {
+    const canvasHeight = GAME_CONFIG.canvasSize.height;
+    const gapSize = Math.max(150, canvasHeight * 0.25);
+    
     return isColliding(planeBox, {
       x: obstacle.x,
       y: obstacle.y,
@@ -76,9 +79,9 @@ export function checkCollisions(state: GameState): boolean {
       height: obstacle.height
     }) || isColliding(planeBox, {
       x: obstacle.x,
-      y: obstacle.y + obstacle.height + GAME_CONFIG.obstacleGap,
+      y: obstacle.y + obstacle.height + gapSize,
       width: obstacle.width,
-      height: GAME_CONFIG.canvasSize.height - (obstacle.y + obstacle.height + GAME_CONFIG.obstacleGap)
+      height: canvasHeight - (obstacle.y + obstacle.height + gapSize)
     });
   });
 }
@@ -121,10 +124,12 @@ function shouldGenerateObstacle(obstacles: Obstacle[]): boolean {
   return lastObstacle.x < GAME_CONFIG.canvasSize.width - 300;
 }
 
-// Generar nuevo obstáculo
+// Generar nuevo obstáculo - adaptativo al viewport
 function generateObstacle(): Obstacle {
+  const canvasHeight = GAME_CONFIG.canvasSize.height;
+  const gapSize = Math.max(150, canvasHeight * 0.25); // Gap mínimo 150px o 25% de altura
   const minHeight = 50;
-  const maxHeight = GAME_CONFIG.canvasSize.height - GAME_CONFIG.obstacleGap - minHeight;
+  const maxHeight = canvasHeight - gapSize - minHeight;
   const height = minHeight + Math.random() * (maxHeight - minHeight);
   
   return {

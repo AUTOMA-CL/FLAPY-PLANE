@@ -77,19 +77,17 @@ export default function GamePage() {
   }
 
   return (
-    <main className="w-full h-screen relative bg-black overflow-hidden flex items-center justify-center">
-      {/* Canvas del juego - responsive container */}
-      <div className="relative w-full h-full max-w-4xl mx-auto flex items-center justify-center">
-        <div className="relative w-full aspect-[4/3] max-h-[90vh] max-w-[90vw]">
-          <GameCanvas 
-            onScoreChange={handleScoreChange}
-            onGameOver={handleGameOver}
-          />
-        </div>
+    <main className="w-full h-screen relative bg-black overflow-hidden">
+      {/* Canvas del juego - FULLSCREEN sin límites */}
+      <div className="absolute inset-0">
+        <GameCanvas 
+          onScoreChange={handleScoreChange}
+          onGameOver={handleGameOver}
+        />
       </div>
 
       {/* UI overlay */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none z-10">
         <GameUI 
           score={score}
           userName={currentUser?.name}
@@ -99,16 +97,11 @@ export default function GamePage() {
 
       {/* Información adicional del usuario - responsive */}
       {currentUser && (
-        <div className="absolute bottom-4 right-4 bg-black bg-opacity-50 rounded-lg p-2 text-white text-xs z-10">
+        <div className="absolute bottom-4 right-4 bg-black bg-opacity-50 rounded-lg p-2 text-white text-xs z-20">
           <div>Mejor: {currentUser.bestScore || 0}</div>
           <div>Juegos: {currentUser.totalGames || 0}</div>
         </div>
       )}
-
-      {/* Orientación móvil - solo desktop */}
-      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-white text-xs opacity-50 text-center hidden lg:block">
-        Mejor experiencia en modo horizontal en tablets/móviles
-      </div>
     </main>
   );
 }
