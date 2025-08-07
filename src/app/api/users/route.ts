@@ -1,14 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { RegistrationFormData, APIResponse, User } from '@/types';
 
-// Usar base de datos apropiada según el entorno
-const isProduction = process.env.NODE_ENV === 'production';
-const database = isProduction 
-  ? require('@/lib/database-vercel')
-  : require('@/lib/database');
+// Importar base de datos según el entorno
+async function getDatabase() {
+  if (process.env.NODE_ENV === 'production') {
+    const db = await import('@/lib/database-vercel');
+    return db;
+  } else {
+    const db = await import('@/lib/database');
+    return db;
+  }
+}
 
 export async function POST(request: NextRequest): Promise<NextResponse<APIResponse<User>>> {
   try {
+    const database = await getDatabase();
     const body: RegistrationFormData = await request.json();
     
     // Validación básica del lado del servidor
@@ -73,6 +79,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
 
 export async function GET(): Promise<NextResponse<APIResponse<User[]>>> {
   try {
+    const database = await getDatabase();
     const users = await database.getUsers();
     
     return NextResponse.json({

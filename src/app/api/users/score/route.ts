@@ -1,14 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { APIResponse } from '@/types';
 
-// Usar base de datos apropiada según el entorno
-const isProduction = process.env.NODE_ENV === 'production';
-const database = isProduction 
-  ? require('@/lib/database-vercel')
-  : require('@/lib/database');
+// Importar base de datos según el entorno
+async function getDatabase() {
+  if (process.env.NODE_ENV === 'production') {
+    const db = await import('@/lib/database-vercel');
+    return db;
+  } else {
+    const db = await import('@/lib/database');
+    return db;
+  }
+}
 
 export async function POST(request: NextRequest): Promise<NextResponse<APIResponse>> {
   try {
+    const database = await getDatabase();
     const body = await request.json();
     const { userId, score } = body;
     

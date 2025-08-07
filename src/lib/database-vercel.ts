@@ -2,7 +2,7 @@
 import { User } from '@/types';
 
 // En producción usar memoria temporal (se reinicia en cada deploy)
-let usersCache: User[] = [];
+const usersCache: User[] = [];
 
 export async function getUsers(): Promise<User[]> {
   return usersCache;
