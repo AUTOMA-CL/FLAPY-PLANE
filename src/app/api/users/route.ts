@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { saveUser, getUsers } from '@/lib/database';
 import { RegistrationFormData, APIResponse, User } from '@/types';
+
+// Usar base de datos apropiada según el entorno
+const isProduction = process.env.NODE_ENV === 'production';
+const database = isProduction 
+  ? require('@/lib/database-vercel')
+  : require('@/lib/database');
 
 export async function POST(request: NextRequest): Promise<NextResponse<APIResponse<User>>> {
   try {
@@ -39,8 +44,8 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
     }
 
     // Verificar si el email ya existe
-    const existingUsers = await getUsers();
-    const emailExists = existingUsers.some(user => user.email.toLowerCase() === email.toLowerCase());
+    const existingUsers = await database.getUsers();
+    const emailExists = existingUsers.some((user: User) => user.email.toLowerCase() === email.toLowerCase());
     
     if (emailExists) {
       return NextResponse.json({
@@ -50,7 +55,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
     }
 
     // Guardar usuario
-    const newUser = await saveUser({ name, phone, email });
+    const newUser = await database.saveUser({ name, phone, email });
     
     return NextResponse.json({
       success: true,
@@ -68,7 +73,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
 
 export async function GET(): Promise<NextResponse<APIResponse<User[]>>> {
   try {
-    const users = await getUsers();
+    const users = await database.getUsers();
     
     return NextResponse.json({
       success: true,

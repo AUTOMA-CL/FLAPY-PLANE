@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { updateUserScore } from '@/lib/database';
 import { APIResponse } from '@/types';
+
+// Usar base de datos apropiada según el entorno
+const isProduction = process.env.NODE_ENV === 'production';
+const database = isProduction 
+  ? require('@/lib/database-vercel')
+  : require('@/lib/database');
 
 export async function POST(request: NextRequest): Promise<NextResponse<APIResponse>> {
   try {
@@ -14,7 +19,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
       }, { status: 400 });
     }
 
-    await updateUserScore(userId, score);
+    await database.updateUserScore(userId, score);
     
     return NextResponse.json({
       success: true,
