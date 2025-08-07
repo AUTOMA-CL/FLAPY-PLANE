@@ -101,7 +101,7 @@ export default function RegistrationForm({ onSubmit, isLoading = false }: Regist
             onChange={(e) => handleInputChange('name', e.target.value)}
             onBlur={() => handleBlur('name')}
             disabled={isLoading}
-            className={`w-full px-4 py-3 text-base border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+            className={`w-full px-4 py-3 text-base border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-black ${
               errors.name && touched.name 
                 ? 'border-red-500 bg-red-50' 
                 : 'border-gray-300 bg-white'
@@ -125,7 +125,7 @@ export default function RegistrationForm({ onSubmit, isLoading = false }: Regist
             onChange={(e) => handleInputChange('phone', e.target.value)}
             onBlur={() => handleBlur('phone')}
             disabled={isLoading}
-            className={`w-full px-4 py-3 text-base border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+            className={`w-full px-4 py-3 text-base border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-black ${
               errors.phone && touched.phone 
                 ? 'border-red-500 bg-red-50' 
                 : 'border-gray-300 bg-white'
@@ -149,7 +149,7 @@ export default function RegistrationForm({ onSubmit, isLoading = false }: Regist
             onChange={(e) => handleInputChange('email', e.target.value)}
             onBlur={() => handleBlur('email')}
             disabled={isLoading}
-            className={`w-full px-4 py-3 text-base border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+            className={`w-full px-4 py-3 text-base border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-black ${
               errors.email && touched.email 
                 ? 'border-red-500 bg-red-50' 
                 : 'border-gray-300 bg-white'
