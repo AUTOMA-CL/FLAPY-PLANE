@@ -6,7 +6,7 @@ export const GAME_CONFIG: GameSettings = {
   jumpVelocity: -12,
   obstacleSpeed: 3,
   obstacleGap: 150,
-  planeSize: { width: 40, height: 30 },
+  planeSize: { width: 60, height: 45 },
   canvasSize: { width: 800, height: 600 } // Se actualiza dinámicamente en el cliente
 };
 

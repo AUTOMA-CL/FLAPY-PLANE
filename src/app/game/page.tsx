@@ -95,11 +95,27 @@ export default function GamePage() {
         />
       </div>
 
-      {/* Información adicional del usuario - responsive */}
+      {/* Información adicional del usuario - diseño bonito */}
       {currentUser && (
-        <div className="absolute bottom-4 right-4 bg-black bg-opacity-50 rounded-lg p-2 text-white text-xs z-20">
-          <div>Mejor: {currentUser.bestScore || 0}</div>
-          <div>Juegos: {currentUser.totalGames || 0}</div>
+        <div className="absolute bottom-4 right-4 z-20">
+          <div 
+            className="text-sm font-bold mb-1"
+            style={{
+              color: '#87CEEB',
+              textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000, 1px -1px 0px #000000, -1px 1px 0px #000000'
+            }}
+          >
+            MEJOR: {currentUser.bestScore || 0}
+          </div>
+          <div 
+            className="text-sm font-bold"
+            style={{
+              color: '#87CEEB',
+              textShadow: '2px 2px 0px #000000, -1px -1px 0px #000000, 1px -1px 0px #000000, -1px 1px 0px #000000'
+            }}
+          >
+            JUEGOS: {currentUser.totalGames || 0}
+          </div>
         </div>
       )}
     </main>

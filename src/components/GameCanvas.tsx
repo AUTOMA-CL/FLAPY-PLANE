@@ -116,29 +116,15 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       ctx.strokeRect(obstacle.x, bottomY, obstacle.width, bottomHeight);
     });
 
-    // Dibujar avión con efectos de viento
+    // Dibujar avión (simple, sin efectos)
     if (imagesRef.current.plane) {
       const angle = Math.min(state.velocity * 0.05, Math.PI / 6);
-      const planeX = state.planePosition.x + GAME_CONFIG.planeSize.width / 2;
-      const planeY = state.planePosition.y + GAME_CONFIG.planeSize.height / 2;
       
-      // Efectos de viento (líneas de velocidad detrás del avión)
-      if (state.isPlaying && !state.gameOver) {
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-        ctx.lineWidth = 2;
-        for (let i = 0; i < 3; i++) {
-          const offsetX = -20 - (i * 8);
-          const offsetY = (i - 1) * 4 + Math.sin(performance.now() * 0.01 + i) * 2;
-          ctx.beginPath();
-          ctx.moveTo(planeX + offsetX, planeY + offsetY);
-          ctx.lineTo(planeX + offsetX - 15, planeY + offsetY);
-          ctx.stroke();
-        }
-      }
-      
-      // Dibujar el avión
       ctx.save();
-      ctx.translate(planeX, planeY);
+      ctx.translate(
+        state.planePosition.x + GAME_CONFIG.planeSize.width / 2,
+        state.planePosition.y + GAME_CONFIG.planeSize.height / 2
+      );
       ctx.rotate(angle);
       ctx.drawImage(
         imagesRef.current.plane,
