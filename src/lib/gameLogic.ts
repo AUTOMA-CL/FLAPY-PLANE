@@ -68,21 +68,18 @@ export function updateGameState(state: GameState, deltaTime: number): GameState 
     }
   }
 
-  // Verificar colisiones (solo si no es invulnerable)
-  if (!newState.isInvulnerable) {
-    const hasObstacleCollision = checkCollisions(newState);
-    const hasCanvasCollision = newState.planePosition.y > GAME_CONFIG.canvasSize.height || 
-                               newState.planePosition.y < 0;
-    
-    if (hasObstacleCollision) {
-      // Colisión con obstáculo: pierde vida + parpadeo + sigue adelante
-      const collisionState = handleCollision(newState);
-      Object.assign(newState, collisionState);
-    } else if (hasCanvasCollision) {
-      // Colisión con límites: pierde vida + reposiciona Y al centro
-      const collisionState = handleCanvasCollision(newState);
-      Object.assign(newState, collisionState);
-    }
+  // Verificar colisiones con obstáculos (solo si no es invulnerable)
+  if (!newState.isInvulnerable && checkCollisions(newState)) {
+    // Colisión con obstáculo: SOLO parpadeo, avión sigue en su posición
+    const collisionState = handleCollision(newState);
+    Object.assign(newState, collisionState);
+  }
+  
+  // Límites de pantalla - mantener avión visible SIN perder vida durante invulnerabilidad
+  if (newState.planePosition.y < 0) {
+    newState.planePosition.y = 0; // No salir por arriba
+  } else if (newState.planePosition.y > GAME_CONFIG.canvasSize.height - GAME_CONFIG.planeSize.height) {
+    newState.planePosition.y = GAME_CONFIG.canvasSize.height - GAME_CONFIG.planeSize.height; // No salir por abajo
   }
 
   // Actualizar puntuación
@@ -196,7 +193,7 @@ export function jump(state: GameState): GameState {
   };
 }
 
-// Manejar colisión con OBSTÁCULOS - NUEVA LÓGICA: avión siempre sigue adelante
+// Manejar colisión - NUEVA LÓGICA: avión JAMÁS se mueve, solo parpadeo
 function handleCollision(state: GameState): GameState {
   const newState = { ...state };
   newState.lives -= 1;
@@ -205,35 +202,13 @@ function handleCollision(state: GameState): GameState {
     newState.gameOver = true;
     newState.isPlaying = false;
   } else {
-    // NUEVA REGLA: El avión NO se teleporta, sigue en su posición actual
-    // Solo activar invulnerabilidad para atravesar obstáculos + parpadeo visual
+    // NO TOCAR POSICIÓN X ni Y - El avión sigue exactamente donde está
+    // NO TOCAR VELOCIDAD - Mantiene su momentum natural
+    // SOLO activar parpadeo de invulnerabilidad
     newState.isInvulnerable = true;
-    newState.invulnerabilityTime = 2; // 2 segundos de invulnerabilidad (parpadeo)
+    newState.invulnerabilityTime = 2; // 2 segundos de parpadeo
     
     // Mostrar mensaje de vida perdida temporalmente  
-    newState.showLifeLostMessage = true;
-    newState.lifeLostMessageTime = 2; // 2 segundos de mensaje
-  }
-  
-  return newState;
-}
-
-// Manejar colisión con LÍMITES DEL CANVAS - sí necesita reposicionar Y
-function handleCanvasCollision(state: GameState): GameState {
-  const newState = { ...state };
-  newState.lives -= 1;
-  
-  if (newState.lives <= 0) {
-    newState.gameOver = true;
-    newState.isPlaying = false;
-  } else {
-    // Para colisiones con límites, reposicionar Y al centro pero mantener X
-    newState.planePosition.y = GAME_CONFIG.canvasSize.height / 2;
-    newState.velocity = 0; // Resetear velocidad
-    newState.isInvulnerable = true;
-    newState.invulnerabilityTime = 2;
-    
-    // Mostrar mensaje de vida perdida
     newState.showLifeLostMessage = true;
     newState.lifeLostMessageTime = 2;
   }
