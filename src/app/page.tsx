@@ -71,20 +71,20 @@ export default function HomePage() {
       <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg relative z-10">
         {/* Header */}
         <div className="text-center mb-6 mt-4">
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-2">
             <Image
               src="/images/FE_NUEVOLOGO(avion)_AZUL.png"
               alt="Logo"
-              width={720}
-              height={720}
+              width={1440}
+              height={1440}
               className="animate-slow-bounce"
               style={{
-                maxWidth: 'min(720px, 80vw)',
+                maxWidth: 'min(1440px, 90vw)',
                 height: 'auto'
               }}
             />
           </div>
-          <p className="text-gray-600 text-sm sm:text-base md:text-lg px-2">
+          <p className="text-gray-600 text-sm sm:text-base md:text-lg px-2 mb-6">
             ¡Prepárate para volar! Registra tus datos y comienza la aventura.
           </p>
         </div>

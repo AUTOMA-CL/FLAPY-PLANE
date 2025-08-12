@@ -181,9 +181,9 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
 
     // Mostrar vidas restantes (durante el juego) - diseño limpio y elegante
     if (state.isPlaying && !state.gameOver && !state.showLifeLostMessage) {
-      // Posición en la esquina superior derecha
-      const livesX = canvasWidth - 140;
-      const livesY = 20;
+      // Posición en la esquina inferior izquierda
+      const livesX = 20;
+      const livesY = canvasHeight - 70;
       
       // Fondo sutil redondeado
       ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
