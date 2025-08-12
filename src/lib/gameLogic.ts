@@ -200,11 +200,12 @@ function handleCollision(state: GameState): GameState {
     newState.gameOver = true;
     newState.isPlaying = false;
   } else {
-    // Reposicionar avión al centro y activar invulnerabilidad
-    newState.planePosition.y = GAME_CONFIG.canvasSize.height / 2;
-    newState.velocity = 0;
+    // Reposicionar avión a posición segura y activar invulnerabilidad total
+    newState.planePosition.x = GAME_CONFIG.canvasSize.width * 0.2; // Posición X original segura
+    newState.planePosition.y = GAME_CONFIG.canvasSize.height / 2; // Centro vertical
+    newState.velocity = 0; // Resetear velocidad
     newState.isInvulnerable = true;
-    newState.invulnerabilityTime = 2; // 2 segundos de invulnerabilidad
+    newState.invulnerabilityTime = 3; // 3 segundos de invulnerabilidad total
     
     // Mostrar mensaje de vida perdida temporalmente
     newState.showLifeLostMessage = true;
