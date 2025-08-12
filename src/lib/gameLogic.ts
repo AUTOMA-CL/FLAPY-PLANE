@@ -68,11 +68,14 @@ export function updateGameState(state: GameState, deltaTime: number): GameState 
     }
   }
 
-  // Verificar colisiones con obstáculos (solo si no es invulnerable)
-  if (!newState.isInvulnerable && checkCollisions(newState)) {
-    // Colisión con obstáculo: SOLO parpadeo, avión sigue en su posición
-    const collisionState = handleCollision(newState);
-    Object.assign(newState, collisionState);
+  // Verificar colisiones con obstáculos - SIEMPRE detectar pero solo hacer daño si no es invulnerable
+  if (checkCollisions(newState)) {
+    if (!newState.isInvulnerable) {
+      // NO es invulnerable: pierde vida + se vuelve invulnerable
+      const collisionState = handleCollision(newState);
+      Object.assign(newState, collisionState);
+    }
+    // SI es invulnerable: simplemente atraviesa sin hacer nada (modo fantasma)
   }
   
   // Límites de pantalla - mantener avión visible SIN perder vida durante invulnerabilidad
