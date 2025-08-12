@@ -5,6 +5,7 @@ export interface User {
   name: string;
   phone: string;
   email: string;
+  age: number;
   createdAt: string;
   bestScore?: number;
   totalGames?: number;
@@ -55,12 +56,14 @@ export interface RegistrationFormData {
   name: string;
   phone: string;
   email: string;
+  age: string;
 }
 
 export interface ValidationErrors {
   name?: string;
   phone?: string;
   email?: string;
+  age?: string;
 }
 
 export interface APIResponse<T = unknown> {

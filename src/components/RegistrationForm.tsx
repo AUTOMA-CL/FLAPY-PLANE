@@ -12,7 +12,8 @@ export default function RegistrationForm({ onSubmit, isLoading = false }: Regist
   const [formData, setFormData] = useState<RegistrationFormData>({
     name: '',
     phone: '',
-    email: ''
+    email: '',
+    age: ''
   });
   
   const [errors, setErrors] = useState<ValidationErrors>({});
@@ -32,6 +33,13 @@ export default function RegistrationForm({ onSubmit, isLoading = false }: Regist
       
       case 'email':
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Email no válido';
+        return undefined;
+      
+      case 'age':
+        const ageNum = parseInt(value);
+        if (!value) return 'La edad es requerida';
+        if (isNaN(ageNum)) return 'La edad debe ser un número';
+        if (ageNum < 1 || ageNum > 120) return 'Edad debe estar entre 1 y 120 años';
         return undefined;
       
       default:
@@ -83,7 +91,7 @@ export default function RegistrationForm({ onSubmit, isLoading = false }: Regist
                      Object.values(formData).every(value => value.trim() !== '');
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className="w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto p-4 sm:p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
         ¡Bienvenido a Flappy Plane!
       </h2>
@@ -158,6 +166,32 @@ export default function RegistrationForm({ onSubmit, isLoading = false }: Regist
           />
           {errors.email && touched.email && (
             <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+          )}
+        </div>
+
+        {/* Campo Edad */}
+        <div>
+          <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-1">
+            Edad
+          </label>
+          <input
+            id="age"
+            type="number"
+            min="1"
+            max="120"
+            value={formData.age}
+            onChange={(e) => handleInputChange('age', e.target.value)}
+            onBlur={() => handleBlur('age')}
+            disabled={isLoading}
+            className={`w-full px-4 py-3 text-base border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-black ${
+              errors.age && touched.age 
+                ? 'border-red-500 bg-red-50' 
+                : 'border-gray-300 bg-white'
+            } disabled:bg-gray-100 disabled:cursor-not-allowed`}
+            placeholder="Tu edad"
+          />
+          {errors.age && touched.age && (
+            <p className="text-red-500 text-sm mt-1">{errors.age}</p>
           )}
         </div>
 

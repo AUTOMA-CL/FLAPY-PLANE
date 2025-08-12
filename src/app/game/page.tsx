@@ -31,6 +31,14 @@ export default function GamePage() {
     setIsLoading(false);
   }, [router]);
 
+  // Aplicar clase CSS para ocultar scroll en página del juego
+  useEffect(() => {
+    document.body.classList.add('game-page');
+    return () => {
+      document.body.classList.remove('game-page');
+    };
+  }, []);
+
   // Manejar cambios de puntuación
   const handleScoreChange = (newScore: number) => {
     setScore(newScore);

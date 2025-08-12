@@ -44,7 +44,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center justify-start py-8 px-4 overflow-y-auto">
       {/* Fondo con logos decorativos */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-10 opacity-10">
@@ -67,20 +67,24 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Contenido principal */}
-      <div className="w-full max-w-lg relative z-10">
+      {/* Contenido principal - responsive mejorado */}
+      <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg relative z-10">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6 mt-4">
           <div className="flex justify-center mb-6">
             <Image
               src="/images/FE_NUEVOLOGO(avion)_AZUL.png"
               alt="Logo"
-              width={360}
-              height={360}
-              className="animate-bounce"
+              width={720}
+              height={720}
+              className="animate-slow-bounce"
+              style={{
+                maxWidth: 'min(720px, 80vw)',
+                height: 'auto'
+              }}
             />
           </div>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 text-sm sm:text-base md:text-lg px-2">
             ¡Prepárate para volar! Registra tus datos y comienza la aventura.
           </p>
         </div>

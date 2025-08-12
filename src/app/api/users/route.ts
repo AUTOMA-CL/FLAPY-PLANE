@@ -18,9 +18,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
     const body: RegistrationFormData = await request.json();
     
     // Validación básica del lado del servidor
-    const { name, phone, email } = body;
+    const { name, phone, email, age } = body;
     
-    if (!name || !phone || !email) {
+    if (!name || !phone || !email || !age) {
       return NextResponse.json({
         success: false,
         error: 'Todos los campos son requeridos'
@@ -49,6 +49,15 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
       }, { status: 400 });
     }
 
+    // Validación de edad
+    const ageNum = parseInt(age);
+    if (isNaN(ageNum) || ageNum < 1 || ageNum > 120) {
+      return NextResponse.json({
+        success: false,
+        error: 'Edad debe ser un número válido entre 1 y 120 años'
+      }, { status: 400 });
+    }
+
     // Verificar si el email ya existe
     const existingUsers = await database.getUsers();
     const emailExists = existingUsers.some((user: User) => user.email.toLowerCase() === email.toLowerCase());
@@ -61,7 +70,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
     }
 
     // Guardar usuario
-    const newUser = await database.saveUser({ name, phone, email });
+    const newUser = await database.saveUser({ name, phone, email, age: ageNum });
     
     return NextResponse.json({
       success: true,
