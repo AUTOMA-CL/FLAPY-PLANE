@@ -17,6 +17,9 @@ export interface GameState {
   planePosition: { x: number; y: number };
   velocity: number;
   obstacles: Obstacle[];
+  lives: number;
+  isInvulnerable: boolean;
+  invulnerabilityTime: number;
 }
 
 export interface Obstacle {

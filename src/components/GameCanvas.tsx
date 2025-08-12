@@ -6,7 +6,6 @@ import {
   initializeGame, 
   updateGameState, 
   jump, 
-  resetGame, 
   GAME_CONFIG 
 } from '@/lib/gameLogic';
 
@@ -116,7 +115,7 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       ctx.strokeRect(obstacle.x, bottomY, obstacle.width, bottomHeight);
     });
 
-    // Dibujar avión (simple, sin efectos)
+    // Dibujar avión (con efecto de invulnerabilidad)
     if (imagesRef.current.plane) {
       const angle = Math.min(state.velocity * 0.05, Math.PI / 6);
       
@@ -126,6 +125,13 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
         state.planePosition.y + GAME_CONFIG.planeSize.height / 2
       );
       ctx.rotate(angle);
+      
+      // Efecto de parpadeo si está invulnerable
+      if (state.isInvulnerable) {
+        const blinkRate = Math.sin(performance.now() * 0.01) > 0;
+        ctx.globalAlpha = blinkRate ? 0.3 : 1.0;
+      }
+      
       ctx.drawImage(
         imagesRef.current.plane,
         -GAME_CONFIG.planeSize.width / 2,
@@ -136,6 +142,11 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       ctx.restore();
     } else {
       // Avión fallback
+      ctx.save();
+      if (state.isInvulnerable) {
+        const blinkRate = Math.sin(performance.now() * 0.01) > 0;
+        ctx.globalAlpha = blinkRate ? 0.3 : 1.0;
+      }
       ctx.fillStyle = '#FFD700';
       ctx.fillRect(
         state.planePosition.x,
@@ -143,6 +154,7 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
         GAME_CONFIG.planeSize.width,
         GAME_CONFIG.planeSize.height
       );
+      ctx.restore();
     }
 
     // Animación de score cuando aumenta
@@ -167,6 +179,27 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       }
     }
 
+    // Mostrar vidas restantes (durante el juego)
+    if (state.isPlaying && !state.gameOver) {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+      ctx.fillRect(10, 10, 120, 50);
+      
+      ctx.fillStyle = 'white';
+      ctx.font = '18px Arial';
+      ctx.textAlign = 'left';
+      ctx.fillText('Vidas:', 20, 30);
+      
+      // Dibujar corazones o íconos de vidas
+      for (let i = 0; i < 3; i++) {
+        if (i < state.lives) {
+          ctx.fillStyle = '#FF0000';
+        } else {
+          ctx.fillStyle = '#666666';
+        }
+        ctx.fillRect(20 + (i * 25), 40, 20, 15);
+      }
+    }
+
     // Pantalla de inicio
     if (!state.isPlaying && !state.gameOver) {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
@@ -179,6 +212,13 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
         'Toca para comenzar', 
         GAME_CONFIG.canvasSize.width / 2, 
         GAME_CONFIG.canvasSize.height / 2
+      );
+      
+      ctx.font = '18px Arial';
+      ctx.fillText(
+        'Tienes 3 vidas - Evita los obstáculos', 
+        GAME_CONFIG.canvasSize.width / 2, 
+        GAME_CONFIG.canvasSize.height / 2 + 40
       );
     }
 

@@ -21,7 +21,10 @@ export function initializeGame(): GameState {
       y: GAME_CONFIG.canvasSize.height / 2 
     },
     velocity: 0,
-    obstacles: []
+    obstacles: [],
+    lives: 3,
+    isInvulnerable: false,
+    invulnerabilityTime: 0
   };
 }
 
@@ -45,17 +48,26 @@ export function updateGameState(state: GameState, deltaTime: number): GameState 
     newState.obstacles.push(generateObstacle());
   }
 
-  // Verificar colisiones
-  if (checkCollisions(newState)) {
-    newState.gameOver = true;
-    newState.isPlaying = false;
+  // Actualizar invulnerabilidad
+  if (newState.isInvulnerable) {
+    newState.invulnerabilityTime -= deltaTime;
+    if (newState.invulnerabilityTime <= 0) {
+      newState.isInvulnerable = false;
+      newState.invulnerabilityTime = 0;
+    }
   }
 
-  // Verificar límites del canvas
-  if (newState.planePosition.y > GAME_CONFIG.canvasSize.height || 
-      newState.planePosition.y < 0) {
-    newState.gameOver = true;
-    newState.isPlaying = false;
+  // Verificar colisiones (solo si no es invulnerable)
+  if (!newState.isInvulnerable && checkCollisions(newState)) {
+    const collisionState = handleCollision(newState);
+    Object.assign(newState, collisionState);
+  }
+
+  // Verificar límites del canvas (solo si no es invulnerable)
+  if (!newState.isInvulnerable && (newState.planePosition.y > GAME_CONFIG.canvasSize.height || 
+      newState.planePosition.y < 0)) {
+    const collisionState = handleCollision(newState);
+    Object.assign(newState, collisionState);
   }
 
   // Actualizar puntuación
@@ -167,6 +179,25 @@ export function jump(state: GameState): GameState {
     velocity: GAME_CONFIG.jumpVelocity,
     isPlaying: true
   };
+}
+
+// Manejar colisión - reducir vidas o terminar juego
+function handleCollision(state: GameState): GameState {
+  const newState = { ...state };
+  newState.lives -= 1;
+  
+  if (newState.lives <= 0) {
+    newState.gameOver = true;
+    newState.isPlaying = false;
+  } else {
+    // Reposicionar avión al centro y activar invulnerabilidad
+    newState.planePosition.y = GAME_CONFIG.canvasSize.height / 2;
+    newState.velocity = 0;
+    newState.isInvulnerable = true;
+    newState.invulnerabilityTime = 2; // 2 segundos de invulnerabilidad
+  }
+  
+  return newState;
 }
 
 // Reiniciar juego
