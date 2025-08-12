@@ -179,24 +179,63 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       }
     }
 
-    // Mostrar vidas restantes (durante el juego)
-    if (state.isPlaying && !state.gameOver) {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-      ctx.fillRect(10, 10, 120, 50);
+    // Mostrar vidas restantes (durante el juego) - diseño limpio y elegante
+    if (state.isPlaying && !state.gameOver && !state.showLifeLostMessage) {
+      // Posición en la esquina superior derecha
+      const livesX = canvasWidth - 140;
+      const livesY = 20;
       
-      ctx.fillStyle = 'white';
-      ctx.font = '18px Arial';
-      ctx.textAlign = 'left';
-      ctx.fillText('Vidas:', 20, 30);
+      // Fondo sutil redondeado
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.beginPath();
+      ctx.roundRect(livesX, livesY, 120, 40, 20);
+      ctx.fill();
       
-      // Dibujar corazones o íconos de vidas
+      // Sombra sutil
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.beginPath();
+      ctx.roundRect(livesX + 2, livesY + 2, 120, 40, 20);
+      ctx.fill();
+      
+      // Fondo principal
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+      ctx.beginPath();
+      ctx.roundRect(livesX, livesY, 120, 40, 20);
+      ctx.fill();
+      
+      // Borde elegante
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(livesX, livesY, 120, 40, 20);
+      ctx.stroke();
+      
+      // Dibujar corazones elegantes
       for (let i = 0; i < 3; i++) {
+        const heartX = livesX + 20 + (i * 28);
+        const heartY = livesY + 20;
+        const size = 8;
+        
         if (i < state.lives) {
-          ctx.fillStyle = '#FF0000';
+          // Corazón activo - rojo brillante
+          ctx.fillStyle = '#ff4757';
         } else {
-          ctx.fillStyle = '#666666';
+          // Corazón perdido - gris claro
+          ctx.fillStyle = '#ddd';
         }
-        ctx.fillRect(20 + (i * 25), 40, 20, 15);
+        
+        // Dibujar corazón simple con forma de círculos y triángulo
+        ctx.beginPath();
+        ctx.arc(heartX - size/2, heartY - size/4, size/2, 0, Math.PI * 2);
+        ctx.arc(heartX + size/2, heartY - size/4, size/2, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.beginPath();
+        ctx.moveTo(heartX - size, heartY);
+        ctx.lineTo(heartX, heartY + size);
+        ctx.lineTo(heartX + size, heartY);
+        ctx.closePath();
+        ctx.fill();
       }
     }
 

@@ -68,17 +68,16 @@ export function updateGameState(state: GameState, deltaTime: number): GameState 
     }
   }
 
-  // Verificar colisiones (solo si no es invulnerable)
-  if (!newState.isInvulnerable && checkCollisions(newState)) {
-    const collisionState = handleCollision(newState);
-    Object.assign(newState, collisionState);
-  }
-
-  // Verificar límites del canvas (solo si no es invulnerable)
-  if (!newState.isInvulnerable && (newState.planePosition.y > GAME_CONFIG.canvasSize.height || 
-      newState.planePosition.y < 0)) {
-    const collisionState = handleCollision(newState);
-    Object.assign(newState, collisionState);
+  // Verificar colisiones (solo si no es invulnerable) - UNA SOLA VERIFICACIÓN POR FRAME
+  if (!newState.isInvulnerable) {
+    const hasObstacleCollision = checkCollisions(newState);
+    const hasCanvasCollision = newState.planePosition.y > GAME_CONFIG.canvasSize.height || 
+                               newState.planePosition.y < 0;
+    
+    if (hasObstacleCollision || hasCanvasCollision) {
+      const collisionState = handleCollision(newState);
+      Object.assign(newState, collisionState);
+    }
   }
 
   // Actualizar puntuación
