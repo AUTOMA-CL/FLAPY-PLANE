@@ -71,18 +71,15 @@ export default function HomePage() {
       <div className="w-full max-w-lg relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-6">
             <Image
               src="/images/FE_NUEVOLOGO(avion)_AZUL.png"
-              alt="Flappy Plane"
-              width={120}
-              height={120}
+              alt="Logo"
+              width={360}
+              height={360}
               className="animate-bounce"
             />
           </div>
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            Flappy Plane
-          </h1>
           <p className="text-gray-600 text-lg">
             ¡Prepárate para volar! Registra tus datos y comienza la aventura.
           </p>
