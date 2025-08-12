@@ -20,6 +20,8 @@ export interface GameState {
   lives: number;
   isInvulnerable: boolean;
   invulnerabilityTime: number;
+  showLifeLostMessage: boolean;
+  lifeLostMessageTime: number;
 }
 
 export interface Obstacle {

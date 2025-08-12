@@ -24,7 +24,9 @@ export function initializeGame(): GameState {
     obstacles: [],
     lives: 3,
     isInvulnerable: false,
-    invulnerabilityTime: 0
+    invulnerabilityTime: 0,
+    showLifeLostMessage: false,
+    lifeLostMessageTime: 0
   };
 }
 
@@ -54,6 +56,15 @@ export function updateGameState(state: GameState, deltaTime: number): GameState 
     if (newState.invulnerabilityTime <= 0) {
       newState.isInvulnerable = false;
       newState.invulnerabilityTime = 0;
+    }
+  }
+
+  // Actualizar mensaje de vida perdida
+  if (newState.showLifeLostMessage) {
+    newState.lifeLostMessageTime -= deltaTime;
+    if (newState.lifeLostMessageTime <= 0) {
+      newState.showLifeLostMessage = false;
+      newState.lifeLostMessageTime = 0;
     }
   }
 
@@ -195,6 +206,10 @@ function handleCollision(state: GameState): GameState {
     newState.velocity = 0;
     newState.isInvulnerable = true;
     newState.invulnerabilityTime = 2; // 2 segundos de invulnerabilidad
+    
+    // Mostrar mensaje de vida perdida temporalmente
+    newState.showLifeLostMessage = true;
+    newState.lifeLostMessageTime = 2; // 2 segundos de mensaje
   }
   
   return newState;

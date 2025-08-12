@@ -222,7 +222,34 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       );
     }
 
-    // Pantalla de Game Over
+    // Mensaje temporal de vida perdida (solo si aún hay vidas)
+    if (state.showLifeLostMessage && !state.gameOver) {
+      ctx.fillStyle = 'rgba(255, 0, 0, 0.8)';
+      ctx.fillRect(0, 0, GAME_CONFIG.canvasSize.width, GAME_CONFIG.canvasSize.height);
+      
+      ctx.fillStyle = 'white';
+      ctx.font = '32px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('¡Vida Perdida!', GAME_CONFIG.canvasSize.width / 2, GAME_CONFIG.canvasSize.height / 2 - 40);
+      
+      ctx.font = '24px Arial';
+      ctx.fillStyle = '#FFD700';
+      ctx.fillText(
+        `Vidas restantes: ${state.lives}`, 
+        GAME_CONFIG.canvasSize.width / 2, 
+        GAME_CONFIG.canvasSize.height / 2
+      );
+      
+      ctx.font = '18px Arial';
+      ctx.fillStyle = 'white';
+      ctx.fillText(
+        '¡Continúa volando!', 
+        GAME_CONFIG.canvasSize.width / 2, 
+        GAME_CONFIG.canvasSize.height / 2 + 40
+      );
+    }
+
+    // Pantalla de Game Over (solo cuando se agotan las vidas)
     if (state.gameOver) {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
       ctx.fillRect(0, 0, GAME_CONFIG.canvasSize.width, GAME_CONFIG.canvasSize.height);
