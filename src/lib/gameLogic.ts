@@ -52,8 +52,13 @@ export function updateGameState(state: GameState, deltaTime: number): GameState 
 
   // Actualizar invulnerabilidad
   if (newState.isInvulnerable) {
+    const prevTime = newState.invulnerabilityTime;
     newState.invulnerabilityTime -= deltaTime;
+    
+    console.log(`⏱️ INVULNERABILITY UPDATE: ${prevTime.toFixed(3)}s -> ${newState.invulnerabilityTime.toFixed(3)}s (delta: ${deltaTime.toFixed(3)})`);
+    
     if (newState.invulnerabilityTime <= 0) {
+      console.log(`🔓 INVULNERABILITY ENDED - Now vulnerable again`);
       newState.isInvulnerable = false;
       newState.invulnerabilityTime = 0;
     }
@@ -69,20 +74,36 @@ export function updateGameState(state: GameState, deltaTime: number): GameState 
   }
 
   // Verificar colisiones con obstáculos - SIEMPRE detectar pero solo hacer daño si no es invulnerable
-  if (checkCollisions(newState) && !newState.isInvulnerable) {
+  const hasCollision = checkCollisions(newState);
+  
+  console.log(`🔍 COLLISION CHECK: hasCollision=${hasCollision}, isInvulnerable=${newState.isInvulnerable}, lives=${newState.lives}`);
+  
+  if (hasCollision && !newState.isInvulnerable) {
+    console.log(`💥 COLLISION DETECTED! Lives before: ${newState.lives}`);
+    
     // Solo ejecutar UNA VEZ por frame - aplicar inmediatamente la invulnerabilidad
     newState.lives -= 1;
     
+    console.log(`💔 LIFE LOST! Lives after: ${newState.lives}`);
+    
     if (newState.lives <= 0) {
+      console.log(`☠️ GAME OVER! No lives remaining`);
       newState.gameOver = true;
       newState.isPlaying = false;
     } else {
+      console.log(`🛡️ ACTIVATING INVULNERABILITY for 2 seconds`);
       // Activar invulnerabilidad INMEDIATAMENTE en este frame
       newState.isInvulnerable = true;
       newState.invulnerabilityTime = 2; // 2 segundos exactos
       newState.showLifeLostMessage = true;
       newState.lifeLostMessageTime = 2;
+      
+      console.log(`✅ INVULNERABILITY SET: isInvulnerable=${newState.isInvulnerable}, time=${newState.invulnerabilityTime}`);
     }
+  }
+  
+  if (hasCollision && newState.isInvulnerable) {
+    console.log(`👻 GHOST MODE: Passing through obstacle (invulnerable for ${newState.invulnerabilityTime.toFixed(2)}s)`);
   }
   
   // Límites de pantalla - mantener avión visible SIN perder vida durante invulnerabilidad
