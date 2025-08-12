@@ -69,13 +69,20 @@ export function updateGameState(state: GameState, deltaTime: number): GameState 
   }
 
   // Verificar colisiones con obstáculos - SIEMPRE detectar pero solo hacer daño si no es invulnerable
-  if (checkCollisions(newState)) {
-    if (!newState.isInvulnerable) {
-      // NO es invulnerable: pierde vida + se vuelve invulnerable
-      const collisionState = handleCollision(newState);
-      Object.assign(newState, collisionState);
+  if (checkCollisions(newState) && !newState.isInvulnerable) {
+    // Solo ejecutar UNA VEZ por frame - aplicar inmediatamente la invulnerabilidad
+    newState.lives -= 1;
+    
+    if (newState.lives <= 0) {
+      newState.gameOver = true;
+      newState.isPlaying = false;
+    } else {
+      // Activar invulnerabilidad INMEDIATAMENTE en este frame
+      newState.isInvulnerable = true;
+      newState.invulnerabilityTime = 2; // 2 segundos exactos
+      newState.showLifeLostMessage = true;
+      newState.lifeLostMessageTime = 2;
     }
-    // SI es invulnerable: simplemente atraviesa sin hacer nada (modo fantasma)
   }
   
   // Límites de pantalla - mantener avión visible SIN perder vida durante invulnerabilidad
@@ -194,29 +201,6 @@ export function jump(state: GameState): GameState {
     velocity: GAME_CONFIG.jumpVelocity,
     isPlaying: true
   };
-}
-
-// Manejar colisión - NUEVA LÓGICA: avión JAMÁS se mueve, solo parpadeo
-function handleCollision(state: GameState): GameState {
-  const newState = { ...state };
-  newState.lives -= 1;
-  
-  if (newState.lives <= 0) {
-    newState.gameOver = true;
-    newState.isPlaying = false;
-  } else {
-    // NO TOCAR POSICIÓN X ni Y - El avión sigue exactamente donde está
-    // NO TOCAR VELOCIDAD - Mantiene su momentum natural
-    // SOLO activar parpadeo de invulnerabilidad
-    newState.isInvulnerable = true;
-    newState.invulnerabilityTime = 2; // 2 segundos de parpadeo
-    
-    // Mostrar mensaje de vida perdida temporalmente  
-    newState.showLifeLostMessage = true;
-    newState.lifeLostMessageTime = 2;
-  }
-  
-  return newState;
 }
 
 // Reiniciar juego
