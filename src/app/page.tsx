@@ -45,24 +45,24 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center justify-center p-4">
-      {/* Fondo con avión decorativo */}
+      {/* Fondo con logos decorativos */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-10 opacity-10">
           <Image
-            src="/images/plane.png"
-            alt="Decorative plane"
-            width={80}
+            src="/images/FE_NUEVOLOGO(avion)_AZUL.png"
+            alt="Decorative logo"
+            width={60}
             height={60}
             className="transform rotate-12"
           />
         </div>
         <div className="absolute bottom-32 left-8 opacity-10">
           <Image
-            src="/images/plane.png"
-            alt="Decorative plane"
-            width={60}
-            height={45}
-            className="transform -rotate-12 scale-x-[-1]"
+            src="/images/FE_NUEVOLOGO(avion)_AZUL.png"
+            alt="Decorative logo"
+            width={50}
+            height={50}
+            className="transform -rotate-12"
           />
         </div>
       </div>
@@ -73,10 +73,10 @@ export default function HomePage() {
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <Image
-              src="/images/plane.png"
+              src="/images/FE_NUEVOLOGO(avion)_AZUL.png"
               alt="Flappy Plane"
-              width={80}
-              height={60}
+              width={120}
+              height={120}
               className="animate-bounce"
             />
           </div>
