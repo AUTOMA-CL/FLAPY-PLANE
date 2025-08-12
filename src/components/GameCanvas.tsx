@@ -282,7 +282,7 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       ctx.font = '18px Arial';
       ctx.fillStyle = 'white';
       ctx.fillText(
-        '¡Eres invulnerable por 3 segundos!', 
+        '¡Eres invulnerable por 2 segundos!', 
         GAME_CONFIG.canvasSize.width / 2, 
         GAME_CONFIG.canvasSize.height / 2 + 40
       );
@@ -290,7 +290,7 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       ctx.font = '16px Arial';
       ctx.fillStyle = '#FFD700';
       ctx.fillText(
-        'Puedes atravesar obstáculos', 
+        'Atraviesas obstáculos - ¡Continúa volando!', 
         GAME_CONFIG.canvasSize.width / 2, 
         GAME_CONFIG.canvasSize.height / 2 + 70
       );

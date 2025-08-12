@@ -68,14 +68,19 @@ export function updateGameState(state: GameState, deltaTime: number): GameState 
     }
   }
 
-  // Verificar colisiones (solo si no es invulnerable) - UNA SOLA VERIFICACIÓN POR FRAME
+  // Verificar colisiones (solo si no es invulnerable)
   if (!newState.isInvulnerable) {
     const hasObstacleCollision = checkCollisions(newState);
     const hasCanvasCollision = newState.planePosition.y > GAME_CONFIG.canvasSize.height || 
                                newState.planePosition.y < 0;
     
-    if (hasObstacleCollision || hasCanvasCollision) {
+    if (hasObstacleCollision) {
+      // Colisión con obstáculo: pierde vida + parpadeo + sigue adelante
       const collisionState = handleCollision(newState);
+      Object.assign(newState, collisionState);
+    } else if (hasCanvasCollision) {
+      // Colisión con límites: pierde vida + reposiciona Y al centro
+      const collisionState = handleCanvasCollision(newState);
       Object.assign(newState, collisionState);
     }
   }
@@ -191,7 +196,7 @@ export function jump(state: GameState): GameState {
   };
 }
 
-// Manejar colisión - reducir vidas o terminar juego
+// Manejar colisión con OBSTÁCULOS - NUEVA LÓGICA: avión siempre sigue adelante
 function handleCollision(state: GameState): GameState {
   const newState = { ...state };
   newState.lives -= 1;
@@ -200,16 +205,37 @@ function handleCollision(state: GameState): GameState {
     newState.gameOver = true;
     newState.isPlaying = false;
   } else {
-    // Reposicionar avión a posición segura y activar invulnerabilidad total
-    newState.planePosition.x = GAME_CONFIG.canvasSize.width * 0.2; // Posición X original segura
-    newState.planePosition.y = GAME_CONFIG.canvasSize.height / 2; // Centro vertical
-    newState.velocity = 0; // Resetear velocidad
+    // NUEVA REGLA: El avión NO se teleporta, sigue en su posición actual
+    // Solo activar invulnerabilidad para atravesar obstáculos + parpadeo visual
     newState.isInvulnerable = true;
-    newState.invulnerabilityTime = 3; // 3 segundos de invulnerabilidad total
+    newState.invulnerabilityTime = 2; // 2 segundos de invulnerabilidad (parpadeo)
     
-    // Mostrar mensaje de vida perdida temporalmente
+    // Mostrar mensaje de vida perdida temporalmente  
     newState.showLifeLostMessage = true;
     newState.lifeLostMessageTime = 2; // 2 segundos de mensaje
+  }
+  
+  return newState;
+}
+
+// Manejar colisión con LÍMITES DEL CANVAS - sí necesita reposicionar Y
+function handleCanvasCollision(state: GameState): GameState {
+  const newState = { ...state };
+  newState.lives -= 1;
+  
+  if (newState.lives <= 0) {
+    newState.gameOver = true;
+    newState.isPlaying = false;
+  } else {
+    // Para colisiones con límites, reposicionar Y al centro pero mantener X
+    newState.planePosition.y = GAME_CONFIG.canvasSize.height / 2;
+    newState.velocity = 0; // Resetear velocidad
+    newState.isInvulnerable = true;
+    newState.invulnerabilityTime = 2;
+    
+    // Mostrar mensaje de vida perdida
+    newState.showLifeLostMessage = true;
+    newState.lifeLostMessageTime = 2;
   }
   
   return newState;
