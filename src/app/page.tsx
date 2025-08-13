@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { RegistrationFormData, APIResponse, User } from '@/types';
+import { RegistrationFormData } from '@/types';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +14,7 @@ export default function HomePage() {
     age: ''
   });
   const router = useRouter();
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzCn1SZBluUYDd3TF1uJ-1_HB7VJ7r-ZkWjRTbG465-WtySSldGpytknY0g0xxhfKfplQ/exec";
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwYMYUihl9oQ2xZpW5CJJ0Xyfm3bsN6E2C5yo3tOBQK4U7slQ2RDRiHiwPvA_bw7akVzg/exec";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
