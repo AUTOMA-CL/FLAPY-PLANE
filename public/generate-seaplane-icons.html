@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de Iconos - Hidroavión Cessna</title>
+</head>
+<body style="background: #f0f0f0; padding: 20px; font-family: Arial;">
+    <h1>🛩️ Generador de Iconos del Hidroavión Cessna</h1>
+    <p>Los iconos se generan automáticamente. Descarga cada uno haciendo clic en los botones.</p>
+    
+    <div id="icons"></div>
+
+    <script>
+        // Tamaños necesarios para PWA y favicon
+        const sizes = [16, 32, 48, 72, 96, 128, 144, 152, 192, 384, 512];
+        const container = document.getElementById('icons');
+        
+        // Función para dibujar el hidroavión Cessna detallado
+        function drawCessnaSeaplane(ctx, size) {
+            // Limpiar canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Fondo con gradiente cielo
+            const gradient = ctx.createLinearGradient(0, 0, 0, size);
+            gradient.addColorStop(0, '#87CEEB'); // Sky blue top
+            gradient.addColorStop(1, '#E0F6FF'); // Light blue bottom
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Configurar para dibujar el hidroavión
+            ctx.save();
+            ctx.translate(size/2, size/2);
+            
+            const scale = size / 200;
+            ctx.scale(scale, scale);
+            
+            // Sombra del avión
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+            ctx.shadowBlur = 5 * scale;
+            ctx.shadowOffsetY = 3 * scale;
+            
+            // === FLOTADORES ===
+            ctx.fillStyle = '#C0C0C0'; // Gris plateado
+            
+            // Flotador izquierdo
+            ctx.beginPath();
+            ctx.ellipse(-35, 35, 35, 12, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#808080';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            
+            // Flotador derecho
+            ctx.beginPath();
+            ctx.ellipse(35, 35, 35, 12, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            
+            // === SOPORTES DE FLOTADORES ===
+            ctx.strokeStyle = '#606060';
+            ctx.lineWidth = 3;
+            
+            // Soporte izquierdo
+            ctx.beginPath();
+            ctx.moveTo(-20, 5);
+            ctx.lineTo(-25, 35);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(-35, 5);
+            ctx.lineTo(-35, 35);
+            ctx.stroke();
+            
+            // Soporte derecho
+            ctx.beginPath();
+            ctx.moveTo(20, 5);
+            ctx.lineTo(25, 35);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(35, 5);
+            ctx.lineTo(35, 35);
+            ctx.stroke();
+            
+            // === FUSELAJE ===
+            ctx.fillStyle = '#FFFFFF'; // Blanco
+            
+            // Cuerpo principal del avión
+            ctx.beginPath();
+            ctx.moveTo(-60, -5);
+            ctx.quadraticCurveTo(-60, -20, -45, -20);
+            ctx.lineTo(45, -20);
+            ctx.quadraticCurveTo(65, -20, 70, -10);
+            ctx.quadraticCurveTo(70, 0, 65, 5);
+            ctx.lineTo(45, 5);
+            ctx.lineTo(-45, 5);
+            ctx.quadraticCurveTo(-60, 5, -60, -5);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Borde del fuselaje
+            ctx.strokeStyle = '#B0B0B0';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            
+            // === ALAS ===
+            ctx.fillStyle = '#F0F0F0';
+            
+            // Ala principal (alta)
+            ctx.beginPath();
+            ctx.moveTo(-85, -25);
+            ctx.lineTo(85, -25);
+            ctx.lineTo(85, -15);
+            ctx.lineTo(80, -15);
+            ctx.lineTo(80, -10);
+            ctx.lineTo(-80, -10);
+            ctx.lineTo(-80, -15);
+            ctx.lineTo(-85, -15);
+            ctx.closePath();
+            ctx.fill();
+            ctx.strokeStyle = '#B0B0B0';
+            ctx.stroke();
+            
+            // Montantes del ala (struts)
+            ctx.strokeStyle = '#606060';
+            ctx.lineWidth = 2;
+            // Montante izquierdo
+            ctx.beginPath();
+            ctx.moveTo(-40, -10);
+            ctx.lineTo(-40, 5);
+            ctx.stroke();
+            // Montante derecho
+            ctx.beginPath();
+            ctx.moveTo(40, -10);
+            ctx.lineTo(40, 5);
+            ctx.stroke();
+            
+            // === COLA ===
+            // Estabilizador vertical
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            ctx.moveTo(-60, -10);
+            ctx.lineTo(-60, -35);
+            ctx.lineTo(-45, -35);
+            ctx.lineTo(-45, -20);
+            ctx.closePath();
+            ctx.fill();
+            ctx.strokeStyle = '#B0B0B0';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            
+            // Estabilizador horizontal
+            ctx.beginPath();
+            ctx.moveTo(-65, -20);
+            ctx.lineTo(-40, -20);
+            ctx.lineTo(-40, -15);
+            ctx.lineTo(-65, -15);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            
+            // === CABINA Y VENTANAS ===
+            // Ventanas de la cabina
+            ctx.fillStyle = '#4A90E2'; // Azul cristal
+            ctx.beginPath();
+            ctx.moveTo(20, -18);
+            ctx.lineTo(45, -18);
+            ctx.quadraticCurveTo(50, -18, 50, -15);
+            ctx.lineTo(50, -10);
+            ctx.lineTo(20, -10);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Ventanas laterales
+            ctx.fillRect(5, -16, 10, 5);
+            ctx.fillRect(-10, -16, 10, 5);
+            ctx.fillRect(-25, -16, 10, 5);
+            
+            // === MOTOR Y HÉLICE ===
+            // Cubierta del motor
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            ctx.arc(70, -7, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#B0B0B0';
+            ctx.stroke();
+            
+            // Centro de la hélice
+            ctx.fillStyle = '#606060';
+            ctx.beginPath();
+            ctx.arc(78, -7, 3, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Aspas de la hélice (en movimiento)
+            ctx.strokeStyle = 'rgba(128, 128, 128, 0.4)';
+            ctx.lineWidth = 2;
+            ctx.save();
+            ctx.translate(78, -7);
+            
+            // Aspa 1
+            ctx.rotate(Math.PI / 6);
+            ctx.beginPath();
+            ctx.moveTo(0, -25);
+            ctx.lineTo(0, 25);
+            ctx.stroke();
+            
+            // Aspa 2
+            ctx.rotate(Math.PI / 2);
+            ctx.beginPath();
+            ctx.moveTo(0, -25);
+            ctx.lineTo(0, 25);
+            ctx.stroke();
+            
+            ctx.restore();
+            
+            // === DETALLES FINALES ===
+            // Línea decorativa roja
+            ctx.strokeStyle = '#FF0000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(-55, -2);
+            ctx.lineTo(55, -2);
+            ctx.stroke();
+            
+            // Matrícula (pequeña)
+            if (size > 64) {
+                ctx.fillStyle = '#000000';
+                ctx.font = `bold ${8 * scale}px Arial`;
+                ctx.fillText('N-172', -20, 2);
+            }
+            
+            ctx.restore();
+        }
+        
+        // Generar todos los iconos
+        sizes.forEach(size => {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            drawCessnaSeaplane(ctx, size);
+            
+            // Crear contenedor para el icono
+            const div = document.createElement('div');
+            div.style.margin = '20px';
+            div.style.padding = '10px';
+            div.style.background = 'white';
+            div.style.borderRadius = '8px';
+            div.style.display = 'inline-block';
+            div.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            
+            const label = document.createElement('p');
+            label.textContent = `icon-${size}.png (${size}x${size})`;
+            label.style.margin = '0 0 10px 0';
+            label.style.fontSize = '14px';
+            label.style.color = '#333';
+            label.style.fontWeight = 'bold';
+            
+            const img = document.createElement('img');
+            img.src = canvas.toDataURL('image/png');
+            img.style.display = 'block';
+            img.style.border = '1px solid #ddd';
+            img.style.maxWidth = '128px';
+            img.style.maxHeight = '128px';
+            img.style.width = size > 128 ? '128px' : size + 'px';
+            img.style.height = size > 128 ? '128px' : size + 'px';
+            img.style.imageRendering = 'crisp-edges';
+            
+            const downloadBtn = document.createElement('a');
+            downloadBtn.href = canvas.toDataURL('image/png');
+            downloadBtn.download = `icon-${size}.png`;
+            downloadBtn.textContent = `⬇️ Descargar ${size}x${size}`;
+            downloadBtn.style.display = 'inline-block';
+            downloadBtn.style.marginTop = '10px';
+            downloadBtn.style.padding = '8px 16px';
+            downloadBtn.style.background = '#4CAF50';
+            downloadBtn.style.color = 'white';
+            downloadBtn.style.textDecoration = 'none';
+            downloadBtn.style.borderRadius = '4px';
+            downloadBtn.style.fontSize = '12px';
+            downloadBtn.style.fontWeight = 'bold';
+            
+            div.appendChild(label);
+            div.appendChild(img);
+            div.appendChild(downloadBtn);
+            container.appendChild(div);
+        });
+        
+        // Generar favicon especial
+        const faviconCanvas = document.createElement('canvas');
+        faviconCanvas.width = 32;
+        faviconCanvas.height = 32;
+        const fctx = faviconCanvas.getContext('2d');
+        
+        drawCessnaSeaplane(fctx, 32);
+        
+        // Mostrar favicon
+        const faviconDiv = document.createElement('div');
+        faviconDiv.style.margin = '20px';
+        faviconDiv.style.padding = '20px';
+        faviconDiv.style.background = '#fff3cd';
+        faviconDiv.style.border = '2px solid #ffc107';
+        faviconDiv.style.borderRadius = '8px';
+        faviconDiv.style.display = 'block';
+        faviconDiv.innerHTML = `
+            <h3>⭐ Favicon Especial (32x32)</h3>
+            <p>Este es el icono que aparecerá en las pestañas del navegador</p>
+            <img src="${faviconCanvas.toDataURL('image/png')}" style="width: 32px; height: 32px; border: 1px solid #ddd; display: block; margin: 10px 0;">
+            <a href="${faviconCanvas.toDataURL('image/png')}" download="favicon.png" style="display: inline-block; margin-top: 10px; padding: 10px 20px; background: #ffc107; color: black; text-decoration: none; border-radius: 4px; font-weight: bold;">⬇️ Descargar Favicon</a>
+            <p style="margin-top: 10px; font-size: 12px; color: #666;">Guárdalo como favicon.ico en la carpeta public/</p>
+        `;
+        container.insertBefore(faviconDiv, container.firstChild);
+        
+        // Instrucciones
+        const instructions = document.createElement('div');
+        instructions.style.margin = '20px';
+        instructions.style.padding = '20px';
+        instructions.style.background = '#d4edda';
+        instructions.style.border = '2px solid #28a745';
+        instructions.style.borderRadius = '8px';
+        instructions.innerHTML = `
+            <h3>📋 Instrucciones:</h3>
+            <ol>
+                <li>Descarga TODOS los iconos usando los botones verdes</li>
+                <li>Guárdalos en la carpeta <code>public/</code> del proyecto</li>
+                <li>El favicon.png debe renombrarse a favicon.ico</li>
+                <li>Después de subir los iconos, haz commit y push</li>
+                <li>Los iconos aparecerán en el navegador y al instalar la PWA</li>
+            </ol>
+        `;
+        container.insertBefore(instructions, container.firstChild);
+    </script>
+</body>
+</html>
