@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { RegistrationFormData } from '@/types';
+import analytics from '@/lib/analytics';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +16,18 @@ export default function HomePage() {
   });
   const router = useRouter();
   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwYMYUihl9oQ2xZpW5CJJ0Xyfm3bsN6E2C5yo3tOBQK4U7slQ2RDRiHiwPvA_bw7akVzg/exec";
+
+  useEffect(() => {
+    // Registrar service worker para PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => console.log('Service Worker registrado:', registration.scope))
+        .catch(error => console.log('Service Worker fallo:', error));
+    }
+    
+    // Track page view
+    analytics.trackEvent('page_view', { page: 'registration' });
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,12 +56,17 @@ export default function HomePage() {
 
       if (result.ok) {
         // Guardar en sessionStorage para el juego
-        sessionStorage.setItem('currentUser', JSON.stringify({
+        const userData = {
+          id: formData.email,
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
           age: formData.age
-        }));
+        };
+        sessionStorage.setItem('currentUser', JSON.stringify(userData));
+        
+        // Track registro exitoso
+        analytics.trackEvent('user_registered', userData);
         
         // Redireccionar al juego
         router.push('/game');
