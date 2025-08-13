@@ -1,10 +1,41 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import analytics from '@/lib/analytics';
 
+interface Player {
+  email: string;
+  bestScore: number;
+  gamesPlayed: number;
+  avgScore: number;
+}
+
+interface Session {
+  userId: string;
+  email: string;
+  startTime: string;
+  endTime?: string;
+  score?: number;
+  device: string;
+  browser: string;
+}
+
+interface Stats {
+  totalUsers: number;
+  totalGames: number;
+  avgScore: number;
+  maxScore: number;
+  deviceStats: Record<string, number>;
+  browserStats: Record<string, number>;
+  topPlayers: Player[];
+  hourlyActivity: Record<number, number>;
+  recentSessions: Session[];
+  recentEvents: Array<{ event: string; timestamp: string; data?: Record<string, unknown> }>;
+}
+
 export default function AnalyticsPage() {
-  const [stats, setStats] = useState<any>(null);
+  const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,7 +54,7 @@ export default function AnalyticsPage() {
     return () => clearInterval(interval);
   }, []);
 
-  if (loading) {
+  if (loading || !stats) {
     return (
       <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
         <div className="text-xl">Cargando analytics...</div>
@@ -124,7 +155,7 @@ export default function AnalyticsPage() {
               </tr>
             </thead>
             <tbody>
-              {stats.topPlayers.map((player: any, index: number) => (
+              {stats.topPlayers.map((player, index) => (
                 <tr key={player.email} className="border-b border-gray-700">
                   <td className="py-2 px-4">
                     {index === 0 && '🥇'}
@@ -193,7 +224,7 @@ export default function AnalyticsPage() {
               </tr>
             </thead>
             <tbody>
-              {stats.recentSessions.slice(0, 10).map((session: any, index: number) => (
+              {stats.recentSessions.slice(0, 10).map((session, index) => (
                 <tr key={index} className="border-b border-gray-700">
                   <td className="py-2 px-4 text-gray-400">
                     {new Date(session.startTime).toLocaleTimeString('es-CL')}
@@ -218,7 +249,7 @@ export default function AnalyticsPage() {
       <div className="mt-8 text-center text-gray-500 text-sm">
         <p>Dashboard privado - No compartir URL</p>
         <p className="mt-2">
-          <a href="/" className="text-blue-400 hover:underline">← Volver al juego</a>
+          <Link href="/" className="text-blue-400 hover:underline">← Volver al juego</Link>
         </p>
       </div>
     </div>

@@ -3,7 +3,7 @@
 interface AnalyticsEvent {
   event: string;
   timestamp: string;
-  data?: any;
+  data?: Record<string, unknown>;
 }
 
 interface UserSession {
@@ -88,7 +88,7 @@ class Analytics {
   }
 
   // Registrar evento
-  trackEvent(event: string, data?: any) {
+  trackEvent(event: string, data?: Record<string, unknown>) {
     const analyticsEvent: AnalyticsEvent = {
       event,
       timestamp: new Date().toISOString(),
