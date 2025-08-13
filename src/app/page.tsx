@@ -25,8 +25,35 @@ export default function HomePage() {
         .catch(error => console.log('Service Worker fallo:', error));
     }
     
+    // Manejar evento de instalación PWA
+    let deferredPrompt: any;
+    
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // Mostrar botón de instalación o prompt automáticamente
+      setTimeout(() => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult: any) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('Usuario aceptó instalar la app');
+            }
+            deferredPrompt = null;
+          });
+        }
+      }, 3000); // Mostrar después de 3 segundos
+    };
+    
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    
     // Track page view
     analytics.trackEvent('page_view', { page: 'registration' });
+    
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
