@@ -56,10 +56,17 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
     };
   }, []);
 
-  // Función de renderizado
+  // Función de renderizado con manejo de errores
   const render = useCallback((ctx: CanvasRenderingContext2D, state: GameState) => {
-    const canvasWidth = GAME_CONFIG.canvasSize.width;
-    const canvasHeight = GAME_CONFIG.canvasSize.height;
+    try {
+      const canvasWidth = GAME_CONFIG.canvasSize.width;
+      const canvasHeight = GAME_CONFIG.canvasSize.height;
+      
+      // Validar dimensiones
+      if (canvasWidth <= 0 || canvasHeight <= 0) {
+        console.warn('Invalid canvas dimensions');
+        return;
+      }
     
     // Detectar cambio de score para animación
     if (state.score > lastScoreRef.current) {
@@ -331,6 +338,9 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
         GAME_CONFIG.canvasSize.height / 2 + 80
       );
     }
+    } catch (error) {
+      console.error('Error during render:', error);
+    }
   }, []);
 
   // Loop principal del juego
@@ -448,15 +458,25 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
     lastTimeRef.current = performance.now();
     animationFrameRef.current = requestAnimationFrame(gameLoop);
 
-    // Cleanup
+    // Cleanup completo para evitar memory leaks
     return () => {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = undefined;
       }
       window.removeEventListener('resize', updateCanvasSize);
       canvas.removeEventListener('touchstart', handleTouch);
+      canvas.removeEventListener('touchend', (e) => e.preventDefault());
+      canvas.removeEventListener('touchmove', (e) => e.preventDefault());
+      canvas.removeEventListener('touchcancel', (e) => e.preventDefault());
       canvas.removeEventListener('click', handleClick);
       document.removeEventListener('keydown', handleKeyPress);
+      
+      // Limpiar el canvas
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
     };
   }, [gameLoop, handleInteraction, imagesLoaded]);
 

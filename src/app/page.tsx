@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { RegistrationFormData } from '@/types';
-import analytics from '@/lib/analytics';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,42 +17,10 @@ export default function HomePage() {
   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwYMYUihl9oQ2xZpW5CJJ0Xyfm3bsN6E2C5yo3tOBQK4U7slQ2RDRiHiwPvA_bw7akVzg/exec";
 
   useEffect(() => {
-    // Registrar service worker para PWA
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => console.log('Service Worker registrado:', registration.scope))
-        .catch(error => console.log('Service Worker fallo:', error));
-    }
-    
-    // Manejar evento de instalación PWA
-    let deferredPrompt: Event & { prompt?: () => void; userChoice?: Promise<{ outcome: string }> };
-    
-    const handleBeforeInstallPrompt = (e: Event) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      
-      // Mostrar botón de instalación o prompt automáticamente
-      setTimeout(() => {
-        if (deferredPrompt && deferredPrompt.prompt) {
-          deferredPrompt.prompt();
-          deferredPrompt.userChoice?.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-              console.log('Usuario aceptó instalar la app');
-            }
-            (deferredPrompt as Event & { prompt?: () => void; userChoice?: Promise<{ outcome: string }> } | null) = null;
-          });
-        }
-      }, 3000); // Mostrar después de 3 segundos
-    };
-    
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    
-    // Track page view
-    analytics.trackEvent('page_view', { page: 'registration' });
-    
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
+    // Prevenir zoom en iOS
+    document.addEventListener('gesturestart', (e) => e.preventDefault());
+    document.addEventListener('gesturechange', (e) => e.preventDefault());
+    document.addEventListener('gestureend', (e) => e.preventDefault());
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -91,9 +58,6 @@ export default function HomePage() {
           age: formData.age
         };
         sessionStorage.setItem('currentUser', JSON.stringify(userData));
-        
-        // Track registro exitoso
-        analytics.trackEvent('user_registered', userData);
         
         // Redireccionar al juego
         router.push('/game');

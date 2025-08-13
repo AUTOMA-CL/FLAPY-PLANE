@@ -75,7 +75,7 @@ export default function RegistrationForm({ onSubmit, isLoading = false }: Regist
     });
 
     setErrors(newErrors);
-    setTouched({ name: true, phone: true, email: true });
+    setTouched({ name: true, phone: true, email: true, age: true });
 
     // Si no hay errores, enviar
     if (Object.keys(newErrors).length === 0) {

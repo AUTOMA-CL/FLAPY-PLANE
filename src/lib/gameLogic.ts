@@ -1,14 +1,13 @@
 import { GameState, Obstacle, GameSettings, PlaneCollisionBox } from '@/types';
-import { log } from './logger';
 
-// Configuraciones del juego - valores ajustados para deltaTime en segundos
+// Configuraciones del juego - optimizado para tablets iOS/Android
 export const GAME_CONFIG: GameSettings = {
-  gravity: 350,      // píxeles/s² (reducido de 500)
-  jumpVelocity: -230, // píxeles/s (reducido ligeramente)
-  obstacleSpeed: 120, // píxeles/s (reducido para tablets)
-  obstacleGap: 150,
+  gravity: 320,      // píxeles/s² - optimizado para control táctil
+  jumpVelocity: -220, // píxeles/s - salto más controlado
+  obstacleSpeed: 110, // píxeles/s - velocidad más manejable en tablets
+  obstacleGap: 160,   // Gap ligeramente mayor para mejor jugabilidad
   planeSize: { width: 90, height: 68 },
-  canvasSize: { width: 800, height: 600 } // Se actualiza dinámicamente en el cliente
+  canvasSize: { width: 800, height: 600 } // Se actualiza dinámicamente
 };
 
 // Inicializar estado del juego
@@ -53,13 +52,9 @@ export function updateGameState(state: GameState, deltaTime: number): GameState 
 
   // Actualizar invulnerabilidad (deltaTime ya viene multiplicado por 0.01 desde GameCanvas)
   if (newState.isInvulnerable) {
-    const prevTime = newState.invulnerabilityTime;
     newState.invulnerabilityTime = Math.max(0, newState.invulnerabilityTime - deltaTime);
     
-    log(`⏱️ INVULNERABILITY UPDATE: ${prevTime.toFixed(3)}s -> ${newState.invulnerabilityTime.toFixed(3)}s (delta: ${deltaTime.toFixed(3)})`);
-    
     if (newState.invulnerabilityTime <= 0) {
-      log(`🔓 INVULNERABILITY ENDED - Now vulnerable again`);
       newState.isInvulnerable = false;
       newState.invulnerabilityTime = 0;
     }
@@ -77,36 +72,20 @@ export function updateGameState(state: GameState, deltaTime: number): GameState 
   // Verificar colisiones con obstáculos - SIEMPRE detectar pero solo hacer daño si no es invulnerable
   const hasCollision = checkCollisions(newState);
   
-  if (hasCollision || newState.isInvulnerable) {
-    log(`🔍 COLLISION CHECK: hasCollision=${hasCollision}, isInvulnerable=${newState.isInvulnerable}, lives=${newState.lives}, invulTime=${newState.invulnerabilityTime.toFixed(2)}s`);
-  }
-  
   if (hasCollision && !newState.isInvulnerable) {
-    log(`💥 COLLISION DETECTED! Lives before: ${newState.lives}`);
-    
     // Solo ejecutar UNA VEZ por frame - aplicar inmediatamente la invulnerabilidad
     newState.lives -= 1;
     
-    log(`💔 LIFE LOST! Lives after: ${newState.lives}`);
-    
     if (newState.lives <= 0) {
-      log(`☠️ GAME OVER! No lives remaining`);
       newState.gameOver = true;
       newState.isPlaying = false;
     } else {
-      log(`🛡️ ACTIVATING INVULNERABILITY for 2 seconds`);
       // Activar invulnerabilidad INMEDIATAMENTE en este frame
       newState.isInvulnerable = true;
       newState.invulnerabilityTime = 2; // 2 segundos exactos
       newState.showLifeLostMessage = true;
       newState.lifeLostMessageTime = 2;
-      
-      log(`✅ INVULNERABILITY SET: isInvulnerable=${newState.isInvulnerable}, time=${newState.invulnerabilityTime}`);
     }
-  }
-  
-  if (hasCollision && newState.isInvulnerable) {
-    log(`👻 GHOST MODE: Passing through obstacle (invulnerable for ${newState.invulnerabilityTime.toFixed(2)}s)`);
   }
   
   // Límites de pantalla - mantener avión visible SIN perder vida durante invulnerabilidad
@@ -144,24 +123,27 @@ export function checkCollisions(state: GameState): boolean {
   });
 }
 
-// Obtener caja de colisión del avión (ajustada a la forma real)
+// Obtener caja de colisión del avión (ajustada para mejor jugabilidad)
 function getPlaneCollisionBox(position: { x: number; y: number }): PlaneCollisionBox {
-  // Reducir la caja de colisión para ser más generoso con el jugador
-  const padding = 4;
+  // Hitbox más generosa para mejor experiencia en tablets
+  const paddingX = 8; // Más padding horizontal
+  const paddingY = 6; // Más padding vertical
   return {
-    x: position.x + padding,
-    y: position.y + padding,
-    width: GAME_CONFIG.planeSize.width - (padding * 2),
-    height: GAME_CONFIG.planeSize.height - (padding * 2)
+    x: position.x + paddingX,
+    y: position.y + paddingY,
+    width: GAME_CONFIG.planeSize.width - (paddingX * 2),
+    height: GAME_CONFIG.planeSize.height - (paddingY * 2)
   };
 }
 
-// Verificar colisión entre dos rectángulos
+// Verificar colisión con tolerancia para evitar falsos positivos
 function isColliding(rect1: PlaneCollisionBox, rect2: { x: number; y: number; width: number; height: number }): boolean {
-  return rect1.x < rect2.x + rect2.width &&
-         rect1.x + rect1.width > rect2.x &&
-         rect1.y < rect2.y + rect2.height &&
-         rect1.y + rect1.height > rect2.y;
+  // Agregar pequeña tolerancia para evitar colisiones por 1 pixel
+  const tolerance = 2;
+  return rect1.x + tolerance < rect2.x + rect2.width &&
+         rect1.x + rect1.width - tolerance > rect2.x &&
+         rect1.y + tolerance < rect2.y + rect2.height &&
+         rect1.y + rect1.height - tolerance > rect2.y;
 }
 
 // Actualizar posición de obstáculos
@@ -174,28 +156,33 @@ function updateObstacles(obstacles: Obstacle[], deltaTime: number): Obstacle[] {
     .filter(obstacle => obstacle.x > -obstacle.width);
 }
 
-// Determinar si se debe generar un nuevo obstáculo
+// Determinar si se debe generar un nuevo obstáculo - mejor espaciado
 function shouldGenerateObstacle(obstacles: Obstacle[]): boolean {
   if (obstacles.length === 0) return true;
   
   const lastObstacle = obstacles[obstacles.length - 1];
-  return lastObstacle.x < GAME_CONFIG.canvasSize.width - 300;
+  // Mayor distancia entre obstáculos para tablets
+  const minDistance = Math.max(350, GAME_CONFIG.canvasSize.width * 0.4);
+  return lastObstacle.x < GAME_CONFIG.canvasSize.width - minDistance;
 }
 
-// Generar nuevo obstáculo - adaptativo al viewport
+// Generar nuevo obstáculo - optimizado para tablets
 function generateObstacle(): Obstacle {
   const canvasHeight = GAME_CONFIG.canvasSize.height;
-  const gapSize = Math.max(150, canvasHeight * 0.25); // Gap mínimo 150px o 25% de altura
-  const minHeight = 50;
-  const maxHeight = canvasHeight - gapSize - minHeight;
-  const height = minHeight + Math.random() * (maxHeight - minHeight);
+  const gapSize = Math.max(160, canvasHeight * 0.28); // Gap mayor para tablets
+  const minHeight = 60; // Altura mínima mayor
+  const maxHeight = canvasHeight - gapSize - minHeight - 20; // Margen extra
+  
+  // Limitar variación para dificultad más consistente
+  const heightVariation = Math.min(maxHeight - minHeight, 200);
+  const height = minHeight + Math.random() * heightVariation;
   
   return {
     id: `obstacle_${Date.now()}_${Math.random()}`,
     x: GAME_CONFIG.canvasSize.width,
     y: 0,
     width: 50,
-    height: height,
+    height: Math.floor(height), // Redondear para evitar subpixel rendering
     passed: false
   };
 }
