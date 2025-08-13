@@ -120,19 +120,28 @@ export default function HomePage() {
           <p className="text-sm">¡Prepárate para volar! Registra tus datos y comienza la aventura.</p>
         </div>
 
-        {/* Logo FEROUCH */}
+        {/* Logo FEROUCH con animación de parpadeo */}
         <div className="flex justify-center py-6 px-0 bg-gray-50">
           <img
             src="/images/FE_NUEVOLOGO(avion)_AZUL.png?v=4"
             alt="FEROUCH"
-            className="w-full"
+            className="w-full animate-pulse"
             style={{
               maxWidth: '900px',
               height: 'auto',
-              transform: 'scale(1.5)'
+              transform: 'scale(1.5)',
+              animation: 'blink 2s ease-in-out infinite'
             }}
           />
         </div>
+        
+        {/* Estilos CSS para la animación de parpadeo */}
+        <style jsx>{`
+          @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+          }
+        `}</style>
 
         {/* Formulario */}
         <form onSubmit={handleSubmit} className="px-4 py-3 space-y-2">
