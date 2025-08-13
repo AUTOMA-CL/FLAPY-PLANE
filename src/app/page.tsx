@@ -63,7 +63,7 @@ export default function HomePage() {
           <img
             src="/images/FE_NUEVOLOGO(avion)_AZUL.png?v=4"
             alt="FEROUCH"
-            className="animate-pulse w-full"
+            className="w-full"
             style={{
               maxWidth: '900px',
               height: 'auto',
