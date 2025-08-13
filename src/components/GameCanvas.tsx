@@ -117,7 +117,7 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
 
     // Dibujar avión (con efecto de invulnerabilidad)
     if (imagesRef.current.plane) {
-      const angle = Math.min(state.velocity * 0.05, Math.PI / 6);
+      const angle = Math.min(state.velocity * 0.002, Math.PI / 6);
       
       ctx.save();
       ctx.translate(
@@ -263,36 +263,44 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
 
     // Mensaje temporal de vida perdida (solo si aún hay vidas)
     if (state.showLifeLostMessage && !state.gameOver) {
-      ctx.fillStyle = 'rgba(255, 0, 0, 0.8)';
-      ctx.fillRect(0, 0, GAME_CONFIG.canvasSize.width, GAME_CONFIG.canvasSize.height);
+      // Notificación pequeña en la parte superior de la pantalla
+      const notificationHeight = 80;
+      const notificationY = 50;
+      
+      // Fondo semitransparente solo para la notificación
+      ctx.fillStyle = 'rgba(255, 0, 0, 0.9)';
+      ctx.fillRect(
+        GAME_CONFIG.canvasSize.width / 2 - 200, 
+        notificationY, 
+        400, 
+        notificationHeight
+      );
+      
+      // Borde de la notificación
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(
+        GAME_CONFIG.canvasSize.width / 2 - 200, 
+        notificationY, 
+        400, 
+        notificationHeight
+      );
       
       ctx.fillStyle = 'white';
-      ctx.font = '32px Arial';
+      ctx.font = 'bold 24px Arial';
       ctx.textAlign = 'center';
-      ctx.fillText('¡Vida Perdida!', GAME_CONFIG.canvasSize.width / 2, GAME_CONFIG.canvasSize.height / 2 - 40);
-      
-      ctx.font = '24px Arial';
-      ctx.fillStyle = '#FFD700';
       ctx.fillText(
-        `Vidas restantes: ${state.lives}`, 
+        '¡Vida Perdida!', 
         GAME_CONFIG.canvasSize.width / 2, 
-        GAME_CONFIG.canvasSize.height / 2
+        notificationY + 30
       );
       
       ctx.font = '18px Arial';
-      ctx.fillStyle = 'white';
-      ctx.fillText(
-        '¡Eres invulnerable por 2 segundos!', 
-        GAME_CONFIG.canvasSize.width / 2, 
-        GAME_CONFIG.canvasSize.height / 2 + 40
-      );
-      
-      ctx.font = '16px Arial';
       ctx.fillStyle = '#FFD700';
       ctx.fillText(
-        'Atraviesas obstáculos - ¡Continúa volando!', 
+        `Vidas restantes: ${state.lives} | Invulnerable por 2s`, 
         GAME_CONFIG.canvasSize.width / 2, 
-        GAME_CONFIG.canvasSize.height / 2 + 70
+        notificationY + 55
       );
     }
 
@@ -345,9 +353,10 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
     const deltaTime = currentTime - lastTimeRef.current;
     lastTimeRef.current = currentTime;
 
-    // Actualizar estado del juego
+    // Actualizar estado del juego (deltaTime en segundos)
     const oldScore = gameStateRef.current.score;
-    gameStateRef.current = updateGameState(gameStateRef.current, deltaTime * 0.01);
+    const deltaTimeInSeconds = deltaTime / 1000; // convertir ms a segundos
+    gameStateRef.current = updateGameState(gameStateRef.current, deltaTimeInSeconds);
 
     // Callbacks
     if (gameStateRef.current.score !== oldScore && onScoreChange) {

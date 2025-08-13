@@ -42,10 +42,10 @@ export async function POST(request: NextRequest): Promise<NextResponse<APIRespon
       }, { status: 400 });
     }
 
-    if (phone.length < 10) {
+    if (phone.length < 9) {
       return NextResponse.json({
         success: false,
-        error: 'El teléfono debe tener al menos 10 caracteres'
+        error: 'El teléfono debe tener al menos 9 dígitos'
       }, { status: 400 });
     }
 

@@ -1,10 +1,11 @@
 import { GameState, Obstacle, GameSettings, PlaneCollisionBox } from '@/types';
+import { log } from './logger';
 
-// Configuraciones del juego - valores por defecto que se actualizan dinámicamente
+// Configuraciones del juego - valores ajustados para deltaTime en segundos
 export const GAME_CONFIG: GameSettings = {
-  gravity: 2.0,
-  jumpVelocity: -9,
-  obstacleSpeed: 5,
+  gravity: 350,      // píxeles/s² (reducido de 500)
+  jumpVelocity: -230, // píxeles/s (reducido ligeramente)
+  obstacleSpeed: 150, // píxeles/s (reducido de 200)
   obstacleGap: 150,
   planeSize: { width: 90, height: 68 },
   canvasSize: { width: 800, height: 600 } // Se actualiza dinámicamente en el cliente
@@ -50,15 +51,15 @@ export function updateGameState(state: GameState, deltaTime: number): GameState 
     newState.obstacles.push(generateObstacle());
   }
 
-  // Actualizar invulnerabilidad
+  // Actualizar invulnerabilidad (deltaTime ya viene multiplicado por 0.01 desde GameCanvas)
   if (newState.isInvulnerable) {
     const prevTime = newState.invulnerabilityTime;
-    newState.invulnerabilityTime -= deltaTime;
+    newState.invulnerabilityTime = Math.max(0, newState.invulnerabilityTime - deltaTime);
     
-    console.log(`⏱️ INVULNERABILITY UPDATE: ${prevTime.toFixed(3)}s -> ${newState.invulnerabilityTime.toFixed(3)}s (delta: ${deltaTime.toFixed(3)})`);
+    log(`⏱️ INVULNERABILITY UPDATE: ${prevTime.toFixed(3)}s -> ${newState.invulnerabilityTime.toFixed(3)}s (delta: ${deltaTime.toFixed(3)})`);
     
     if (newState.invulnerabilityTime <= 0) {
-      console.log(`🔓 INVULNERABILITY ENDED - Now vulnerable again`);
+      log(`🔓 INVULNERABILITY ENDED - Now vulnerable again`);
       newState.isInvulnerable = false;
       newState.invulnerabilityTime = 0;
     }
@@ -76,34 +77,36 @@ export function updateGameState(state: GameState, deltaTime: number): GameState 
   // Verificar colisiones con obstáculos - SIEMPRE detectar pero solo hacer daño si no es invulnerable
   const hasCollision = checkCollisions(newState);
   
-  console.log(`🔍 COLLISION CHECK: hasCollision=${hasCollision}, isInvulnerable=${newState.isInvulnerable}, lives=${newState.lives}`);
+  if (hasCollision || newState.isInvulnerable) {
+    log(`🔍 COLLISION CHECK: hasCollision=${hasCollision}, isInvulnerable=${newState.isInvulnerable}, lives=${newState.lives}, invulTime=${newState.invulnerabilityTime.toFixed(2)}s`);
+  }
   
   if (hasCollision && !newState.isInvulnerable) {
-    console.log(`💥 COLLISION DETECTED! Lives before: ${newState.lives}`);
+    log(`💥 COLLISION DETECTED! Lives before: ${newState.lives}`);
     
     // Solo ejecutar UNA VEZ por frame - aplicar inmediatamente la invulnerabilidad
     newState.lives -= 1;
     
-    console.log(`💔 LIFE LOST! Lives after: ${newState.lives}`);
+    log(`💔 LIFE LOST! Lives after: ${newState.lives}`);
     
     if (newState.lives <= 0) {
-      console.log(`☠️ GAME OVER! No lives remaining`);
+      log(`☠️ GAME OVER! No lives remaining`);
       newState.gameOver = true;
       newState.isPlaying = false;
     } else {
-      console.log(`🛡️ ACTIVATING INVULNERABILITY for 2 seconds`);
+      log(`🛡️ ACTIVATING INVULNERABILITY for 2 seconds`);
       // Activar invulnerabilidad INMEDIATAMENTE en este frame
       newState.isInvulnerable = true;
       newState.invulnerabilityTime = 2; // 2 segundos exactos
       newState.showLifeLostMessage = true;
       newState.lifeLostMessageTime = 2;
       
-      console.log(`✅ INVULNERABILITY SET: isInvulnerable=${newState.isInvulnerable}, time=${newState.invulnerabilityTime}`);
+      log(`✅ INVULNERABILITY SET: isInvulnerable=${newState.isInvulnerable}, time=${newState.invulnerabilityTime}`);
     }
   }
   
   if (hasCollision && newState.isInvulnerable) {
-    console.log(`👻 GHOST MODE: Passing through obstacle (invulnerable for ${newState.invulnerabilityTime.toFixed(2)}s)`);
+    log(`👻 GHOST MODE: Passing through obstacle (invulnerable for ${newState.invulnerabilityTime.toFixed(2)}s)`);
   }
   
   // Límites de pantalla - mantener avión visible SIN perder vida durante invulnerabilidad

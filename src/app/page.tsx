@@ -3,15 +3,21 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import RegistrationForm from '@/components/RegistrationForm';
 import { RegistrationFormData, APIResponse, User } from '@/types';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState<RegistrationFormData>({
+    name: '',
+    phone: '',
+    email: '',
+    age: ''
+  });
   const router = useRouter();
 
-  const handleSubmit = async (formData: RegistrationFormData) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
     setError(null);
 
@@ -27,10 +33,7 @@ export default function HomePage() {
       const result: APIResponse<User> = await response.json();
 
       if (result.success && result.data) {
-        // Guardar usuario en sessionStorage para el juego
         sessionStorage.setItem('currentUser', JSON.stringify(result.data));
-        
-        // Redireccionar al juego
         router.push('/game');
       } else {
         setError(result.error || 'Error desconocido');
@@ -43,84 +46,120 @@ export default function HomePage() {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center justify-start py-8 px-4 overflow-y-auto">
-      {/* Fondo con logos decorativos */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-10 opacity-10">
-          <Image
-            src="/images/FE_NUEVOLOGO(avion)_AZUL.png"
-            alt="Decorative logo"
-            width={60}
-            height={60}
-            className="transform rotate-12"
-          />
-        </div>
-        <div className="absolute bottom-32 left-8 opacity-10">
-          <Image
-            src="/images/FE_NUEVOLOGO(avion)_AZUL.png"
-            alt="Decorative logo"
-            width={50}
-            height={50}
-            className="transform -rotate-12"
-          />
-        </div>
-      </div>
+  const handleInputChange = (field: keyof RegistrationFormData, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
 
-      {/* Contenido principal - responsive mejorado */}
-      <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg relative z-10">
-        {/* Header */}
-        <div className="text-center mb-6 mt-4">
-          <div className="flex justify-center mb-2">
-            <Image
-              src="/images/FE_NUEVOLOGO(avion)_AZUL.png"
-              alt="Logo"
-              width={1440}
-              height={1440}
-              className="animate-slow-bounce"
-              style={{
-                maxWidth: 'min(1440px, 90vw)',
-                height: 'auto'
-              }}
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-md w-full">
+        {/* Header con texto */}
+        <div className="bg-blue-600 text-white text-center py-2">
+          <p className="text-sm">¡Prepárate para volar! Registra tus datos y comienza la aventura.</p>
+        </div>
+
+        {/* Logo FEROUCH */}
+        <div className="flex justify-center py-6 px-0 bg-gray-50">
+          <img
+            src="/images/FE_NUEVOLOGO(avion)_AZUL.png?v=4"
+            alt="FEROUCH"
+            className="animate-pulse w-full"
+            style={{
+              maxWidth: '900px',
+              height: 'auto',
+              transform: 'scale(1.5)'
+            }}
+          />
+        </div>
+
+        {/* Formulario */}
+        <form onSubmit={handleSubmit} className="px-4 py-3 space-y-2">
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
+              {error}
+            </div>
+          )}
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Nombre completo
+            </label>
+            <input
+              type="text"
+              required
+              value={formData.name}
+              onChange={(e) => handleInputChange('name', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black bg-white"
+              placeholder="Ingresa tu nombre"
             />
           </div>
-          <p className="text-gray-600 text-sm sm:text-base md:text-lg px-2 mb-6">
-            ¡Prepárate para volar! Registra tus datos y comienza la aventura.
-          </p>
-        </div>
 
-        {/* Error Message */}
-        {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800">
-                  Error
-                </h3>
-                <p className="text-sm text-red-700 mt-1">
-                  {error}
-                </p>
-              </div>
-            </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Teléfono
+            </label>
+            <input
+              type="tel"
+              required
+              value={formData.phone}
+              onChange={(e) => handleInputChange('phone', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black bg-white"
+              placeholder="+56 9 1234 5678"
+            />
           </div>
-        )}
 
-        {/* Registration Form */}
-        <RegistrationForm onSubmit={handleSubmit} isLoading={isLoading} />
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email
+            </label>
+            <input
+              type="email"
+              required
+              value={formData.email}
+              onChange={(e) => handleInputChange('email', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black bg-white"
+              placeholder="tu@email.com"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Edad
+            </label>
+            <input
+              type="number"
+              required
+              min="1"
+              max="120"
+              value={formData.age}
+              onChange={(e) => handleInputChange('age', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black bg-white"
+              placeholder="Tu edad"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          >
+            {isLoading ? (
+              <span className="flex items-center justify-center">
+                <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                </svg>
+                Cargando...
+              </span>
+            ) : (
+              'Comenzar Juego'
+            )}
+          </button>
+        </form>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-gray-500 text-sm">
-          <p>
-            Optimizado para tablets y dispositivos móviles
-          </p>
-          <p className="mt-1">
-            ¡Mejor experiencia en modo horizontal!
-          </p>
+        <div className="bg-gray-100 px-6 py-2 text-center text-xs text-gray-600">
+          <p>© Optimizado para tablets y dispositivos móviles</p>
         </div>
       </div>
     </div>

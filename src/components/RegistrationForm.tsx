@@ -27,7 +27,7 @@ export default function RegistrationForm({ onSubmit, isLoading = false }: Regist
         return undefined;
       
       case 'phone':
-        if (value.length < 10) return 'El teléfono debe tener al menos 10 caracteres';
+        if (value.length < 9) return 'El teléfono debe tener al menos 9 dígitos';
         if (!/^[\d\s\-\+\(\)]+$/.test(value)) return 'Formato de teléfono no válido';
         return undefined;
       
