@@ -26,14 +26,23 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
   const scoreAnimationRef = useRef<{ show: boolean; time: number }>({ show: false, time: 0 });
   const lastScoreRef = useRef(0);
 
-  // Cargar imágenes
+  // Cargar imágenes con timeout para evitar bloqueos
   useEffect(() => {
     let loadedCount = 0;
     const totalImages = 2;
+    let mounted = true;
 
     const onImageLoad = () => {
       loadedCount++;
-      if (loadedCount === totalImages) {
+      if (loadedCount === totalImages && mounted) {
+        setImagesLoaded(true);
+      }
+    };
+
+    const onImageError = () => {
+      console.warn('Error loading image, continuing without it');
+      loadedCount++;
+      if (loadedCount === totalImages && mounted) {
         setImagesLoaded(true);
       }
     };
@@ -41,17 +50,28 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
     // Cargar imagen del avión
     const planeImg = new Image();
     planeImg.onload = onImageLoad;
+    planeImg.onerror = onImageError;
     planeImg.src = '/images/plane.png';
     imagesRef.current.plane = planeImg;
 
-    // Cargar imagen de fondo
+    // Cargar imagen de fondo (sin cache busting que causa problemas)
     const backgroundImg = new Image();
     backgroundImg.onload = onImageLoad;
-    backgroundImg.src = `/images/background.jpeg?v=${Date.now()}`;
+    backgroundImg.onerror = onImageError;
+    backgroundImg.src = '/images/background.jpeg';
     imagesRef.current.background = backgroundImg;
 
+    // Timeout de seguridad: si las imágenes no cargan en 3 segundos, continuar
+    const timeout = setTimeout(() => {
+      if (mounted && !imagesLoaded) {
+        console.warn('Image loading timeout, starting game without images');
+        setImagesLoaded(true);
+      }
+    }, 3000);
+
     return () => {
-      // Limpiar referencias
+      mounted = false;
+      clearTimeout(timeout);
       imagesRef.current = {};
     };
   }, []);
@@ -458,32 +478,25 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
     lastTimeRef.current = performance.now();
     animationFrameRef.current = requestAnimationFrame(gameLoop);
 
-    // Cleanup completo para evitar memory leaks
+    // Cleanup
     return () => {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
-        animationFrameRef.current = undefined;
       }
       window.removeEventListener('resize', updateCanvasSize);
       canvas.removeEventListener('touchstart', handleTouch);
-      canvas.removeEventListener('touchend', (e) => e.preventDefault());
-      canvas.removeEventListener('touchmove', (e) => e.preventDefault());
-      canvas.removeEventListener('touchcancel', (e) => e.preventDefault());
       canvas.removeEventListener('click', handleClick);
       document.removeEventListener('keydown', handleKeyPress);
-      
-      // Limpiar el canvas
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
     };
   }, [gameLoop, handleInteraction, imagesLoaded]);
 
   if (!imagesLoaded) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-white text-xl">Cargando juego...</div>
+      <div className="flex items-center justify-center h-full bg-sky-200">
+        <div className="text-center">
+          <div className="text-blue-800 text-2xl font-bold mb-2">Cargando juego...</div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-600 mx-auto"></div>
+        </div>
       </div>
     );
   }

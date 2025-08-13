@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { RegistrationFormData } from '@/types';
 
@@ -16,12 +16,7 @@ export default function HomePage() {
   const router = useRouter();
   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwYMYUihl9oQ2xZpW5CJJ0Xyfm3bsN6E2C5yo3tOBQK4U7slQ2RDRiHiwPvA_bw7akVzg/exec";
 
-  useEffect(() => {
-    // Prevenir zoom en iOS
-    document.addEventListener('gesturestart', (e) => e.preventDefault());
-    document.addEventListener('gesturechange', (e) => e.preventDefault());
-    document.addEventListener('gestureend', (e) => e.preventDefault());
-  }, []);
+  // Removed unnecessary gesture event listeners that could cause issues
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
