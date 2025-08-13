@@ -2,22 +2,44 @@ import { NextResponse } from 'next/server';
 
 const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbwYMYUihl9oQ2xZpW5CJJ0Xyfm3bsN6E2C5yo3tOBQK4U7slQ2RDRiHiwPvA_bw7akVzg/exec";
 
+interface GoogleSheetsUser {
+  nombre: string;
+  telefono: string;
+  email: string;
+  edad: string;
+  puntaje: number | string;
+}
+
+interface GoogleSheetsResponse {
+  ok: boolean;
+  users?: GoogleSheetsUser[];
+  totalRegistros?: number;
+  error?: string;
+}
+
 export async function GET() {
   try {
+    // Construir URL con parámetros
+    const url = new URL(GOOGLE_SHEETS_URL);
+    url.searchParams.append('action', 'getAnalytics');
+    
+    console.log('Fetching analytics from:', url.toString());
+    
     // Obtener datos de Google Sheets
-    const response = await fetch(`${GOOGLE_SHEETS_URL}?action=getAnalytics`, {
+    const response = await fetch(url.toString(), {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
       },
-      cache: 'no-store'
+      cache: 'no-store',
+      mode: 'cors'
     });
 
     if (!response.ok) {
       throw new Error('Error al obtener datos de Google Sheets');
     }
 
-    const data = await response.json();
+    const data: GoogleSheetsResponse = await response.json();
     
     // Si Google Sheets no devuelve analytics, usar datos mock para desarrollo
     if (!data || !data.users) {
@@ -33,26 +55,32 @@ export async function GET() {
 
     // Procesar datos de Google Sheets
     const users = data.users || [];
-    const scores = users.filter((u: any) => u.puntaje).map((u: any) => parseInt(u.puntaje));
+    const scores = users
+      .filter((u) => u.puntaje && u.puntaje !== 0)
+      .map((u) => typeof u.puntaje === 'string' ? parseInt(u.puntaje) : u.puntaje as number);
     
     const analytics = {
       totalUsers: users.length,
       totalGames: scores.length,
-      avgScore: scores.length > 0 ? Math.round(scores.reduce((a: number, b: number) => a + b, 0) / scores.length) : 0,
+      avgScore: scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0,
       maxScore: scores.length > 0 ? Math.max(...scores) : 0,
       users: users,
       topPlayers: users
-        .filter((u: any) => u.puntaje)
-        .sort((a: any, b: any) => parseInt(b.puntaje) - parseInt(a.puntaje))
+        .filter((u) => u.puntaje && u.puntaje !== 0)
+        .sort((a, b) => {
+          const scoreA = typeof a.puntaje === 'string' ? parseInt(a.puntaje) : a.puntaje as number;
+          const scoreB = typeof b.puntaje === 'string' ? parseInt(b.puntaje) : b.puntaje as number;
+          return scoreB - scoreA;
+        })
         .slice(0, 10)
-        .map((u: any) => ({
+        .map((u) => ({
           email: u.email,
           nombre: u.nombre,
-          bestScore: parseInt(u.puntaje),
+          bestScore: typeof u.puntaje === 'string' ? parseInt(u.puntaje) : u.puntaje as number,
           edad: u.edad
         })),
       recentGames: users
-        .filter((u: any) => u.puntaje)
+        .filter((u) => u.puntaje && u.puntaje !== 0)
         .slice(-20)
         .reverse()
     };
