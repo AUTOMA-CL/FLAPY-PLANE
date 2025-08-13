@@ -7,6 +7,36 @@ import GameUI from '@/components/GameUI';
 import { User } from '@/types';
 // import { updateUserScore } from '@/lib/database'; // Solo servidor
 
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzCn1SZBluUYDd3TF1uJ-1_HB7VJ7r-ZkWjRTbG465-WtySSldGpytknY0g0xxhfKfplQ/exec";
+
+const updateScore = async (email: string, puntaje: number): Promise<{ok: boolean, error?: string}> => {
+  try {
+    const params = new URLSearchParams();
+    params.append('action', 'updateScore');
+    params.append('email', email);
+    params.append('puntaje', puntaje.toString());
+
+    const response = await fetch(WEB_APP_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString()
+    });
+
+    const result = await response.json();
+    
+    if (!result.ok) {
+      console.error('Error actualizando puntaje:', result.error);
+    }
+    
+    return result;
+  } catch (error) {
+    console.error('Error de conexión al actualizar puntaje:', error);
+    return { ok: false, error: 'Error de conexión' };
+  }
+};
+
 export default function GamePage() {
   const [score, setScore] = useState(0);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -46,16 +76,13 @@ export default function GamePage() {
 
   // Manejar game over
   const handleGameOver = async (finalScore: number) => {
-    if (currentUser) {
+    if (currentUser && currentUser.email) {
       try {
-        // Actualizar puntuación via API
-        const response = await fetch('/api/users/score', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId: currentUser.id, score: finalScore })
-        });
-
-        if (response.ok) {
+        // Actualizar puntuación en Google Sheets
+        const result = await updateScore(currentUser.email, finalScore);
+        
+        if (result.ok) {
+          console.log('Puntaje actualizado en Google Sheets:', finalScore);
           // Actualizar usuario en sessionStorage
           const updatedUser = {
             ...currentUser,
@@ -64,6 +91,8 @@ export default function GamePage() {
           };
           sessionStorage.setItem('currentUser', JSON.stringify(updatedUser));
           setCurrentUser(updatedUser);
+        } else {
+          console.error('No se pudo actualizar el puntaje en Google Sheets');
         }
       } catch (error) {
         console.error('Error updating user score:', error);

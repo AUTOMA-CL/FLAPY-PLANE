@@ -15,6 +15,7 @@ export default function HomePage() {
     age: ''
   });
   const router = useRouter();
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzCn1SZBluUYDd3TF1uJ-1_HB7VJ7r-ZkWjRTbG465-WtySSldGpytknY0g0xxhfKfplQ/exec";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,21 +23,38 @@ export default function HomePage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/users', {
+      // Crear los parámetros para el formulario
+      const params = new URLSearchParams();
+      params.append('action', 'register');
+      params.append('nombre', formData.name);
+      params.append('telefono', formData.phone);
+      params.append('email', formData.email);
+      params.append('edad', formData.age);
+
+      // Enviar al Google Apps Script
+      const response = await fetch(WEB_APP_URL, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify(formData),
+        body: params.toString()
       });
 
-      const result: APIResponse<User> = await response.json();
+      const result = await response.json();
 
-      if (result.success && result.data) {
-        sessionStorage.setItem('currentUser', JSON.stringify(result.data));
+      if (result.ok) {
+        // Guardar en sessionStorage para el juego
+        sessionStorage.setItem('currentUser', JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          age: formData.age
+        }));
+        
+        // Redireccionar al juego
         router.push('/game');
       } else {
-        setError(result.error || 'Error desconocido');
+        setError(result.error || 'Error al registrar usuario');
       }
     } catch (error) {
       console.error('Error al enviar formulario:', error);
