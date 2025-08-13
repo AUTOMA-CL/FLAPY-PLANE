@@ -71,7 +71,7 @@ export default function AnalyticsClient() {
       .map(u => typeof u.puntaje === 'string' ? parseInt(u.puntaje) : u.puntaje as number),
     avgScore: 0,
     maxScore: 0,
-    topPlayers: [] as any[]
+    topPlayers: [] as GoogleUser[]
   };
 
   if (stats.scores.length > 0) {
@@ -172,7 +172,7 @@ export default function AnalyticsClient() {
                 </tr>
               </thead>
               <tbody>
-                {stats.topPlayers.map((player: any, index: number) => (
+                {stats.topPlayers.map((player, index) => (
                   <tr key={index} className="border-b border-gray-700">
                     <td className="py-2 px-4">
                       {index === 0 && '🥇'}

@@ -26,7 +26,7 @@ export default function HomePage() {
     }
     
     // Manejar evento de instalación PWA
-    let deferredPrompt: any;
+    let deferredPrompt: Event & { prompt?: () => void; userChoice?: Promise<{ outcome: string }> };
     
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
@@ -34,13 +34,13 @@ export default function HomePage() {
       
       // Mostrar botón de instalación o prompt automáticamente
       setTimeout(() => {
-        if (deferredPrompt) {
+        if (deferredPrompt && deferredPrompt.prompt) {
           deferredPrompt.prompt();
-          deferredPrompt.userChoice.then((choiceResult: any) => {
+          deferredPrompt.userChoice?.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
               console.log('Usuario aceptó instalar la app');
             }
-            deferredPrompt = null;
+            (deferredPrompt as Event & { prompt?: () => void; userChoice?: Promise<{ outcome: string }> } | null) = null;
           });
         }
       }, 3000); // Mostrar después de 3 segundos
