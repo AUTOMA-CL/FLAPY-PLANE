@@ -2,62 +2,97 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import analytics from '@/lib/analytics';
 
 interface Player {
   email: string;
+  nombre?: string;
   bestScore: number;
-  gamesPlayed: number;
-  avgScore: number;
+  edad?: string;
 }
 
-interface Session {
-  userId: string;
+interface User {
+  nombre: string;
+  telefono: string;
   email: string;
-  startTime: string;
-  endTime?: string;
-  score?: number;
-  device: string;
-  browser: string;
+  edad: string;
+  puntaje: number;
 }
 
-interface Stats {
+interface AnalyticsData {
   totalUsers: number;
   totalGames: number;
   avgScore: number;
   maxScore: number;
-  deviceStats: Record<string, number>;
-  browserStats: Record<string, number>;
   topPlayers: Player[];
-  hourlyActivity: Record<number, number>;
-  recentSessions: Session[];
-  recentEvents: Array<{ event: string; timestamp: string; data?: Record<string, unknown> }>;
+  users: User[];
+  recentGames: User[];
 }
 
 export default function AnalyticsPage() {
-  const [stats, setStats] = useState<Stats | null>(null);
+  const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Cargar estadísticas
-    const loadStats = () => {
-      const data = analytics.getStats();
-      setStats(data);
-      setLoading(false);
+    // Función para cargar datos desde la API
+    const fetchAnalytics = async () => {
+      try {
+        const response = await fetch('/api/analytics', {
+          cache: 'no-store'
+        });
+        
+        if (!response.ok) {
+          throw new Error('Error al cargar analytics');
+        }
+        
+        const analyticsData = await response.json();
+        setData(analyticsData);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching analytics:', err);
+        setError('Error al cargar los datos. Por favor, recarga la página.');
+      } finally {
+        setLoading(false);
+      }
     };
 
-    loadStats();
+    // Cargar datos inicialmente
+    fetchAnalytics();
     
-    // Actualizar cada 5 segundos
-    const interval = setInterval(loadStats, 5000);
+    // Actualizar cada 10 segundos
+    const interval = setInterval(fetchAnalytics, 10000);
     
     return () => clearInterval(interval);
   }, []);
 
-  if (loading || !stats) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-        <div className="text-xl">Cargando analytics...</div>
+        <div className="text-xl">Cargando analytics desde Google Sheets...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-xl text-red-400 mb-4">{error}</div>
+          <button 
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700"
+          >
+            Reintentar
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+        <div className="text-xl">No hay datos disponibles</div>
       </div>
     );
   }
@@ -67,7 +102,7 @@ export default function AnalyticsPage() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">📊 Analytics Dashboard</h1>
-        <p className="text-gray-400">Flappy Plane - Métricas en Tiempo Real</p>
+        <p className="text-gray-400">Flappy Plane - Datos en Tiempo Real desde Google Sheets</p>
         <div className="mt-2 text-sm text-gray-500">
           Última actualización: {new Date().toLocaleString('es-CL')}
         </div>
@@ -76,172 +111,174 @@ export default function AnalyticsPage() {
       {/* Métricas principales */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <div className="bg-gray-800 rounded-lg p-6">
-          <div className="text-gray-400 text-sm mb-2">Total Usuarios</div>
-          <div className="text-3xl font-bold text-blue-400">{stats.totalUsers}</div>
+          <div className="text-gray-400 text-sm mb-2">Total Usuarios Registrados</div>
+          <div className="text-3xl font-bold text-blue-400">{data.totalUsers}</div>
         </div>
         
         <div className="bg-gray-800 rounded-lg p-6">
-          <div className="text-gray-400 text-sm mb-2">Partidas Jugadas</div>
-          <div className="text-3xl font-bold text-green-400">{stats.totalGames}</div>
+          <div className="text-gray-400 text-sm mb-2">Usuarios con Puntaje</div>
+          <div className="text-3xl font-bold text-green-400">{data.totalGames}</div>
         </div>
         
         <div className="bg-gray-800 rounded-lg p-6">
           <div className="text-gray-400 text-sm mb-2">Puntuación Promedio</div>
-          <div className="text-3xl font-bold text-yellow-400">{stats.avgScore}</div>
+          <div className="text-3xl font-bold text-yellow-400">{data.avgScore}</div>
         </div>
         
         <div className="bg-gray-800 rounded-lg p-6">
           <div className="text-gray-400 text-sm mb-2">Puntuación Máxima</div>
-          <div className="text-3xl font-bold text-red-400">{stats.maxScore}</div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        {/* Dispositivos */}
-        <div className="bg-gray-800 rounded-lg p-6">
-          <h3 className="text-xl font-semibold mb-4">📱 Dispositivos</h3>
-          <div className="space-y-3">
-            {Object.entries(stats.deviceStats).map(([device, count]) => (
-              <div key={device} className="flex justify-between items-center">
-                <span className="text-gray-300">{device}</span>
-                <div className="flex items-center gap-2">
-                  <div className="bg-gray-700 rounded-full h-2 w-32">
-                    <div 
-                      className="bg-blue-500 h-2 rounded-full"
-                      style={{ width: `${(count as number / stats.totalGames) * 100}%` }}
-                    />
-                  </div>
-                  <span className="text-sm text-gray-400 w-12 text-right">{count}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Navegadores */}
-        <div className="bg-gray-800 rounded-lg p-6">
-          <h3 className="text-xl font-semibold mb-4">🌐 Navegadores</h3>
-          <div className="space-y-3">
-            {Object.entries(stats.browserStats).map(([browser, count]) => (
-              <div key={browser} className="flex justify-between items-center">
-                <span className="text-gray-300">{browser}</span>
-                <div className="flex items-center gap-2">
-                  <div className="bg-gray-700 rounded-full h-2 w-32">
-                    <div 
-                      className="bg-green-500 h-2 rounded-full"
-                      style={{ width: `${(count as number / stats.totalGames) * 100}%` }}
-                    />
-                  </div>
-                  <span className="text-sm text-gray-400 w-12 text-right">{count}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+          <div className="text-3xl font-bold text-red-400">{data.maxScore}</div>
         </div>
       </div>
 
       {/* Top 10 Jugadores */}
-      <div className="bg-gray-800 rounded-lg p-6 mb-8">
-        <h3 className="text-xl font-semibold mb-4">🏆 Top 10 Jugadores</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-gray-700">
-                <th className="text-left py-2 px-4">#</th>
-                <th className="text-left py-2 px-4">Email</th>
-                <th className="text-right py-2 px-4">Mejor Puntuación</th>
-                <th className="text-right py-2 px-4">Partidas</th>
-                <th className="text-right py-2 px-4">Promedio</th>
-              </tr>
-            </thead>
-            <tbody>
-              {stats.topPlayers.map((player, index) => (
-                <tr key={player.email} className="border-b border-gray-700">
-                  <td className="py-2 px-4">
-                    {index === 0 && '🥇'}
-                    {index === 1 && '🥈'}
-                    {index === 2 && '🥉'}
-                    {index > 2 && (index + 1)}
-                  </td>
-                  <td className="py-2 px-4 text-gray-300">
-                    {player.email.substring(0, 3)}***{player.email.substring(player.email.indexOf('@'))}
-                  </td>
-                  <td className="text-right py-2 px-4 font-bold text-yellow-400">
-                    {player.bestScore}
-                  </td>
-                  <td className="text-right py-2 px-4 text-gray-400">
-                    {player.gamesPlayed}
-                  </td>
-                  <td className="text-right py-2 px-4 text-gray-400">
-                    {player.avgScore}
-                  </td>
+      {data.topPlayers && data.topPlayers.length > 0 && (
+        <div className="bg-gray-800 rounded-lg p-6 mb-8">
+          <h3 className="text-xl font-semibold mb-4">🏆 Top 10 Jugadores</h3>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-700">
+                  <th className="text-left py-2 px-4">#</th>
+                  <th className="text-left py-2 px-4">Nombre</th>
+                  <th className="text-left py-2 px-4">Email</th>
+                  <th className="text-right py-2 px-4">Mejor Puntuación</th>
+                  <th className="text-center py-2 px-4">Edad</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {data.topPlayers.map((player, index) => (
+                  <tr key={index} className="border-b border-gray-700">
+                    <td className="py-2 px-4">
+                      {index === 0 && '🥇'}
+                      {index === 1 && '🥈'}
+                      {index === 2 && '🥉'}
+                      {index > 2 && (index + 1)}
+                    </td>
+                    <td className="py-2 px-4 text-gray-300">
+                      {player.nombre || 'Sin nombre'}
+                    </td>
+                    <td className="py-2 px-4 text-gray-300">
+                      {player.email.substring(0, 3)}***{player.email.substring(player.email.indexOf('@'))}
+                    </td>
+                    <td className="text-right py-2 px-4 font-bold text-yellow-400">
+                      {player.bestScore}
+                    </td>
+                    <td className="text-center py-2 px-4 text-gray-400">
+                      {player.edad || '-'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Actividad por Hora */}
+      {/* Todos los Usuarios Registrados */}
       <div className="bg-gray-800 rounded-lg p-6 mb-8">
-        <h3 className="text-xl font-semibold mb-4">⏰ Actividad por Hora</h3>
-        <div className="grid grid-cols-12 gap-1">
-          {Array.from({ length: 24 }, (_, hour) => {
-            const count = stats.hourlyActivity[hour] || 0;
-            const maxCount = Math.max(...Object.values(stats.hourlyActivity as { [key: number]: number }));
-            const height = maxCount > 0 ? (count / maxCount) * 100 : 0;
-            
-            return (
-              <div key={hour} className="text-center">
-                <div className="relative h-20 flex items-end justify-center">
-                  <div 
-                    className="bg-blue-500 w-full rounded-t transition-all hover:bg-blue-400"
-                    style={{ height: `${height}%` }}
-                    title={`${hour}:00 - ${count} partidas`}
-                  />
-                </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  {hour % 3 === 0 ? hour : ''}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        <div className="text-center text-xs text-gray-500 mt-2">Hora del día (0-23)</div>
-      </div>
-
-      {/* Sesiones Recientes */}
-      <div className="bg-gray-800 rounded-lg p-6">
-        <h3 className="text-xl font-semibold mb-4">🎮 Sesiones Recientes</h3>
+        <h3 className="text-xl font-semibold mb-4">👥 Usuarios Registrados ({data.totalUsers})</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-700">
-                <th className="text-left py-2 px-4">Hora</th>
-                <th className="text-left py-2 px-4">Usuario</th>
-                <th className="text-left py-2 px-4">Dispositivo</th>
-                <th className="text-right py-2 px-4">Puntuación</th>
+                <th className="text-left py-2 px-4">Nombre</th>
+                <th className="text-left py-2 px-4">Email</th>
+                <th className="text-left py-2 px-4">Teléfono</th>
+                <th className="text-center py-2 px-4">Edad</th>
+                <th className="text-right py-2 px-4">Puntaje</th>
               </tr>
             </thead>
             <tbody>
-              {stats.recentSessions.slice(0, 10).map((session, index) => (
+              {data.users && data.users.slice(0, 50).map((user, index) => (
                 <tr key={index} className="border-b border-gray-700">
-                  <td className="py-2 px-4 text-gray-400">
-                    {new Date(session.startTime).toLocaleTimeString('es-CL')}
+                  <td className="py-2 px-4 text-gray-300">
+                    {user.nombre || 'Sin nombre'}
                   </td>
                   <td className="py-2 px-4 text-gray-300">
-                    {session.email.substring(0, 3)}***
+                    {user.email.substring(0, 3)}***{user.email.substring(user.email.indexOf('@'))}
                   </td>
                   <td className="py-2 px-4 text-gray-400">
-                    {session.device} / {session.browser}
+                    {user.telefono ? `${user.telefono.substring(0, 3)}****` : '-'}
+                  </td>
+                  <td className="text-center py-2 px-4 text-gray-400">
+                    {user.edad || '-'}
                   </td>
                   <td className="text-right py-2 px-4 font-mono">
-                    {session.score || '-'}
+                    {user.puntaje || '-'}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          {data.users && data.users.length > 50 && (
+            <div className="text-center mt-4 text-gray-500">
+              Mostrando los primeros 50 usuarios de {data.users.length} totales
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Estadísticas de Resumen */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-gray-800 rounded-lg p-6">
+          <h4 className="text-lg font-semibold mb-3">📈 Estadísticas</h4>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-gray-400">Tasa de Juego:</span>
+              <span className="text-white">
+                {data.totalUsers > 0 
+                  ? `${Math.round((data.totalGames / data.totalUsers) * 100)}%`
+                  : '0%'}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-400">Usuarios sin puntaje:</span>
+              <span className="text-white">{data.totalUsers - data.totalGames}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gray-800 rounded-lg p-6">
+          <h4 className="text-lg font-semibold mb-3">🎯 Rangos de Puntaje</h4>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-gray-400">0-50 puntos:</span>
+              <span className="text-white">
+                {data.users ? data.users.filter(u => u.puntaje > 0 && u.puntaje <= 50).length : 0}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-400">51-100 puntos:</span>
+              <span className="text-white">
+                {data.users ? data.users.filter(u => u.puntaje > 50 && u.puntaje <= 100).length : 0}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-400">100+ puntos:</span>
+              <span className="text-white">
+                {data.users ? data.users.filter(u => u.puntaje > 100).length : 0}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gray-800 rounded-lg p-6">
+          <h4 className="text-lg font-semibold mb-3">ℹ️ Información</h4>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-gray-400">Fuente de datos:</span>
+              <span className="text-green-400">Google Sheets</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-400">Actualización:</span>
+              <span className="text-white">Cada 10 seg</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-400">Estado:</span>
+              <span className="text-green-400">En línea</span>
+            </div>
+          </div>
         </div>
       </div>
 
