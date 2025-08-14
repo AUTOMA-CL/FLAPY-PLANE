@@ -92,21 +92,104 @@ export default function HomePage() {
     }
   };
 
-  // Función para guardar en cola de pendientes
+  // Función para guardar en cola de pendientes con protección contra condiciones de carrera
   const guardarEnColaPendiente = (userData: User) => {
-    const pendientes = JSON.parse(localStorage.getItem('registrosPendientes') || '[]');
-    pendientes.push({
-      ...userData,
-      timestamp: Date.now(),
-      intentos: 0
-    });
-    localStorage.setItem('registrosPendientes', JSON.stringify(pendientes));
-    console.log('📋 Registro guardado en cola para reintento posterior');
+    // Implementar un simple mecanismo de lock usando un timestamp
+    const lockKey = 'registrosPendientes_lock';
+    const maxLockTime = 1000; // 1 segundo máximo de lock
+    let retries = 0;
+    const maxRetries = 10;
+    
+    // Función auxiliar para intentar adquirir el lock
+    const tryAcquireLock = (): boolean => {
+      const now = Date.now();
+      const existingLock = localStorage.getItem(lockKey);
+      
+      if (existingLock) {
+        const lockTime = parseInt(existingLock);
+        // Si el lock es muy viejo (más de 1 segundo), lo consideramos expirado
+        if (now - lockTime > maxLockTime) {
+          localStorage.setItem(lockKey, now.toString());
+          return true;
+        }
+        return false;
+      }
+      
+      localStorage.setItem(lockKey, now.toString());
+      return true;
+    };
+    
+    // Intentar adquirir el lock con reintentos
+    while (!tryAcquireLock() && retries < maxRetries) {
+      retries++;
+      // Esperar un tiempo aleatorio corto (10-50ms)
+      const waitTime = 10 + Math.random() * 40;
+      const start = Date.now();
+      while (Date.now() - start < waitTime) {
+        // Busy wait
+      }
+    }
+    
+    try {
+      // Leer, modificar y escribir de forma atómica
+      const pendientes = JSON.parse(localStorage.getItem('registrosPendientes') || '[]');
+      pendientes.push({
+        ...userData,
+        timestamp: Date.now(),
+        intentos: 0
+      });
+      localStorage.setItem('registrosPendientes', JSON.stringify(pendientes));
+      console.log('📋 Registro guardado en cola para reintento posterior');
+    } finally {
+      // Siempre liberar el lock
+      localStorage.removeItem(lockKey);
+    }
   };
 
-  // Función para procesar registros pendientes en segundo plano
+  // Función para procesar registros pendientes en segundo plano con protección contra condiciones de carrera
   const procesarRegistrosPendientes = useCallback(async () => {
-    const pendientes = JSON.parse(localStorage.getItem('registrosPendientes') || '[]');
+    // Usar el mismo mecanismo de lock
+    const lockKey = 'registrosPendientes_lock';
+    const maxLockTime = 1000;
+    let retries = 0;
+    const maxRetries = 10;
+    
+    // Intentar adquirir el lock
+    const tryAcquireLock = (): boolean => {
+      const now = Date.now();
+      const existingLock = localStorage.getItem(lockKey);
+      
+      if (existingLock) {
+        const lockTime = parseInt(existingLock);
+        if (now - lockTime > maxLockTime) {
+          localStorage.setItem(lockKey, now.toString());
+          return true;
+        }
+        return false;
+      }
+      
+      localStorage.setItem(lockKey, now.toString());
+      return true;
+    };
+    
+    // Intentar adquirir el lock con reintentos
+    while (!tryAcquireLock() && retries < maxRetries) {
+      retries++;
+      await wait(10 + Math.random() * 40);
+    }
+    
+    if (retries >= maxRetries) {
+      console.log('⚠️ No se pudo adquirir lock para procesar pendientes');
+      return;
+    }
+    
+    let pendientes;
+    try {
+      pendientes = JSON.parse(localStorage.getItem('registrosPendientes') || '[]');
+    } finally {
+      // Liberar el lock después de leer
+      localStorage.removeItem(lockKey);
+    }
     
     if (pendientes.length === 0) return;
     
@@ -152,8 +235,18 @@ export default function HomePage() {
       }
     }
     
-    // Actualizar localStorage con los que siguen pendientes
-    localStorage.setItem('registrosPendientes', JSON.stringify(pendientesActualizados));
+    // Actualizar localStorage con los que siguen pendientes (con lock)
+    retries = 0;
+    while (!tryAcquireLock() && retries < maxRetries) {
+      retries++;
+      await wait(10 + Math.random() * 40);
+    }
+    
+    try {
+      localStorage.setItem('registrosPendientes', JSON.stringify(pendientesActualizados));
+    } finally {
+      localStorage.removeItem(lockKey);
+    }
     
     if (pendientesActualizados.length > 0) {
       console.log(`⏳ Quedan ${pendientesActualizados.length} registros pendientes`);

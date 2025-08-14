@@ -1,5 +1,31 @@
 # 📋 CHANGELOG - Flappy Plane Game
 
+## Versión 2.2.4 (2025-01-14)
+### 🔧 Fix de Estabilidad #4: Protección contra Condiciones de Carrera en localStorage
+
+### 🐛 Problema Resuelto
+- **Condición de carrera**: Si 2 tablets escribían en localStorage simultáneamente, una podía sobrescribir a la otra
+- **Impacto**: Pérdida potencial de registros pendientes con 4 tablets simultáneas
+- **Síntomas**: Registros que desaparecían misteriosamente de la cola
+
+### ✅ Solución Implementada
+- Sistema de lock/mutex usando timestamps en localStorage
+- Reintentos con backoff aleatorio (10-50ms)
+- Locks con expiración automática (1 segundo)
+- Protección en lectura y escritura de registros pendientes
+
+### 📊 Mejoras
+- Integridad: No más pérdida de datos por escrituras simultáneas
+- Robustez: Sistema a prueba de fallos con 4+ tablets
+- Confiabilidad: Garantía de que todos los registros se preservan
+
+### ⚠️ Impacto para el Usuario
+- **SIN CAMBIOS VISIBLES** en el juego
+- Mayor confiabilidad con múltiples tablets
+- Garantía de que ningún registro se pierde
+
+---
+
 ## Versión 2.2.3 (2025-01-14)
 ### 🔧 Fix de Estabilidad #3: Limpieza Correcta de Timeouts
 
