@@ -307,12 +307,15 @@ export default function HomePage() {
     params.append('email', formData.email);
     params.append('edad', formData.age);
 
-    // NAVEGAR AL JUEGO INMEDIATAMENTE
-    router.push('/game');
-    
     // Enviar registro a Google Sheets EN SEGUNDO PLANO
-    // No esperamos la respuesta, el usuario ya está jugando
+    // IMPORTANTE: Iniciar el envío ANTES de navegar
     enviarRegistroEnSegundoPlano(userData, params);
+    
+    // Pequeño delay para asegurar que el envío se inicie
+    await wait(50);
+    
+    // NAVEGAR AL JUEGO
+    router.push('/game');
     
     setIsLoading(false);
   };
