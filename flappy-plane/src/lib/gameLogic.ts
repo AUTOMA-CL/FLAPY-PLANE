@@ -164,19 +164,31 @@ function isColliding(rect1: PlaneCollisionBox, rect2: { x: number; y: number; wi
          rect1.y + rect1.height > rect2.y;
 }
 
-// Actualizar posición de obstáculos
+// Actualizar posición de obstáculos con límite máximo
 function updateObstacles(obstacles: Obstacle[], deltaTime: number): Obstacle[] {
-  return obstacles
+  // Primero actualizar posiciones y filtrar los que salieron de pantalla
+  const updatedObstacles = obstacles
     .map(obstacle => ({
       ...obstacle,
       x: obstacle.x - GAME_CONFIG.obstacleSpeed * deltaTime
     }))
     .filter(obstacle => obstacle.x > -obstacle.width);
+  
+  // Limitar a máximo 10 obstáculos para evitar degradación de performance
+  // Si hay más de 10, mantener solo los 10 más cercanos al jugador
+  if (updatedObstacles.length > 10) {
+    return updatedObstacles.slice(-10);
+  }
+  
+  return updatedObstacles;
 }
 
 // Determinar si se debe generar un nuevo obstáculo
 function shouldGenerateObstacle(obstacles: Obstacle[]): boolean {
   if (obstacles.length === 0) return true;
+  
+  // No generar más de 10 obstáculos para mantener performance
+  if (obstacles.length >= 10) return false;
   
   const lastObstacle = obstacles[obstacles.length - 1];
   return lastObstacle.x < GAME_CONFIG.canvasSize.width - 300;

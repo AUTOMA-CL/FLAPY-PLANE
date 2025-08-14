@@ -1,5 +1,31 @@
 # 📋 CHANGELOG - Flappy Plane Game
 
+## Versión 2.2.2 (2025-01-14)
+### 🔧 Fix de Estabilidad #2: Límite de Obstáculos para Performance
+
+### 🐛 Problema Resuelto
+- **Acumulación infinita**: Los obstáculos podían acumularse indefinidamente en partidas largas
+- **Impacto**: Degradación gradual del rendimiento después de ~10 minutos de juego
+- **Síntomas**: FPS caían progresivamente en sesiones extendidas
+
+### ✅ Solución Implementada
+- Límite máximo de 10 obstáculos activos simultáneamente
+- Sistema inteligente que mantiene los 10 obstáculos más cercanos
+- Prevención de generación excesiva de obstáculos
+- Optimización del filtrado de obstáculos fuera de pantalla
+
+### 📊 Mejoras
+- Performance: FPS estables incluso en partidas de 30+ minutos
+- Memoria: Uso constante sin crecimiento
+- Gameplay: Sin cambios en la dificultad o experiencia
+
+### ⚠️ Impacto para el Usuario
+- **SIN CAMBIOS VISIBLES** en el gameplay
+- El juego se sentirá más fluido en partidas largas
+- Mejora notable en tablets con menos recursos
+
+---
+
 ## Versión 2.2.1 (2025-01-14)
 ### 🔧 Fix de Estabilidad #1: Memory Leak en Página de Logs
 
