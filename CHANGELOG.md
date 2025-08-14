@@ -1,5 +1,20 @@
 # 📋 CHANGELOG - Flappy Plane Game
 
+## Versión 2.0.1 (2025-01-14)
+### ✅ Estado: ESTABLE - Ajuste Visual
+
+### 🎨 Cambios Visuales
+- Aumentado el tamaño del logo FEROUCH en la página de registro al 150% (1.5x)
+- Mejorada la visibilidad del logo sin afectar el layout general
+- Agregado overflow-hidden al contenedor para mantener las dimensiones del recuadro
+
+### 📝 Detalles Técnicos
+- Archivo modificado: `src/app/page.tsx`
+- Aplicado `transform scale-150` al logo
+- Sin cambios en espaciados o dimensiones del formulario
+
+---
+
 ## Versión 2.0.0-stable (2025-01-14)
 ### ✅ Estado: ESTABLE - Producción Ready
 
