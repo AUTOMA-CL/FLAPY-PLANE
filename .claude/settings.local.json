@@ -25,6 +25,7 @@
       "Bash(rm:*)",
       "Bash(git rm:*)"
     ],
-    "deny": []
+    "deny": [],
+    "defaultMode": "acceptEdits"
   }
 }
