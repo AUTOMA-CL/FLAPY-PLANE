@@ -24,10 +24,13 @@ export default function HomePage() {
   // Función para registrar con reintentos automáticos
   const registrarConReintentos = useCallback(async (params: URLSearchParams, intentos = 3): Promise<{ok: boolean, error?: string}> => {
     for (let i = 0; i < intentos; i++) {
+      // Declarar timeoutId fuera del try para poder limpiarlo en finally
+      let timeoutId: NodeJS.Timeout | undefined;
+      
       try {
         // Crear un AbortController para el timeout
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos timeout
+        timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos timeout
 
         const response = await fetch(WEB_APP_URL, {
           method: 'POST',
@@ -37,8 +40,6 @@ export default function HomePage() {
           body: params.toString(),
           signal: controller.signal
         });
-
-        clearTimeout(timeoutId);
         
         if (response.ok) {
           const result = await response.json();
@@ -56,6 +57,11 @@ export default function HomePage() {
         const tiempoEspera = 1000 * Math.pow(2, i);
         console.log(`Esperando ${tiempoEspera}ms antes de reintentar...`);
         await wait(tiempoEspera);
+      } finally {
+        // Siempre limpiar el timeout, incluso si hay error
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
       }
     }
     return { ok: false, error: 'Error después de múltiples intentos' };

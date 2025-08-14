@@ -1,5 +1,31 @@
 # 📋 CHANGELOG - Flappy Plane Game
 
+## Versión 2.2.3 (2025-01-14)
+### 🔧 Fix de Estabilidad #3: Limpieza Correcta de Timeouts
+
+### 🐛 Problema Resuelto
+- **Timeouts sin limpiar**: Si ocurría un error antes del clearTimeout, el timer quedaba activo
+- **Impacto**: Consumo innecesario de recursos y posibles logs de error falsos
+- **Síntomas**: Mensajes de timeout después de respuestas exitosas
+
+### ✅ Solución Implementada
+- Uso de bloques `try-finally` para garantizar limpieza
+- El timeout siempre se limpia, incluso si hay errores
+- Declaración de timeoutId fuera del try para acceso en finally
+- Aplicado en registro de usuarios y actualización de scores
+
+### 📊 Mejoras
+- Recursos: No más timers huérfanos
+- Logs: Eliminados mensajes de error falsos
+- Estabilidad: Mejor manejo de recursos del sistema
+
+### ⚠️ Impacto para el Usuario
+- **SIN CAMBIOS VISIBLES** en el juego
+- Menos consumo de recursos del sistema
+- Logs más limpios y precisos
+
+---
+
 ## Versión 2.2.2 (2025-01-14)
 ### 🔧 Fix de Estabilidad #2: Límite de Obstáculos para Performance
 

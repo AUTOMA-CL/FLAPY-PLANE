@@ -17,6 +17,9 @@ const updateScoreConReintentos = async (email: string, puntaje: number, intentos
   await wait(Math.random() * 500);
   
   for (let i = 0; i < intentos; i++) {
+    // Declarar timeoutId fuera del try para poder limpiarlo en finally
+    let timeoutId: NodeJS.Timeout | undefined;
+    
     try {
       const params = new URLSearchParams();
       params.append('action', 'updateScore');
@@ -25,7 +28,7 @@ const updateScoreConReintentos = async (email: string, puntaje: number, intentos
 
       // Crear un AbortController para el timeout
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos timeout
+      timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos timeout
 
       const response = await fetch(WEB_APP_URL, {
         method: 'POST',
@@ -35,8 +38,6 @@ const updateScoreConReintentos = async (email: string, puntaje: number, intentos
         body: params.toString(),
         signal: controller.signal
       });
-
-      clearTimeout(timeoutId);
 
       if (response.ok) {
         const result = await response.json();
@@ -55,6 +56,11 @@ const updateScoreConReintentos = async (email: string, puntaje: number, intentos
       const tiempoEspera = 1000 * Math.pow(2, i);
       console.log(`Esperando ${tiempoEspera}ms antes de reintentar actualización de score...`);
       await wait(tiempoEspera);
+    } finally {
+      // Siempre limpiar el timeout, incluso si hay error
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     }
   }
   
