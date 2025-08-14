@@ -1,5 +1,31 @@
 # 📋 CHANGELOG - Flappy Plane Game
 
+## Versión 2.2.6 (2025-01-14)
+### 🔧 Fix de Estabilidad #6: Canvas Resize con Debounce
+
+### 🐛 Problema Resuelto
+- **Resize sin throttling**: Múltiples eventos de resize causaban lag al rotar tablet
+- **Impacto**: Juego se congelaba momentáneamente durante rotación
+- **Síntomas**: Lag o pausas al cambiar orientación del dispositivo
+
+### ✅ Solución Implementada
+- Agregado debounce de 100ms al resize del canvas
+- Solo se redimensiona después de que termine la rotación
+- Limpieza correcta del timeout en cleanup
+- Evita múltiples recálculos durante la animación de rotación
+
+### 📊 Mejoras
+- Performance: Sin lags durante rotación de tablet
+- Fluidez: Transición suave al cambiar orientación
+- Recursos: Menos cálculos innecesarios
+
+### ⚠️ Impacto para el Usuario
+- **MEJORA AL ROTAR**: Si rotas la tablet, el juego se ajusta más suavemente
+- Sin congelamientos durante el cambio de orientación
+- Experiencia más fluida en dispositivos móviles
+
+---
+
 ## Versión 2.2.5 (2025-01-14)
 ### 🔧 Fix de Estabilidad #5: Navegación Optimizada con Router de Next.js
 

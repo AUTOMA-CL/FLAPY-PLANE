@@ -420,8 +420,23 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       console.log('Canvas resized:', viewportWidth, 'x', viewportHeight, 'DPR:', dpr);
     };
 
+    // Crear versión con debounce para evitar múltiples resize durante rotación
+    let resizeTimeout: NodeJS.Timeout;
+    const debouncedUpdateCanvasSize = () => {
+      // Limpiar timeout anterior si existe
+      clearTimeout(resizeTimeout);
+      
+      // Esperar 100ms después del último evento de resize
+      resizeTimeout = setTimeout(() => {
+        updateCanvasSize();
+      }, 100);
+    };
+
+    // Actualizar tamaño inicial
     updateCanvasSize();
-    window.addEventListener('resize', updateCanvasSize);
+    
+    // Usar versión con debounce para el evento resize
+    window.addEventListener('resize', debouncedUpdateCanvasSize);
 
     // Eventos de interacción
     const handleTouch = (e: TouchEvent) => {
@@ -455,7 +470,10 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
-      window.removeEventListener('resize', updateCanvasSize);
+      // Limpiar timeout de resize si existe
+      clearTimeout(resizeTimeout);
+      // Remover el listener con debounce
+      window.removeEventListener('resize', debouncedUpdateCanvasSize);
       canvas.removeEventListener('touchstart', handleTouch);
       canvas.removeEventListener('click', handleClick);
       document.removeEventListener('keydown', handleKeyPress);
