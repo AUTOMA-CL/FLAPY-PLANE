@@ -11,13 +11,49 @@ interface LogEntry {
 export default function LogsPage() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    
+    const fetchLogs = async () => {
+      // Solo continuar si el componente está activo
+      if (!isActive) return;
+      
+      try {
+        const response = await fetch('/api/logs');
+        const result = await response.json();
+        if (result.success) {
+          setLogs(result.logs);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching logs:', error);
+        setLoading(false);
+        // En caso de error, detener el auto-refresh para evitar spam
+        if (interval) {
+          clearInterval(interval);
+          interval = null;
+        }
+      }
+    };
+
+    // Fetch inicial
     fetchLogs();
-    // Refrescar cada 2 segundos
-    const interval = setInterval(fetchLogs, 2000);
-    return () => clearInterval(interval);
-  }, []);
+    
+    // Solo iniciar el interval si el componente está activo
+    if (isActive) {
+      interval = setInterval(fetchLogs, 2000);
+    }
+
+    // Cleanup function
+    return () => {
+      setIsActive(false);
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [isActive]);
 
   const fetchLogs = async () => {
     try {

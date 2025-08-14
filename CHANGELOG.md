@@ -1,5 +1,31 @@
 # 📋 CHANGELOG - Flappy Plane Game
 
+## Versión 2.2.1 (2025-01-14)
+### 🔧 Fix de Estabilidad #1: Memory Leak en Página de Logs
+
+### 🐛 Problema Resuelto
+- **Memory Leak**: El `setInterval` en la página de logs no se limpiaba correctamente en caso de error
+- **Impacto**: Consumo de memoria indefinido si se dejaba abierta la página
+- **Síntomas**: Tablets lentas después de horas de uso
+
+### ✅ Solución Implementada
+- Agregado flag `isActive` para controlar el ciclo de vida del componente
+- El interval ahora se detiene automáticamente en caso de error
+- Cleanup mejorado al desmontar el componente
+- Prevención de múltiples fetch simultáneos
+
+### 📊 Mejoras
+- Memoria: No más acumulación de timers
+- Performance: Detención automática en caso de fallo
+- Estabilidad: Mejor manejo del ciclo de vida
+
+### ⚠️ Impacto para el Usuario
+- **SIN CAMBIOS VISIBLES** en el juego principal
+- Solo afecta la página de logs (ruta `/logs`)
+- No requiere cambios en configuración
+
+---
+
 ## Versión 2.2.0 (2025-01-14)
 ### 🚀 Estado: PRODUCCIÓN OPTIMIZADA - Backup de Seguridad
 
