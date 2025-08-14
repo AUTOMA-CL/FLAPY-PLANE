@@ -22,10 +22,8 @@
       "Bash(curl:*)",
       "Bash(dir:*)",
       "Bash(git remote set-url:*)",
-      "Bash(rm:*)",
-      "Bash(git rm:*)"
+      "Bash(rm:*)"
     ],
-    "deny": [],
-    "defaultMode": "acceptEdits"
+    "deny": []
   }
 }
