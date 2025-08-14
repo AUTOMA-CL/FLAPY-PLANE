@@ -309,10 +309,14 @@ export default function HomePage() {
 
     // Enviar registro a Google Sheets EN SEGUNDO PLANO
     // IMPORTANTE: Iniciar el envío ANTES de navegar
-    enviarRegistroEnSegundoPlano(userData, params);
+    // Usamos setTimeout para garantizar que el envío continúe incluso después de navegar
+    setTimeout(() => {
+      enviarRegistroEnSegundoPlano(userData, params);
+    }, 0);
     
-    // Pequeño delay para asegurar que el envío se inicie
-    await wait(50);
+    // Delay más largo para asegurar que el proceso asíncrono esté establecido
+    // y el event loop haya procesado el setTimeout
+    await wait(100);
     
     // NAVEGAR AL JUEGO
     router.push('/game');

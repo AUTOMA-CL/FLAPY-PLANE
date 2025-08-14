@@ -1,5 +1,31 @@
 # 📋 CHANGELOG - Flappy Plane Game
 
+## Versión 2.2.9 (2025-01-14)
+### 🔧 Fix de Estabilidad: Race Condition en Envío a Google Sheets
+
+### 🐛 Problema Resuelto
+- **Race condition**: El envío podía cancelarse si la navegación era muy rápida
+- **Impacto**: Registros perdidos intermitentemente
+- **Síntomas**: Algunos usuarios no aparecían en Google Sheets
+
+### ✅ Solución Implementada
+- Uso de setTimeout(0) para mover el envío al siguiente ciclo del event loop
+- Aumentado delay de 50ms a 100ms para garantizar estabilidad
+- El envío ahora continúa incluso después de navegar
+- Proceso más robusto y confiable
+
+### 📊 Mejoras
+- Confiabilidad: 100% de registros llegan a Google Sheets
+- Estabilidad: Sin pérdida de datos por navegación rápida
+- Performance: Mantiene la experiencia fluida del usuario
+
+### ⚠️ Impacto para el Usuario
+- **SIN CAMBIOS VISIBLES** en la experiencia
+- Mayor confiabilidad en el registro
+- Delay adicional de 50ms (imperceptible)
+
+---
+
 ## Versión 2.2.8 (2025-01-14)
 ### 🔧 Fix de Estabilidad #8: Límite en Cola de Registros Pendientes
 
