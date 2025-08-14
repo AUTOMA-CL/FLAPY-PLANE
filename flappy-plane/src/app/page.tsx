@@ -58,11 +58,11 @@ export default function HomePage() {
         </div>
 
         {/* Logo FEROUCH */}
-        <div className="flex justify-center py-8 px-0 bg-gray-50">
+        <div className="flex justify-center py-8 px-0 bg-gray-50 overflow-hidden">
           <img
             src="/images/FE_NUEVOLOGO(avion)_AZUL.png?v=3"
             alt="FEROUCH"
-            className="animate-pulse w-full"
+            className="animate-pulse w-full transform scale-150"
             style={{
               maxWidth: '600px',
               height: 'auto'
