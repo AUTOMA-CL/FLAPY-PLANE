@@ -17,11 +17,6 @@ export default function HomePage() {
   
   // URL de Google Apps Script
   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwYMYUihl9oQ2xZpW5CJJ0Xyfm3bsN6E2C5yo3tOBQK4U7slQ2RDRiHiwPvA_bw7akVzg/exec";
-  
-  // Al cargar la página, intentar procesar registros pendientes
-  useEffect(() => {
-    procesarRegistrosPendientes();
-  }, [procesarRegistrosPendientes]);
 
   // Función helper para esperar
   const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -160,6 +155,11 @@ export default function HomePage() {
       console.log('✅ Todos los registros pendientes procesados');
     }
   }, [registrarConReintentos]);
+
+  // Al cargar la página, intentar procesar registros pendientes
+  useEffect(() => {
+    procesarRegistrosPendientes();
+  }, [procesarRegistrosPendientes]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
