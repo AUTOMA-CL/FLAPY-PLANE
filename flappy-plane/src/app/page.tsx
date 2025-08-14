@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { RegistrationFormData, APIResponse, User } from '@/types';
+import { RegistrationFormData, User } from '@/types';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,13 +21,13 @@ export default function HomePage() {
   // Al cargar la página, intentar procesar registros pendientes
   useEffect(() => {
     procesarRegistrosPendientes();
-  }, []);
+  }, [procesarRegistrosPendientes]);
 
   // Función helper para esperar
   const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
   // Función para registrar con reintentos automáticos
-  const registrarConReintentos = async (params: URLSearchParams, intentos = 3): Promise<any> => {
+  const registrarConReintentos = useCallback(async (params: URLSearchParams, intentos = 3): Promise<{ok: boolean, error?: string}> => {
     for (let i = 0; i < intentos; i++) {
       try {
         // Crear un AbortController para el timeout
@@ -49,8 +49,8 @@ export default function HomePage() {
           const result = await response.json();
           return result;
         }
-      } catch (error: any) {
-        console.log(`Intento ${i + 1} falló:`, error.message);
+      } catch (error) {
+        console.log(`Intento ${i + 1} falló:`, error instanceof Error ? error.message : 'Error desconocido');
         
         // Si es el último intento, lanzar el error
         if (i === intentos - 1) {
@@ -63,7 +63,8 @@ export default function HomePage() {
         await wait(tiempoEspera);
       }
     }
-  };
+    return { ok: false, error: 'Error después de múltiples intentos' };
+  }, []);
 
   // Función para enviar registro en segundo plano
   const enviarRegistroEnSegundoPlano = async (userData: User, params: URLSearchParams) => {
@@ -103,7 +104,7 @@ export default function HomePage() {
   };
 
   // Función para procesar registros pendientes en segundo plano
-  const procesarRegistrosPendientes = async () => {
+  const procesarRegistrosPendientes = useCallback(async () => {
     const pendientes = JSON.parse(localStorage.getItem('registrosPendientes') || '[]');
     
     if (pendientes.length === 0) return;
@@ -141,7 +142,7 @@ export default function HomePage() {
             pendientesActualizados.push(registro);
           }
         }
-      } catch (error) {
+      } catch {
         registro.intentos++;
         registro.timestamp = Date.now();
         if (registro.intentos < 5) {
@@ -158,7 +159,7 @@ export default function HomePage() {
     } else {
       console.log('✅ Todos los registros pendientes procesados');
     }
-  };
+  }, [registrarConReintentos]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

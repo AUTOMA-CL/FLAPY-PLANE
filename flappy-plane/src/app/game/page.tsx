@@ -42,8 +42,8 @@ const updateScoreConReintentos = async (email: string, puntaje: number, intentos
         const result = await response.json();
         return result;
       }
-    } catch (error: any) {
-      console.log(`Intento ${i + 1} de actualizar score falló:`, error.message);
+    } catch (error) {
+      console.log(`Intento ${i + 1} de actualizar score falló:`, error instanceof Error ? error.message : 'Error desconocido');
       
       // Si es el último intento, retornar error
       if (i === intentos - 1) {
