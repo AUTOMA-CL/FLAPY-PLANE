@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de Iconos - Avión</title>
+</head>
+<body style="background: #f0f0f0; padding: 20px; font-family: Arial;">
+    <h1>Generador de Iconos del Avión</h1>
+    <p>Abre esta página en Chrome, los iconos se generan automáticamente. Haz clic derecho → Guardar imagen para cada uno.</p>
+    
+    <div id="icons"></div>
+
+    <script>
+        const sizes = [16, 32, 48, 72, 96, 128, 144, 152, 192, 384, 512, 1024];
+        const container = document.getElementById('icons');
+        
+        sizes.forEach(size => {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Fondo circular azul oscuro
+            ctx.fillStyle = '#1e3a8a';
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Dibujar el avión hidroavión
+            ctx.fillStyle = 'white';
+            ctx.save();
+            ctx.translate(size/2, size/2);
+            
+            const scale = size / 200;
+            ctx.scale(scale, scale);
+            
+            // Fuselaje del avión
+            ctx.beginPath();
+            ctx.ellipse(0, -10, 60, 20, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Ala principal
+            ctx.fillRect(-80, -15, 160, 10);
+            
+            // Flotadores
+            ctx.beginPath();
+            ctx.ellipse(-30, 25, 25, 10, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(30, 25, 25, 10, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Soportes de flotadores
+            ctx.fillRect(-32, 5, 4, 20);
+            ctx.fillRect(28, 5, 4, 20);
+            
+            // Cola vertical
+            ctx.beginPath();
+            ctx.moveTo(-35, -10);
+            ctx.lineTo(-35, -30);
+            ctx.lineTo(-20, -30);
+            ctx.lineTo(-20, -10);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Hélice
+            ctx.beginPath();
+            ctx.arc(55, -10, 6, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Aspas de la hélice
+            ctx.save();
+            ctx.translate(55, -10);
+            ctx.rotate(Math.PI / 4);
+            ctx.fillRect(-2, -20, 4, 40);
+            ctx.fillRect(-20, -2, 40, 4);
+            ctx.restore();
+            
+            ctx.restore();
+            
+            // Crear contenedor para el icono
+            const div = document.createElement('div');
+            div.style.margin = '20px';
+            div.style.padding = '10px';
+            div.style.background = 'white';
+            div.style.borderRadius = '8px';
+            div.style.display = 'inline-block';
+            div.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            
+            const label = document.createElement('p');
+            label.textContent = `icon-${size}.png (${size}x${size})`;
+            label.style.margin = '0 0 10px 0';
+            label.style.fontSize = '14px';
+            label.style.color = '#333';
+            
+            const img = document.createElement('img');
+            img.src = canvas.toDataURL('image/png');
+            img.style.display = 'block';
+            img.style.border = '1px solid #ddd';
+            img.style.imageRendering = 'pixelated';
+            img.style.maxWidth = '128px';
+            img.style.maxHeight = '128px';
+            
+            const downloadBtn = document.createElement('a');
+            downloadBtn.href = canvas.toDataURL('image/png');
+            downloadBtn.download = `icon-${size}.png`;
+            downloadBtn.textContent = 'Descargar';
+            downloadBtn.style.display = 'inline-block';
+            downloadBtn.style.marginTop = '10px';
+            downloadBtn.style.padding = '5px 10px';
+            downloadBtn.style.background = '#1e3a8a';
+            downloadBtn.style.color = 'white';
+            downloadBtn.style.textDecoration = 'none';
+            downloadBtn.style.borderRadius = '4px';
+            
+            div.appendChild(label);
+            div.appendChild(img);
+            div.appendChild(downloadBtn);
+            container.appendChild(div);
+        });
+        
+        // Generar favicon.ico data URL
+        const faviconCanvas = document.createElement('canvas');
+        faviconCanvas.width = 32;
+        faviconCanvas.height = 32;
+        const fctx = faviconCanvas.getContext('2d');
+        
+        // Dibujar favicon
+        fctx.fillStyle = '#1e3a8a';
+        fctx.beginPath();
+        fctx.arc(16, 16, 16, 0, Math.PI * 2);
+        fctx.fill();
+        
+        fctx.fillStyle = 'white';
+        fctx.save();
+        fctx.translate(16, 16);
+        fctx.scale(0.16, 0.16);
+        
+        // Mini avión simplificado para favicon
+        fctx.beginPath();
+        fctx.ellipse(0, -10, 60, 20, 0, 0, Math.PI * 2);
+        fctx.fill();
+        fctx.fillRect(-80, -15, 160, 10);
+        fctx.beginPath();
+        fctx.ellipse(-30, 25, 25, 10, 0, 0, Math.PI * 2);
+        fctx.fill();
+        fctx.beginPath();
+        fctx.ellipse(30, 25, 25, 10, 0, 0, Math.PI * 2);
+        fctx.fill();
+        
+        fctx.restore();
+        
+        // Mostrar favicon
+        const faviconDiv = document.createElement('div');
+        faviconDiv.style.margin = '20px';
+        faviconDiv.style.padding = '20px';
+        faviconDiv.style.background = '#fff3cd';
+        faviconDiv.style.border = '2px solid #ffc107';
+        faviconDiv.style.borderRadius = '8px';
+        faviconDiv.innerHTML = `
+            <h3>Favicon</h3>
+            <img src="${faviconCanvas.toDataURL('image/png')}" style="width: 32px; height: 32px; border: 1px solid #ddd;">
+            <p>Para usar como favicon, guarda como favicon.ico</p>
+            <a href="${faviconCanvas.toDataURL('image/png')}" download="favicon.png" style="display: inline-block; margin-top: 10px; padding: 5px 10px; background: #ffc107; color: black; text-decoration: none; border-radius: 4px;">Descargar Favicon</a>
+        `;
+        container.appendChild(faviconDiv);
+    </script>
+</body>
+</html>
