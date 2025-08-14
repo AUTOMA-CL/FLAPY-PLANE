@@ -1,5 +1,31 @@
 # 📋 CHANGELOG - Flappy Plane Game
 
+## Versión 2.2.8 (2025-01-14)
+### 🔧 Fix de Estabilidad #8: Límite en Cola de Registros Pendientes
+
+### 🐛 Problema Resuelto
+- **Cola sin límite**: Los registros pendientes podían acumularse infinitamente
+- **Impacto**: localStorage podría llenarse después de días sin conexión
+- **Síntomas**: Error al intentar guardar después de mucho tiempo offline
+
+### ✅ Solución Implementada
+- Límite máximo de 100 registros pendientes
+- Sistema FIFO: se eliminan los más antiguos si se supera el límite
+- Aplicado tanto al guardar como al procesar
+- Logs informativos sobre el estado de la cola
+
+### 📊 Mejoras
+- Estabilidad: localStorage nunca se llenará
+- Robustez: Sistema funcional incluso con conexión intermitente prolongada
+- Transparencia: Información clara sobre registros en cola
+
+### ⚠️ Impacto para el Usuario
+- **SIN CAMBIOS VISIBLES** en uso normal
+- Si hay más de 100 registros sin enviar, se priorizan los más recientes
+- Previene errores después de largos períodos sin conexión
+
+---
+
 ## Versión 2.2.7 (2025-01-14)
 ### 🔧 Fix de Estabilidad #7: IDs de Obstáculos 100% Únicos
 

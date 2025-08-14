@@ -133,13 +133,24 @@ export default function HomePage() {
     try {
       // Leer, modificar y escribir de forma atómica
       const pendientes = JSON.parse(localStorage.getItem('registrosPendientes') || '[]');
+      
+      // Límite máximo de 100 registros pendientes para evitar llenar localStorage
+      const MAX_PENDING_RECORDS = 100;
+      
+      // Si ya hay demasiados pendientes, eliminar los más antiguos (FIFO)
+      if (pendientes.length >= MAX_PENDING_RECORDS) {
+        console.warn(`⚠️ Cola de pendientes llena (${MAX_PENDING_RECORDS}), eliminando registro más antiguo`);
+        pendientes.shift(); // Eliminar el más antiguo
+      }
+      
       pendientes.push({
         ...userData,
         timestamp: Date.now(),
         intentos: 0
       });
+      
       localStorage.setItem('registrosPendientes', JSON.stringify(pendientes));
-      console.log('📋 Registro guardado en cola para reintento posterior');
+      console.log(`📋 Registro guardado en cola (${pendientes.length}/${MAX_PENDING_RECORDS} pendientes)`);
     } finally {
       // Siempre liberar el lock
       localStorage.removeItem(lockKey);
@@ -243,7 +254,15 @@ export default function HomePage() {
     }
     
     try {
-      localStorage.setItem('registrosPendientes', JSON.stringify(pendientesActualizados));
+      // Aplicar mismo límite máximo al actualizar
+      const MAX_PENDING_RECORDS = 100;
+      const registrosLimitados = pendientesActualizados.slice(-MAX_PENDING_RECORDS);
+      
+      if (pendientesActualizados.length > registrosLimitados.length) {
+        console.warn(`⚠️ Limitando cola a ${MAX_PENDING_RECORDS} registros máximo`);
+      }
+      
+      localStorage.setItem('registrosPendientes', JSON.stringify(registrosLimitados));
     } finally {
       localStorage.removeItem(lockKey);
     }
