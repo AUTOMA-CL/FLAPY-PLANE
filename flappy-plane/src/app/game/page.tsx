@@ -8,27 +8,70 @@ import { User } from '@/types';
 
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwYMYUihl9oQ2xZpW5CJJ0Xyfm3bsN6E2C5yo3tOBQK4U7slQ2RDRiHiwPvA_bw7akVzg/exec";
 
-const updateScore = async (email: string, puntaje: number): Promise<{ok: boolean, error?: string}> => {
-  try {
-    const params = new URLSearchParams();
-    params.append('action', 'updateScore');
-    params.append('email', email);
-    params.append('puntaje', puntaje.toString());
+// Función helper para esperar
+const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-    const response = await fetch(WEB_APP_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: params.toString()
-    });
+// Función mejorada para actualizar score con reintentos
+const updateScoreConReintentos = async (email: string, puntaje: number, intentos = 3): Promise<{ok: boolean, error?: string}> => {
+  // Agregar delay aleatorio inicial (0-500ms) para evitar colisiones
+  await wait(Math.random() * 500);
+  
+  for (let i = 0; i < intentos; i++) {
+    try {
+      const params = new URLSearchParams();
+      params.append('action', 'updateScore');
+      params.append('email', email);
+      params.append('puntaje', puntaje.toString());
 
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('Error updating score:', error);
-    return { ok: false, error: 'Error al actualizar puntuación' };
+      // Crear un AbortController para el timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos timeout
+
+      const response = await fetch(WEB_APP_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: params.toString(),
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      if (response.ok) {
+        const result = await response.json();
+        return result;
+      }
+    } catch (error: any) {
+      console.log(`Intento ${i + 1} de actualizar score falló:`, error.message);
+      
+      // Si es el último intento, retornar error
+      if (i === intentos - 1) {
+        console.error('❌ No se pudo actualizar el score después de 3 intentos');
+        return { ok: false, error: 'Error al actualizar puntuación después de varios intentos' };
+      }
+      
+      // Esperar con exponential backoff (1s, 2s, 4s)
+      const tiempoEspera = 1000 * Math.pow(2, i);
+      console.log(`Esperando ${tiempoEspera}ms antes de reintentar actualización de score...`);
+      await wait(tiempoEspera);
+    }
   }
+  
+  return { ok: false, error: 'Error inesperado' };
+};
+
+// Función para guardar score en cola si falla
+const guardarScoreEnCola = (email: string, score: number) => {
+  const scoresPendientes = JSON.parse(localStorage.getItem('scoresPendientes') || '[]');
+  scoresPendientes.push({
+    email,
+    score,
+    timestamp: Date.now(),
+    intentos: 0
+  });
+  localStorage.setItem('scoresPendientes', JSON.stringify(scoresPendientes));
+  console.log('📋 Score guardado localmente para envío posterior');
 };
 
 export default function GamePage() {
@@ -68,29 +111,40 @@ export default function GamePage() {
     setScore(newScore);
   };
 
-  // Manejar game over
+  // Manejar game over - NO BLOQUEA EL JUEGO
   const handleGameOver = async (finalScore: number) => {
     if (currentUser && currentUser.email) {
-      try {
-        // Actualizar puntuación en Google Sheets
-        const result = await updateScore(currentUser.email, finalScore);
-        
-        if (result.ok) {
-          console.log('Puntaje actualizado en Google Sheets:', finalScore);
-          // Actualizar usuario en sessionStorage
-          const updatedUser = {
-            ...currentUser,
-            bestScore: Math.max(currentUser.bestScore || 0, finalScore),
-            totalGames: (currentUser.totalGames || 0) + 1
-          };
-          sessionStorage.setItem('currentUser', JSON.stringify(updatedUser));
-          setCurrentUser(updatedUser);
-        } else {
-          console.error('Error al actualizar puntuación en Google Sheets:', result.error);
-        }
-      } catch (error) {
-        console.error('Error updating user score:', error);
+      // Actualizar usuario en sessionStorage INMEDIATAMENTE
+      const updatedUser = {
+        ...currentUser,
+        bestScore: Math.max(currentUser.bestScore || 0, finalScore),
+        totalGames: (currentUser.totalGames || 0) + 1
+      };
+      sessionStorage.setItem('currentUser', JSON.stringify(updatedUser));
+      setCurrentUser(updatedUser);
+      
+      // Enviar score a Google Sheets EN SEGUNDO PLANO
+      // No bloqueamos el juego esperando la respuesta
+      updateScoreEnSegundoPlano(currentUser.email, finalScore);
+    }
+  };
+
+  // Función para actualizar score en segundo plano
+  const updateScoreEnSegundoPlano = async (email: string, finalScore: number) => {
+    try {
+      const result = await updateScoreConReintentos(email, finalScore);
+      
+      if (result.ok) {
+        console.log('✅ Score actualizado en Google Sheets:', finalScore);
+      } else {
+        console.error('❌ Error actualizando score:', result.error);
+        // Guardar en cola para reintento posterior
+        guardarScoreEnCola(email, finalScore);
       }
+    } catch (error) {
+      console.error('❌ Error crítico actualizando score:', error);
+      // Guardar en cola para reintento posterior
+      guardarScoreEnCola(email, finalScore);
     }
   };
 
