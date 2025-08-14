@@ -93,11 +93,10 @@ export default function HomePage() {
   };
 
   // Función para guardar en cola de pendientes con protección contra condiciones de carrera
-  const guardarEnColaPendiente = (userData: User) => {
+  const guardarEnColaPendiente = async (userData: User) => {
     // Implementar un simple mecanismo de lock usando un timestamp
     const lockKey = 'registrosPendientes_lock';
     const maxLockTime = 1000; // 1 segundo máximo de lock
-    let retries = 0;
     const maxRetries = 10;
     
     // Función auxiliar para intentar adquirir el lock
@@ -119,15 +118,28 @@ export default function HomePage() {
       return true;
     };
     
-    // Intentar adquirir el lock con reintentos
-    while (!tryAcquireLock() && retries < maxRetries) {
-      retries++;
-      // Esperar un tiempo aleatorio corto (10-50ms)
-      const waitTime = 10 + Math.random() * 40;
-      const start = Date.now();
-      while (Date.now() - start < waitTime) {
-        // Busy wait
+    // Función para esperar sin bloquear el CPU
+    const waitForLock = async (retriesLeft: number): Promise<boolean> => {
+      if (retriesLeft <= 0) return false;
+      
+      if (tryAcquireLock()) {
+        return true;
       }
+      
+      // Esperar un tiempo aleatorio corto (10-50ms) sin busy wait
+      const waitTime = 10 + Math.random() * 40;
+      await wait(waitTime);
+      
+      // Intentar de nuevo recursivamente
+      return waitForLock(retriesLeft - 1);
+    };
+    
+    // Intentar adquirir el lock
+    const lockAcquired = await waitForLock(maxRetries);
+    
+    if (!lockAcquired) {
+      console.warn('⚠️ No se pudo adquirir lock para guardar en cola');
+      return;
     }
     
     try {

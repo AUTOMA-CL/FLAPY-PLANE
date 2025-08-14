@@ -1,5 +1,31 @@
 # 📋 CHANGELOG - Flappy Plane Game
 
+## Versión 2.3.0 (2025-01-14)
+### 🔧 Fix de Performance: Eliminado Busy Wait en localStorage Lock
+
+### 🐛 Problema Resuelto
+- **Busy wait**: El código consumía CPU innecesariamente mientras esperaba el lock
+- **Impacto**: Uso excesivo de CPU, especialmente en dispositivos móviles
+- **Síntomas**: Posible calentamiento y drenaje de batería en tablets
+
+### ✅ Solución Implementada
+- Reemplazado busy wait con función asíncrona recursiva
+- Uso de await/Promise para no bloquear el thread principal
+- Espera no bloqueante con setTimeout interno
+- CPU libre durante los períodos de espera
+
+### 📊 Mejoras
+- Performance: Sin consumo innecesario de CPU
+- Batería: Menor consumo energético en tablets
+- Responsividad: UI no se bloquea durante esperas
+
+### ⚠️ Impacto para el Usuario
+- **SIN CAMBIOS VISIBLES** en funcionalidad
+- Mejor duración de batería en tablets
+- Dispositivos más frescos durante uso prolongado
+
+---
+
 ## Versión 2.2.9 (2025-01-14)
 ### 🔧 Fix de Estabilidad: Race Condition en Envío a Google Sheets
 
