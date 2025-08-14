@@ -1,5 +1,27 @@
 # 📋 CHANGELOG - Flappy Plane Game
 
+## Versión 2.0.2 (2025-01-14)
+### ✅ Estado: ESTABLE - Google Sheets Restaurado
+
+### 🔧 Correcciones Críticas
+- **SOLUCIONADO:** Problema de lentitud al hacer click en "Comenzar Juego"
+- Restaurada integración directa con Google Sheets
+- Eliminada base de datos JSON local que causaba demoras
+- Los registros y puntajes ahora van directamente a Google Sheets
+
+### 📝 Cambios Técnicos
+- Registro de usuarios: POST directo a Google Apps Script
+- Actualización de puntajes: POST directo a Google Apps Script
+- Eliminada dependencia de `/api/users` local
+- URL del script restaurada y funcionando
+
+### ⚡ Mejoras de Performance
+- Tiempo de respuesta reducido significativamente
+- Sin lectura/escritura de archivos JSON locales
+- Conexión directa con Google Sheets más rápida
+
+---
+
 ## Versión 2.0.1 (2025-01-14)
 ### ✅ Estado: ESTABLE - Ajuste Visual
 

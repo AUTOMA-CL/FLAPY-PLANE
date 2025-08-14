@@ -1,9 +1,9 @@
 # 🎮 FLAPPY PLANE - INFORMACIÓN DE VERSIÓN Y CONTINUIDAD
 
-## 📌 VERSIÓN ACTUAL: 2.0.1
+## 📌 VERSIÓN ACTUAL: 2.0.2
 **Fecha:** 2025-01-14  
-**Estado:** ✅ ESTABLE - Producción Ready con ajustes visuales  
-**Último Commit:** 5fa80f8  
+**Estado:** ✅ ESTABLE - Google Sheets Restaurado y Optimizado  
+**Último Commit:** ddde889  
 **Branch:** main  
 
 ---
@@ -20,13 +20,14 @@ Despliegue: Vercel (configurado y funcionando)
 
 ### Estado Actual:
 - ✅ Juego 100% funcional
-- ✅ Sistema de registro operativo
-- ✅ Base de datos local JSON funcionando
+- ✅ Sistema de registro operativo con Google Sheets
+- ✅ **Google Sheets como base de datos** (v2.0.2)
 - ✅ Desplegado en Vercel sin errores
 - ✅ Build pasando sin warnings críticos
 - ✅ Touch controls optimizados
 - ✅ Detección de colisiones precisa
 - ✅ Logo FEROUCH ampliado 1.5x en página de registro (v2.0.1)
+- ✅ **Problema de lentitud SOLUCIONADO** (v2.0.2)
 
 ### Archivos Críticos:
 1. **Configuración:**
