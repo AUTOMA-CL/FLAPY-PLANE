@@ -1,5 +1,32 @@
 # 📋 CHANGELOG - Flappy Plane Game
 
+## Versión 2.1.0 (2025-01-14)
+### 🚀 Estado: PRODUCCIÓN READY - Sistema A Prueba de Fallas
+
+### 🎯 Mejoras Críticas para Producción
+- **JUEGO INSTANTÁNEO:** El usuario entra al juego inmediatamente, registro se envía en segundo plano
+- **REINTENTOS AUTOMÁTICOS:** 3 intentos con exponential backoff (1s, 2s, 4s)
+- **TIMEOUT EXTENDIDO:** 10 segundos de espera para conexiones lentas de centros comerciales
+- **ANTI-COLISIÓN:** Delay aleatorio cuando 4 tablets registran simultáneamente
+- **COLA DE PENDIENTES:** Datos guardados localmente si Google Sheets falla
+- **AUTO-RECUPERACIÓN:** Procesa automáticamente registros pendientes al abrir la app
+
+### 💪 Resistencia a Fallas
+- Funciona aunque Google Sheets esté caído
+- Nunca pierde datos (localStorage como backup)
+- Sin errores visibles para el usuario
+- Maneja perfectamente 4 tablets simultáneas
+- Ideal para eventos en centros comerciales
+
+### 📊 Cambios Técnicos
+- Implementado sistema de cola con localStorage
+- Fetch con AbortController y timeout de 10s
+- Procesamiento asíncrono en segundo plano
+- Sistema de reintentos con backoff exponencial
+- Validación de registros pendientes cada 30 segundos
+
+---
+
 ## Versión 2.0.3 (2025-01-14)
 ### ✅ Estado: CONFIRMADO - Performance Optimizado
 
