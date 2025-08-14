@@ -67,24 +67,31 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       lastScoreRef.current = state.score;
     }
 
-    // Optimización para tablets: usar color sólido en lugar de gradiente
-    ctx.fillStyle = '#87CEEB';
+    // SIEMPRE rellenar toda la pantalla primero con color de fondo
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvasHeight);
+    gradient.addColorStop(0, '#87CEEB');
+    gradient.addColorStop(1, '#98FB98');
+    ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-    // Dibujar imagen de fondo con menor calidad para mejor rendimiento
+    // Luego dibujar la imagen encima si está disponible
     if (imagesRef.current.background && imagesRef.current.background.complete) {
-      ctx.imageSmoothingEnabled = false; // Desactivar antialiasing para mejor FPS
       const img = imagesRef.current.background;
       
-      // Simplificar cálculo de escalado
-      const scale = Math.max(canvasWidth / img.naturalWidth, canvasHeight / img.naturalHeight);
+      // Calcular escalado para cubrir TODO el viewport (cover behavior)
+      const scaleX = canvasWidth / img.naturalWidth;
+      const scaleY = canvasHeight / img.naturalHeight;
+      const scale = Math.max(scaleX, scaleY);
+      
       const scaledWidth = img.naturalWidth * scale;
       const scaledHeight = img.naturalHeight * scale;
+      
+      // Centrar la imagen escalada
       const offsetX = (canvasWidth - scaledWidth) / 2;
       const offsetY = (canvasHeight - scaledHeight) / 2;
       
+      // Dibujar la imagen escalada encima del fondo
       ctx.drawImage(img, offsetX, offsetY, scaledWidth, scaledHeight);
-      ctx.imageSmoothingEnabled = true;
     }
 
     // Dibujar obstáculos con gap dinámico
@@ -343,20 +350,12 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
       return;
     }
 
-    // Limitar FPS a 30 para tablets
-    const targetFrameTime = 33; // ~30 FPS
     const deltaTime = currentTime - lastTimeRef.current;
-    
-    if (deltaTime < targetFrameTime) {
-      animationFrameRef.current = requestAnimationFrame(gameLoop);
-      return;
-    }
-    
     lastTimeRef.current = currentTime;
 
-    // Actualizar estado del juego con deltaTime limitado
+    // Actualizar estado del juego (deltaTime en segundos)
     const oldScore = gameStateRef.current.score;
-    const deltaTimeInSeconds = Math.min(deltaTime / 1000, 0.05); // Limitar a 50ms máximo
+    const deltaTimeInSeconds = deltaTime / 1000; // convertir ms a segundos
     gameStateRef.current = updateGameState(gameStateRef.current, deltaTimeInSeconds);
 
     // Callbacks

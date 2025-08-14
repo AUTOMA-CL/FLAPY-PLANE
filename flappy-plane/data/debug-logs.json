@@ -1,174 +1,702 @@
 [
   {
-    "timestamp": "2025-08-13T05:27:34.220Z",
-    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.91s"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.256Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.909s -> 0.873s (delta: 0.036)"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.257Z",
-    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.87s"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.292Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.873s -> 0.836s (delta: 0.036)"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.293Z",
-    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.84s"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.329Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.836s -> 0.800s (delta: 0.036)"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.329Z",
-    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.80s"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.365Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.800s -> 0.764s (delta: 0.036)"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.365Z",
-    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.76s"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.401Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.764s -> 0.727s (delta: 0.036)"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.402Z",
-    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.73s"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.438Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.727s -> 0.691s (delta: 0.036)"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.438Z",
-    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.69s"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.474Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.691s -> 0.655s (delta: 0.036)"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.475Z",
-    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.65s"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.510Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.655s -> 0.618s (delta: 0.036)"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.511Z",
-    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.62s"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.547Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.618s -> 0.582s (delta: 0.036)"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.547Z",
-    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.58s"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.583Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.582s -> 0.545s (delta: 0.036)"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.584Z",
-    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.55s"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.620Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.545s -> 0.509s (delta: 0.036)"
-  },
-  {
-    "timestamp": "2025-08-13T05:27:34.620Z",
+    "timestamp": "2025-08-13T04:01:12.818Z",
     "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.51s"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.656Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.509s -> 0.473s (delta: 0.036)"
+    "timestamp": "2025-08-13T04:01:12.822Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.515s -> 0.509s (delta: 0.006)"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.692Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.473s -> 0.436s (delta: 0.036)"
+    "timestamp": "2025-08-13T04:01:12.822Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.51s"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.656Z",
+    "timestamp": "2025-08-13T04:01:12.828Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.509s -> 0.503s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.829Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.50s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.834Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.503s -> 0.497s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.834Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.50s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.840Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.497s -> 0.491s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.840Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.49s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.846Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.491s -> 0.485s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.846Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.48s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.852Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.485s -> 0.478s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.853Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.48s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.858Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.478s -> 0.472s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.859Z",
     "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.47s"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.693Z",
+    "timestamp": "2025-08-13T04:01:12.864Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.472s -> 0.466s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.865Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.47s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.870Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.466s -> 0.460s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.871Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.46s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.876Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.460s -> 0.454s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.877Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.45s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.882Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.454s -> 0.448s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.883Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.45s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.888Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.448s -> 0.442s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.889Z",
     "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.44s"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.729Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.436s -> 0.400s (delta: 0.036)"
+    "timestamp": "2025-08-13T04:01:12.896Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.442s -> 0.436s (delta: 0.006)"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.729Z",
+    "timestamp": "2025-08-13T04:01:12.897Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.44s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.901Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.436s -> 0.430s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.902Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.43s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.907Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.430s -> 0.424s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.908Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.42s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.913Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.424s -> 0.418s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.914Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.42s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.919Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.418s -> 0.412s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.919Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.41s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.925Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.412s -> 0.406s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.925Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.41s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.931Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.406s -> 0.400s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.931Z",
     "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.40s"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.765Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.400s -> 0.364s (delta: 0.036)"
+    "timestamp": "2025-08-13T04:01:12.937Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.400s -> 0.394s (delta: 0.006)"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.766Z",
+    "timestamp": "2025-08-13T04:01:12.938Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.39s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.943Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.394s -> 0.388s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.944Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.39s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.949Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.388s -> 0.382s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.950Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.38s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.955Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.382s -> 0.375s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.956Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.38s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.961Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.375s -> 0.369s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.962Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.37s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.967Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.369s -> 0.363s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.968Z",
     "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.36s"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.802Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.364s -> 0.327s (delta: 0.036)"
+    "timestamp": "2025-08-13T04:01:12.973Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.363s -> 0.357s (delta: 0.006)"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.802Z",
+    "timestamp": "2025-08-13T04:01:12.974Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.36s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.979Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.357s -> 0.351s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.980Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.35s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.985Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.351s -> 0.345s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.986Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.35s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.991Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.345s -> 0.339s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.992Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.34s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.997Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.339s -> 0.333s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:12.998Z",
     "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.33s"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.838Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.327s -> 0.291s (delta: 0.036)"
+    "timestamp": "2025-08-13T04:01:13.003Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.333s -> 0.327s (delta: 0.006)"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.838Z",
+    "timestamp": "2025-08-13T04:01:13.004Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.33s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.010Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.327s -> 0.321s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.011Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.32s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.016Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.321s -> 0.315s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.017Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.31s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.022Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.315s -> 0.309s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.023Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.31s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.028Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.309s -> 0.303s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.029Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.30s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.034Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.303s -> 0.297s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.035Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.30s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.040Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.297s -> 0.291s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.041Z",
     "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.29s"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.874Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.291s -> 0.255s (delta: 0.036)"
+    "timestamp": "2025-08-13T04:01:13.046Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.291s -> 0.285s (delta: 0.006)"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.875Z",
+    "timestamp": "2025-08-13T04:01:13.047Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.28s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.052Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.285s -> 0.278s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.053Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.28s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.058Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.278s -> 0.272s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.059Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.27s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.064Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.272s -> 0.266s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.065Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.27s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.070Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.266s -> 0.260s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.071Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.26s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.076Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.260s -> 0.254s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.077Z",
     "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.25s"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.911Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.255s -> 0.218s (delta: 0.036)"
+    "timestamp": "2025-08-13T04:01:13.082Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.254s -> 0.248s (delta: 0.006)"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.911Z",
+    "timestamp": "2025-08-13T04:01:13.083Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.25s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.088Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.248s -> 0.242s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.089Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.24s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.094Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.242s -> 0.236s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.095Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.24s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.100Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.236s -> 0.230s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.101Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.23s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.107Z",
     "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.22s"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.953Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.218s -> 0.180s (delta: 0.038)"
+    "timestamp": "2025-08-13T04:01:13.107Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.230s -> 0.224s (delta: 0.006)"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.953Z",
+    "timestamp": "2025-08-13T04:01:13.113Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.224s -> 0.218s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.113Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.22s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.119Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.218s -> 0.212s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.119Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.21s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.125Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.212s -> 0.206s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.125Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.21s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.131Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.206s -> 0.200s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.131Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.20s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.137Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.200s -> 0.194s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.137Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.19s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.145Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.19s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.145Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.194s -> 0.187s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.149Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.187s -> 0.182s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.150Z",
     "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.18s"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.989Z",
-    "message": "⏱️ INVULNERABILITY UPDATE: 0.180s -> 0.144s (delta: 0.036)"
+    "timestamp": "2025-08-13T04:01:13.155Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.182s -> 0.175s (delta: 0.006)"
   },
   {
-    "timestamp": "2025-08-13T05:27:34.990Z",
+    "timestamp": "2025-08-13T04:01:13.156Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.18s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.161Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.175s -> 0.169s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.162Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.17s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.167Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.169s -> 0.163s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.168Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.16s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.173Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.163s -> 0.157s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.174Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.16s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.179Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.157s -> 0.151s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.180Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.15s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.185Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.151s -> 0.145s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.186Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.15s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.191Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.145s -> 0.139s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.192Z",
     "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.14s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.197Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.139s -> 0.133s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.198Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.13s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.204Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.133s -> 0.127s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.204Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.13s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.210Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.127s -> 0.121s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.210Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.12s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.216Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.121s -> 0.115s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.217Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.11s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.222Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.115s -> 0.109s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.222Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.11s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.228Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.109s -> 0.103s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.228Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.10s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.234Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.103s -> 0.097s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.235Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.10s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.240Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.097s -> 0.091s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.241Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.09s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.246Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.091s -> 0.085s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.246Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.08s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.252Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.085s -> 0.079s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.253Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.08s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.258Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.079s -> 0.072s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.259Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.07s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.264Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.072s -> 0.066s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.265Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.07s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.270Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.066s -> 0.060s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.271Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.06s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.276Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.060s -> 0.054s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.283Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.054s -> 0.048s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.277Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.05s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.283Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.05s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.288Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.048s -> 0.042s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.289Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.04s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.294Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.042s -> 0.036s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.295Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.04s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.300Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.036s -> 0.030s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.301Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.03s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.307Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.02s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.307Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.030s -> 0.024s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.313Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.024s -> 0.018s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.313Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.02s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.319Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.018s -> 0.012s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.319Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.01s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.325Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.012s -> 0.006s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.326Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=false, isInvulnerable=true, lives=1, invulTime=0.01s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.331Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 0.006s -> 0.000s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:13.331Z",
+    "message": "🔓 INVULNERABILITY ENDED - Now vulnerable again"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:14.791Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=false, lives=1, invulTime=0.00s"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:14.792Z",
+    "message": "💥 COLLISION DETECTED! Lives before: 1"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:14.792Z",
+    "message": "💔 LIFE LOST! Lives after: 0"
+  },
+  {
+    "timestamp": "2025-08-13T04:01:14.793Z",
+    "message": "☠️ GAME OVER! No lives remaining"
   }
 ]

@@ -1,96 +1,101 @@
-// Google Sheets Database Integration
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwYMYUihl9oQ2xZpW5CJJ0Xyfm3bsN6E2C5yo3tOBQK4U7slQ2RDRiHiwPvA_bw7akVzg/exec";
+import { promises as fs } from 'fs';
+import path from 'path';
+import { User } from '@/types';
 
-// Registrar usuario en Google Sheets
-export async function saveUser(userData: {
-  name: string;
-  phone: string;
-  email: string;
-  age: string;
-}) {
-  const params = new URLSearchParams({
-    action: 'register',
-    nombre: userData.name,
-    telefono: userData.phone,
-    email: userData.email,
-    edad: userData.age
-  });
+const DATA_FILE = path.join(process.cwd(), 'data', 'users.json');
 
+// Asegurar que el directorio data existe
+async function ensureDataDirectory() {
+  const dataDir = path.join(process.cwd(), 'data');
   try {
-    await fetch(WEB_APP_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: params.toString(),
-      mode: 'no-cors' // Para evitar problemas de CORS
-    });
-
-    // Con no-cors no podemos leer la respuesta, asumimos éxito
-    return {
-      ok: true,
-      user: {
-        id: Date.now().toString(),
-        name: userData.name,
-        phone: userData.phone,
-        email: userData.email,
-        age: userData.age,
-        createdAt: new Date().toISOString()
-      }
-    };
-  } catch (error) {
-    console.error('Error al registrar usuario:', error);
-    throw new Error('Error al conectar con la base de datos');
+    await fs.access(dataDir);
+  } catch {
+    await fs.mkdir(dataDir, { recursive: true });
   }
 }
 
-// Actualizar puntuación en Google Sheets
-export async function updateScore(email: string, score: number) {
-  const params = new URLSearchParams({
-    action: 'updateScore',
-    email: email,
-    puntaje: score.toString()
-  });
-
+// Leer usuarios del archivo JSON
+export async function getUsers(): Promise<User[]> {
   try {
-    await fetch(WEB_APP_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: params.toString(),
-      mode: 'no-cors' // Para evitar problemas de CORS
-    });
-
-    // Con no-cors no podemos leer la respuesta, asumimos éxito
-    return { ok: true, score };
+    await ensureDataDirectory();
+    
+    try {
+      const data = await fs.readFile(DATA_FILE, 'utf8');
+      return JSON.parse(data);
+    } catch (error) {
+      // Si el archivo no existe, crear uno vacío
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+        await fs.writeFile(DATA_FILE, '[]', 'utf8');
+        return [];
+      }
+      throw error;
+    }
   } catch (error) {
-    console.error('Error al actualizar puntuación:', error);
+    console.error('Error reading users file:', error);
+    throw new Error('Error al leer usuarios');
+  }
+}
+
+// Guardar usuario en el archivo JSON
+export async function saveUser(userData: Omit<User, 'id' | 'createdAt'>): Promise<User> {
+  try {
+    const users = await getUsers();
+    
+    const newUser: User = {
+      id: generateId(),
+      ...userData,
+      createdAt: new Date().toISOString(),
+      bestScore: 0,
+      totalGames: 0
+    };
+    
+    users.push(newUser);
+    
+    await fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), 'utf8');
+    
+    return newUser;
+  } catch (error) {
+    console.error('Error saving user:', error);
+    throw new Error('Error al guardar usuario');
+  }
+}
+
+// Actualizar puntuación de usuario
+export async function updateUserScore(userId: string, score: number): Promise<void> {
+  try {
+    const users = await getUsers();
+    const userIndex = users.findIndex(user => user.id === userId);
+    
+    if (userIndex === -1) {
+      throw new Error('Usuario no encontrado');
+    }
+    
+    const user = users[userIndex];
+    user.totalGames = (user.totalGames || 0) + 1;
+    
+    if (!user.bestScore || score > user.bestScore) {
+      user.bestScore = score;
+    }
+    
+    await fs.writeFile(DATA_FILE, JSON.stringify(users, null, 2), 'utf8');
+  } catch (error) {
+    console.error('Error updating user score:', error);
     throw new Error('Error al actualizar puntuación');
   }
 }
 
-// Función auxiliar para obtener usuario por email (local storage como fallback)
-export function getCurrentUser() {
-  if (typeof window !== 'undefined') {
-    const userStr = localStorage.getItem('currentUser');
-    if (userStr) {
-      return JSON.parse(userStr);
-    }
-  }
-  return null;
+// Generar ID único simple
+function generateId(): string {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
 }
 
-// Función auxiliar para guardar usuario actual (local storage)
-export function setCurrentUser(user: {
-  name: string;
-  email: string;
-  phone: string;
-  age: string;
-  bestScore?: number;
-  totalGames?: number;
-}) {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('currentUser', JSON.stringify(user));
+// Obtener usuario por email
+export async function getUserByEmail(email: string): Promise<User | null> {
+  try {
+    const users = await getUsers();
+    return users.find(user => user.email.toLowerCase() === email.toLowerCase()) || null;
+  } catch (error) {
+    console.error('Error getting user by email:', error);
+    return null;
   }
 }

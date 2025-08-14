@@ -5,38 +5,7 @@ import { useRouter } from 'next/navigation';
 import GameCanvas from '@/components/GameCanvas';
 import GameUI from '@/components/GameUI';
 import { User } from '@/types';
-import analytics from '@/lib/analytics';
 // import { updateUserScore } from '@/lib/database'; // Solo servidor
-
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwYMYUihl9oQ2xZpW5CJJ0Xyfm3bsN6E2C5yo3tOBQK4U7slQ2RDRiHiwPvA_bw7akVzg/exec";
-
-const updateScore = async (email: string, puntaje: number): Promise<{ok: boolean, error?: string}> => {
-  try {
-    const params = new URLSearchParams();
-    params.append('action', 'updateScore');
-    params.append('email', email);
-    params.append('puntaje', puntaje.toString());
-
-    const response = await fetch(WEB_APP_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: params.toString()
-    });
-
-    const result = await response.json();
-    
-    if (!result.ok) {
-      console.error('Error actualizando puntaje:', result.error);
-    }
-    
-    return result;
-  } catch (error) {
-    console.error('Error de conexión al actualizar puntaje:', error);
-    return { ok: false, error: 'Error de conexión' };
-  }
-};
 
 export default function GamePage() {
   const [score, setScore] = useState(0);
@@ -51,9 +20,6 @@ export default function GamePage() {
       try {
         const user: User = JSON.parse(userStr);
         setCurrentUser(user);
-        // Iniciar sesión de analytics
-        analytics.startGameSession(user.id || user.email, user.email);
-        analytics.trackEvent('page_view', { page: 'game' });
       } catch (error) {
         console.error('Error parsing user data:', error);
         router.push('/');
@@ -80,17 +46,16 @@ export default function GamePage() {
 
   // Manejar game over
   const handleGameOver = async (finalScore: number) => {
-    // Registrar fin de juego en analytics
-    analytics.endGameSession(finalScore);
-    analytics.trackEvent('game_over', { score: finalScore });
-    
-    if (currentUser && currentUser.email) {
+    if (currentUser) {
       try {
-        // Actualizar puntuación en Google Sheets
-        const result = await updateScore(currentUser.email, finalScore);
-        
-        if (result.ok) {
-          console.log('Puntaje actualizado en Google Sheets:', finalScore);
+        // Actualizar puntuación via API
+        const response = await fetch('/api/users/score', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: currentUser.id, score: finalScore })
+        });
+
+        if (response.ok) {
           // Actualizar usuario en sessionStorage
           const updatedUser = {
             ...currentUser,
@@ -99,8 +64,6 @@ export default function GamePage() {
           };
           sessionStorage.setItem('currentUser', JSON.stringify(updatedUser));
           setCurrentUser(updatedUser);
-        } else {
-          console.error('No se pudo actualizar el puntaje en Google Sheets');
         }
       } catch (error) {
         console.error('Error updating user score:', error);

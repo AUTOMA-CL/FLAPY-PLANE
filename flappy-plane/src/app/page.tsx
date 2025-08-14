@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { RegistrationFormData } from '@/types';
-import analytics from '@/lib/analytics';
+import { RegistrationFormData, APIResponse, User } from '@/types';
 
 export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,46 +14,6 @@ export default function HomePage() {
     age: ''
   });
   const router = useRouter();
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwYMYUihl9oQ2xZpW5CJJ0Xyfm3bsN6E2C5yo3tOBQK4U7slQ2RDRiHiwPvA_bw7akVzg/exec";
-
-  useEffect(() => {
-    // Registrar service worker para PWA
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => console.log('Service Worker registrado:', registration.scope))
-        .catch(error => console.log('Service Worker fallo:', error));
-    }
-    
-    // Manejar evento de instalación PWA
-    let deferredPrompt: Event & { prompt?: () => void; userChoice?: Promise<{ outcome: string }> };
-    
-    const handleBeforeInstallPrompt = (e: Event) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      
-      // Mostrar botón de instalación o prompt automáticamente
-      setTimeout(() => {
-        if (deferredPrompt && deferredPrompt.prompt) {
-          deferredPrompt.prompt();
-          deferredPrompt.userChoice?.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-              console.log('Usuario aceptó instalar la app');
-            }
-            (deferredPrompt as Event & { prompt?: () => void; userChoice?: Promise<{ outcome: string }> } | null) = null;
-          });
-        }
-      }, 3000); // Mostrar después de 3 segundos
-    };
-    
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    
-    // Track page view
-    analytics.trackEvent('page_view', { page: 'registration' });
-    
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,43 +21,21 @@ export default function HomePage() {
     setError(null);
 
     try {
-      // Crear los parámetros para el formulario
-      const params = new URLSearchParams();
-      params.append('action', 'register');
-      params.append('nombre', formData.name);
-      params.append('telefono', formData.phone);
-      params.append('email', formData.email);
-      params.append('edad', formData.age);
-
-      // Enviar al Google Apps Script
-      const response = await fetch(WEB_APP_URL, {
+      const response = await fetch('/api/users', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
-        body: params.toString()
+        body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
+      const result: APIResponse<User> = await response.json();
 
-      if (result.ok) {
-        // Guardar en sessionStorage para el juego
-        const userData = {
-          id: formData.email,
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          age: formData.age
-        };
-        sessionStorage.setItem('currentUser', JSON.stringify(userData));
-        
-        // Track registro exitoso
-        analytics.trackEvent('user_registered', userData);
-        
-        // Redireccionar al juego
+      if (result.success && result.data) {
+        sessionStorage.setItem('currentUser', JSON.stringify(result.data));
         router.push('/game');
       } else {
-        setError(result.error || 'Error al registrar usuario');
+        setError(result.error || 'Error desconocido');
       }
     } catch (error) {
       console.error('Error al enviar formulario:', error);
@@ -120,31 +57,21 @@ export default function HomePage() {
           <p className="text-sm">¡Prepárate para volar! Registra tus datos y comienza la aventura.</p>
         </div>
 
-        {/* Logo FEROUCH con animación de parpadeo */}
-        <div className="flex justify-center py-6 px-0 bg-gray-50">
+        {/* Logo FEROUCH */}
+        <div className="flex justify-center py-8 px-0 bg-gray-50">
           <img
-            src="/images/FE_NUEVOLOGO(avion)_AZUL.png?v=4"
+            src="/images/FE_NUEVOLOGO(avion)_AZUL.png?v=3"
             alt="FEROUCH"
-            className="w-full animate-pulse"
+            className="animate-pulse w-full"
             style={{
-              maxWidth: '900px',
-              height: 'auto',
-              transform: 'scale(1.5)',
-              animation: 'blink 2s ease-in-out infinite'
+              maxWidth: '600px',
+              height: 'auto'
             }}
           />
         </div>
-        
-        {/* Estilos CSS para la animación de parpadeo */}
-        <style jsx>{`
-          @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-          }
-        `}</style>
 
         {/* Formulario */}
-        <form onSubmit={handleSubmit} className="px-4 py-3 space-y-2">
+        <form onSubmit={handleSubmit} className="p-4 space-y-3">
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
               {error}
@@ -229,7 +156,7 @@ export default function HomePage() {
         </form>
 
         {/* Footer */}
-        <div className="bg-gray-100 px-6 py-2 text-center text-xs text-gray-600">
+        <div className="bg-gray-100 px-6 py-3 text-center text-xs text-gray-600">
           <p>© Optimizado para tablets y dispositivos móviles</p>
         </div>
       </div>

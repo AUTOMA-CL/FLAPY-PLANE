@@ -20,9 +20,7 @@
       "Bash(grep:*)",
       "Bash(taskkill:*)",
       "Bash(curl:*)",
-      "Bash(dir:*)",
-      "Bash(git remote set-url:*)",
-      "Bash(rm:*)"
+      "Bash(dir:*)"
     ],
     "deny": []
   }
