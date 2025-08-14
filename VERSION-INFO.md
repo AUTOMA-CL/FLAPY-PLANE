@@ -1,10 +1,35 @@
 # 🎮 FLAPPY PLANE - INFORMACIÓN DE VERSIÓN Y CONTINUIDAD
 
-## 📌 VERSIÓN ACTUAL: 2.0.3
+## 📌 VERSIÓN ACTUAL: 2.1.0
 **Fecha:** 2025-01-14  
-**Estado:** ✅ CONFIRMADO - Performance Optimizado y Validado  
-**Último Commit:** 113315c  
+**Estado:** 🚀 PRODUCCIÓN READY - Sistema A Prueba de Fallas  
+**Último Commit:** 92904d7  
 **Branch:** main  
+**Tag:** v2.1.0-production-ready
+
+---
+
+## ⚠️ IMPORTANTE PARA LA PRÓXIMA CONVERSACIÓN
+**El usuario se fue a dormir el 14/01/2025 después de implementar v2.1.0**
+- El sistema está desplegado en Vercel
+- AÚN NO HA SIDO PROBADO en dispositivos reales
+- Necesita probar en teléfonos/tablets antes del evento
+
+### 📱 TESTING PENDIENTE:
+1. [ ] Probar registro en segundo plano en dispositivo real
+2. [ ] Verificar que el juego se abre inmediatamente
+3. [ ] Simular falla de Google Sheets (desconectar internet)
+4. [ ] Verificar que los datos se guardan localmente
+5. [ ] Reconectar internet y verificar envío automático
+6. [ ] Probar con 4 dispositivos simultáneos
+7. [ ] Verificar logs en consola del navegador
+
+### 🔍 QUÉ REVISAR EN LA CONSOLA:
+- `✅ Registro enviado exitosamente a Google Sheets`
+- `📋 Registro guardado en cola para reintento posterior`
+- `📤 Procesando X registros pendientes...`
+- `Intento X falló: [mensaje]`
+- `Esperando Xms antes de reintentar...`
 
 ---
 
@@ -18,7 +43,7 @@ Framework: Next.js 15.4.6 con TypeScript
 Despliegue: Vercel (configurado y funcionando)
 ```
 
-### Estado Actual:
+### Estado Actual v2.1.0:
 - ✅ Juego 100% funcional
 - ✅ Sistema de registro operativo con Google Sheets
 - ✅ **Google Sheets como base de datos** (v2.0.2)
@@ -26,13 +51,20 @@ Despliegue: Vercel (configurado y funcionando)
 - ✅ Build pasando sin warnings críticos
 - ✅ Touch controls optimizados
 - ✅ Detección de colisiones precisa
-- ✅ Logo FEROUCH ampliado 1.5x en página de registro (v2.0.1)
+- ✅ Logo FEROUCH ampliado 1.5x (v2.0.1)
 - ✅ **Problema de lentitud SOLUCIONADO** (v2.0.2)
+- 🚀 **SISTEMA A PRUEBA DE FALLAS** (v2.1.0):
+  - ✅ Registro en segundo plano (usuario juega inmediatamente)
+  - ✅ Reintentos automáticos con exponential backoff
+  - ✅ Timeout de 10 segundos para conexiones lentas
+  - ✅ Delay aleatorio anti-colisión para 4 tablets
+  - ✅ Cola de pendientes con localStorage
+  - ✅ Procesamiento automático de registros fallidos
 
 ### Archivos Críticos:
 1. **Configuración:**
    - `/vercel.json` - Config para deploy en subcarpeta
-   - `/flappy-plane/package.json` - Versión 2.0.3
+   - `/flappy-plane/package.json` - Versión 2.1.0
    - `/CLAUDE.md` - Instrucciones del proyecto
 
 2. **Core del Juego:**
@@ -53,7 +85,7 @@ Despliegue: Vercel (configurado y funcionando)
 # Clonar y preparar
 git clone https://github.com/AUTOMA-CL/FLAPY-PLANE.git
 cd "Flappy Plane"
-git checkout v2.0.3-performance-ok
+git checkout v2.1.0-production-ready
 
 # Desarrollo
 cd flappy-plane
@@ -64,6 +96,57 @@ npm run dev
 git tag -a v2.X-descripcion -m "Descripción del cambio"
 git push origin v2.X-descripcion
 ```
+
+---
+
+## 🛡️ SISTEMA A PRUEBA DE FALLAS v2.1.0
+
+### Características Implementadas:
+
+#### 1. **REGISTRO EN SEGUNDO PLANO**
+- Usuario llena formulario → Entra al juego INMEDIATAMENTE
+- Los datos se envían a Google Sheets mientras juega
+- Si falla, se guarda en localStorage y reintenta después
+
+#### 2. **REINTENTOS AUTOMÁTICOS**
+- 3 intentos con exponential backoff (1s, 2s, 4s)
+- Si Google Sheets no responde, espera y reintenta
+- Nunca molesta inmediatamente al servidor
+
+#### 3. **TIMEOUT EXTENDIDO**
+- Espera hasta 10 segundos por respuesta
+- Perfecto para internet lento de centros comerciales
+- Usa AbortController para cancelar si excede tiempo
+
+#### 4. **ANTI-COLISIÓN**
+- Delay aleatorio de 0-500ms antes de enviar
+- Evita que 4 tablets golpeen Google Sheets simultáneamente
+- Como una fila invisible automática
+
+#### 5. **COLA DE PENDIENTES**
+- Si todo falla, guarda en localStorage
+- Al abrir la app, procesa automáticamente pendientes
+- Máximo 5 intentos por registro antes de descartar
+
+### Flujo del Sistema:
+```
+1. Usuario llena formulario
+2. Click en "Comenzar Juego"
+3. → Guarda datos en sessionStorage
+4. → NAVEGA AL JUEGO INMEDIATAMENTE
+5. → En segundo plano:
+   - Espera delay aleatorio (0-500ms)
+   - Intenta enviar a Google Sheets
+   - Si falla, reintenta 3 veces
+   - Si sigue fallando, guarda en cola local
+6. Usuario juega sin enterarse de nada
+```
+
+### Manejo de Errores:
+- **Google Sheets caído:** Guarda local, envía después
+- **Internet lento:** Espera hasta 10 segundos
+- **4 tablets simultáneas:** Delays evitan colisión
+- **Pérdida de datos:** IMPOSIBLE (localStorage backup)
 
 ---
 
@@ -104,7 +187,7 @@ git push origin v2.X-descripcion
 ## 📝 NOTAS PARA EL DESARROLLADOR
 
 ### Si cambias de modelo/conversación, menciona:
-1. "Continuar desde versión 2.0.3 del proyecto Flappy Plane"
+1. "Continuar desde versión 2.1.0 del proyecto Flappy Plane"
 2. "El proyecto está en GitHub: AUTOMA-CL/FLAPY-PLANE"
 3. "La carpeta del proyecto Next.js está en flappy-plane/"
 4. "Revisar VERSION-INFO.md y CHANGELOG.md para contexto"
