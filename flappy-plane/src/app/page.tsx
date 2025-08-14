@@ -14,6 +14,9 @@ export default function HomePage() {
     age: ''
   });
   const router = useRouter();
+  
+  // URL de Google Apps Script
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwYMYUihl9oQ2xZpW5CJJ0Xyfm3bsN6E2C5yo3tOBQK4U7slQ2RDRiHiwPvA_bw7akVzg/exec";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,21 +24,41 @@ export default function HomePage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/users', {
+      // Crear los parámetros para el formulario
+      const params = new URLSearchParams();
+      params.append('action', 'register');
+      params.append('nombre', formData.name);
+      params.append('telefono', formData.phone);
+      params.append('email', formData.email);
+      params.append('edad', formData.age);
+
+      // Enviar al Google Apps Script
+      const response = await fetch(WEB_APP_URL, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify(formData),
+        body: params.toString()
       });
 
-      const result: APIResponse<User> = await response.json();
+      const result = await response.json();
 
-      if (result.success && result.data) {
-        sessionStorage.setItem('currentUser', JSON.stringify(result.data));
+      if (result.ok) {
+        // Guardar en sessionStorage para el juego
+        const userData: User = {
+          id: formData.email,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          age: parseInt(formData.age),
+          createdAt: new Date().toISOString(),
+          bestScore: 0,
+          totalGames: 0
+        };
+        sessionStorage.setItem('currentUser', JSON.stringify(userData));
         router.push('/game');
       } else {
-        setError(result.error || 'Error desconocido');
+        setError(result.error || 'Error al registrar usuario');
       }
     } catch (error) {
       console.error('Error al enviar formulario:', error);
