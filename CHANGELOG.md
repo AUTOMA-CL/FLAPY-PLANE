@@ -1,5 +1,31 @@
 # 📋 CHANGELOG - Flappy Plane Game
 
+## Versión 2.2.7 (2025-01-14)
+### 🔧 Fix de Estabilidad #7: IDs de Obstáculos 100% Únicos
+
+### 🐛 Problema Resuelto
+- **IDs potencialmente duplicados**: Usaba Date.now() + Math.random() que teóricamente podría duplicarse
+- **Impacto**: Posibles problemas en el conteo de puntuación
+- **Síntomas**: Score incorrecto en casos extremadamente raros
+
+### ✅ Solución Implementada
+- Contador incremental global para garantizar unicidad
+- Combinación de contador + timestamp para IDs únicos
+- Reset del contador al iniciar nuevo juego
+- Imposibilidad matemática de duplicación
+
+### 📊 Mejoras
+- Integridad: IDs 100% únicos garantizados
+- Precisión: Conteo de score sin posibilidad de error
+- Robustez: Sistema a prueba de fallos
+
+### ⚠️ Impacto para el Usuario
+- **SIN CAMBIOS VISIBLES** en el juego
+- Mayor confiabilidad en el sistema de puntuación
+- Elimina un bug extremadamente raro pero posible
+
+---
+
 ## Versión 2.2.6 (2025-01-14)
 ### 🔧 Fix de Estabilidad #6: Canvas Resize con Debounce
 

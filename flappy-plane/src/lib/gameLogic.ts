@@ -13,6 +13,9 @@ export const GAME_CONFIG: GameSettings = {
 
 // Inicializar estado del juego
 export function initializeGame(): GameState {
+  // Resetear contador de IDs al inicializar nuevo juego
+  obstacleIdCounter = 0;
+  
   return {
     score: 0,
     isPlaying: false,
@@ -194,6 +197,9 @@ function shouldGenerateObstacle(obstacles: Obstacle[]): boolean {
   return lastObstacle.x < GAME_CONFIG.canvasSize.width - 300;
 }
 
+// Contador global para garantizar IDs únicos
+let obstacleIdCounter = 0;
+
 // Generar nuevo obstáculo - adaptativo al viewport
 function generateObstacle(): Obstacle {
   const canvasHeight = GAME_CONFIG.canvasSize.height;
@@ -202,8 +208,11 @@ function generateObstacle(): Obstacle {
   const maxHeight = canvasHeight - gapSize - minHeight;
   const height = minHeight + Math.random() * (maxHeight - minHeight);
   
+  // Incrementar contador para garantizar ID único
+  obstacleIdCounter++;
+  
   return {
-    id: `obstacle_${Date.now()}_${Math.random()}`,
+    id: `obstacle_${obstacleIdCounter}_${Date.now()}`,
     x: GAME_CONFIG.canvasSize.width,
     y: 0,
     width: 50,
@@ -241,5 +250,7 @@ export function jump(state: GameState): GameState {
 
 // Reiniciar juego
 export function resetGame(): GameState {
+  // Resetear contador de IDs al reiniciar el juego
+  obstacleIdCounter = 0;
   return initializeGame();
 }
