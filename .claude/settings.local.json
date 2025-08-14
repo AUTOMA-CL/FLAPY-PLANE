@@ -22,7 +22,8 @@
       "Bash(curl:*)",
       "Bash(dir:*)",
       "Bash(git tag:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(git ls-tree:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"

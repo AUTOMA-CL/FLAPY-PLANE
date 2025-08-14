@@ -1,9 +1,9 @@
 # 🎮 FLAPPY PLANE - INFORMACIÓN DE VERSIÓN Y CONTINUIDAD
 
-## 📌 VERSIÓN ACTUAL: 2.0.2
+## 📌 VERSIÓN ACTUAL: 2.0.3
 **Fecha:** 2025-01-14  
-**Estado:** ✅ ESTABLE - Google Sheets Restaurado y Optimizado  
-**Último Commit:** ddde889  
+**Estado:** ✅ CONFIRMADO - Performance Optimizado y Validado  
+**Último Commit:** 113315c  
 **Branch:** main  
 
 ---
@@ -32,7 +32,7 @@ Despliegue: Vercel (configurado y funcionando)
 ### Archivos Críticos:
 1. **Configuración:**
    - `/vercel.json` - Config para deploy en subcarpeta
-   - `/flappy-plane/package.json` - Versión 2.0.1
+   - `/flappy-plane/package.json` - Versión 2.0.3
    - `/CLAUDE.md` - Instrucciones del proyecto
 
 2. **Core del Juego:**
@@ -53,7 +53,7 @@ Despliegue: Vercel (configurado y funcionando)
 # Clonar y preparar
 git clone https://github.com/AUTOMA-CL/FLAPY-PLANE.git
 cd "Flappy Plane"
-git checkout v2.0.1-logo-fix
+git checkout v2.0.3-performance-ok
 
 # Desarrollo
 cd flappy-plane
@@ -104,7 +104,7 @@ git push origin v2.X-descripcion
 ## 📝 NOTAS PARA EL DESARROLLADOR
 
 ### Si cambias de modelo/conversación, menciona:
-1. "Continuar desde versión 2.0.1 del proyecto Flappy Plane"
+1. "Continuar desde versión 2.0.3 del proyecto Flappy Plane"
 2. "El proyecto está en GitHub: AUTOMA-CL/FLAPY-PLANE"
 3. "La carpeta del proyecto Next.js está en flappy-plane/"
 4. "Revisar VERSION-INFO.md y CHANGELOG.md para contexto"
