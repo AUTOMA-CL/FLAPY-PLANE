@@ -1,5 +1,31 @@
 # 📋 CHANGELOG - Flappy Plane Game
 
+## Versión 2.2.5 (2025-01-14)
+### 🔧 Fix de Estabilidad #5: Navegación Optimizada con Router de Next.js
+
+### 🐛 Problema Resuelto
+- **Recarga completa**: Usar `window.location.href` causaba recarga completa de la app
+- **Impacto**: Flash blanco al volver al menú y pérdida de estado
+- **Síntomas**: Transición brusca entre game over y menú principal
+
+### ✅ Solución Implementada
+- Cambio de `window.location.href` a `router.push()`
+- Navegación del lado del cliente sin recarga
+- Transición suave entre páginas
+- Preservación del estado de la aplicación
+
+### 📊 Mejoras
+- UX: Transiciones más suaves y rápidas
+- Performance: No recarga todo el JavaScript
+- Estado: Mantiene el contexto de la aplicación
+
+### ⚠️ Impacto para el Usuario
+- **CAMBIO VISIBLE POSITIVO**: Transición más fluida al volver al menú
+- Sin flash blanco entre pantallas
+- Navegación más rápida y profesional
+
+---
+
 ## Versión 2.2.4 (2025-01-14)
 ### 🔧 Fix de Estabilidad #4: Protección contra Condiciones de Carrera en localStorage
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useCallback, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { GameState } from '@/types';
 import { 
   initializeGame, 
@@ -15,6 +16,7 @@ interface GameCanvasProps {
 }
 
 export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProps) {
+  const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const gameStateRef = useRef<GameState>(initializeGame());
   const animationFrameRef = useRef<number | undefined>(undefined);
@@ -378,12 +380,13 @@ export default function GameCanvas({ onScoreChange, onGameOver }: GameCanvasProp
   const handleInteraction = useCallback(() => {
     if (gameStateRef.current.gameOver) {
       // VOLVER AL MENU DE REGISTRO para capturar nuevos datos
-      window.location.href = '/';
+      // Usar router.push para evitar recarga completa
+      router.push('/');
     } else {
       // Saltar
       gameStateRef.current = jump(gameStateRef.current);
     }
-  }, []);
+  }, [router]);
 
   // Configurar eventos y loop del juego
   useEffect(() => {
