@@ -216,7 +216,7 @@ function generateObstacle(): Obstacle {
     height = minHeight + Math.random() * (maxHeight - minHeight);
   } else {
     // Limitar la variación respecto al obstáculo anterior
-    const maxVariation = 50; // Máximo 50 píxeles de diferencia vertical entre huecos (más gradual)
+    const maxVariation = 30; // Máximo 30 píxeles de diferencia vertical entre huecos (muy gradual)
     
     // Calcular límites basados en el obstáculo anterior
     const minNewHeight = Math.max(minHeight, lastGapPosition - maxVariation);
