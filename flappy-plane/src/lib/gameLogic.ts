@@ -132,7 +132,7 @@ export function checkCollisions(state: GameState): boolean {
   
   return state.obstacles.some(obstacle => {
     const canvasHeight = GAME_CONFIG.canvasSize.height;
-    const gapSize = Math.max(180, canvasHeight * 0.25); // Aumentado 20%
+    const gapSize = Math.max(216, canvasHeight * 0.25); // Aumentado 44% total
     
     return isColliding(planeBox, {
       x: obstacle.x,
@@ -205,7 +205,7 @@ let lastGapPosition: number | null = null; // Guardar posición del último huec
 // Generar nuevo obstáculo - adaptativo al viewport
 function generateObstacle(): Obstacle {
   const canvasHeight = GAME_CONFIG.canvasSize.height;
-  const gapSize = Math.max(180, canvasHeight * 0.25); // Gap mínimo 180px o 25% de altura (aumentado 20%)
+  const gapSize = Math.max(216, canvasHeight * 0.25); // Gap mínimo 216px o 25% de altura (aumentado 44% total)
   const minHeight = 50;
   const maxHeight = canvasHeight - gapSize - minHeight;
   
