@@ -132,7 +132,7 @@ export function checkCollisions(state: GameState): boolean {
   
   return state.obstacles.some(obstacle => {
     const canvasHeight = GAME_CONFIG.canvasSize.height;
-    const gapSize = Math.max(260, canvasHeight * 0.30); // Muy amplio
+    const gapSize = Math.max(300, canvasHeight * 0.35); // Extra amplio
     
     return isColliding(planeBox, {
       x: obstacle.x,
@@ -205,7 +205,7 @@ let lastGapPosition: number | null = null; // Guardar posición del último huec
 // Generar nuevo obstáculo - adaptativo al viewport
 function generateObstacle(): Obstacle {
   const canvasHeight = GAME_CONFIG.canvasSize.height;
-  const gapSize = Math.max(260, canvasHeight * 0.30); // Gap mínimo 260px o 30% de altura (muy amplio)
+  const gapSize = Math.max(300, canvasHeight * 0.35); // Gap mínimo 300px o 35% de altura (extra amplio)
   const minHeight = 50;
   const maxHeight = canvasHeight - gapSize - minHeight;
   
@@ -216,7 +216,7 @@ function generateObstacle(): Obstacle {
     height = minHeight + Math.random() * (maxHeight - minHeight);
   } else {
     // Limitar la variación respecto al obstáculo anterior
-    const maxVariation = 30; // Máximo 30 píxeles de diferencia vertical entre huecos (muy gradual)
+    const maxVariation = 20; // Máximo 20 píxeles de diferencia vertical entre huecos (ultra gradual)
     
     // Calcular límites basados en el obstáculo anterior
     const minNewHeight = Math.max(minHeight, lastGapPosition - maxVariation);
