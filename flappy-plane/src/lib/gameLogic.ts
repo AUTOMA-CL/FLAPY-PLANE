@@ -13,8 +13,9 @@ export const GAME_CONFIG: GameSettings = {
 
 // Inicializar estado del juego
 export function initializeGame(): GameState {
-  // Resetear contador de IDs al inicializar nuevo juego
+  // Resetear contador de IDs y posición del último hueco al inicializar nuevo juego
   obstacleIdCounter = 0;
+  lastGapPosition = null;
   
   return {
     score: 0,
@@ -199,6 +200,7 @@ function shouldGenerateObstacle(obstacles: Obstacle[]): boolean {
 
 // Contador global para garantizar IDs únicos
 let obstacleIdCounter = 0;
+let lastGapPosition: number | null = null; // Guardar posición del último hueco
 
 // Generar nuevo obstáculo - adaptativo al viewport
 function generateObstacle(): Obstacle {
@@ -206,7 +208,26 @@ function generateObstacle(): Obstacle {
   const gapSize = Math.max(150, canvasHeight * 0.25); // Gap mínimo 150px o 25% de altura
   const minHeight = 50;
   const maxHeight = canvasHeight - gapSize - minHeight;
-  const height = minHeight + Math.random() * (maxHeight - minHeight);
+  
+  let height: number;
+  
+  // Si no hay obstáculo previo, generar posición aleatoria
+  if (lastGapPosition === null) {
+    height = minHeight + Math.random() * (maxHeight - minHeight);
+  } else {
+    // Limitar la variación respecto al obstáculo anterior
+    const maxVariation = 80; // Máximo 80 píxeles de diferencia vertical entre huecos
+    
+    // Calcular límites basados en el obstáculo anterior
+    const minNewHeight = Math.max(minHeight, lastGapPosition - maxVariation);
+    const maxNewHeight = Math.min(maxHeight, lastGapPosition + maxVariation);
+    
+    // Generar altura dentro de los límites
+    height = minNewHeight + Math.random() * (maxNewHeight - minNewHeight);
+  }
+  
+  // Guardar la posición del hueco para el siguiente obstáculo
+  lastGapPosition = height;
   
   // Incrementar contador para garantizar ID único
   obstacleIdCounter++;
@@ -250,7 +271,8 @@ export function jump(state: GameState): GameState {
 
 // Reiniciar juego
 export function resetGame(): GameState {
-  // Resetear contador de IDs al reiniciar el juego
+  // Resetear contador de IDs y posición del último hueco al reiniciar el juego
   obstacleIdCounter = 0;
+  lastGapPosition = null;
   return initializeGame();
 }
