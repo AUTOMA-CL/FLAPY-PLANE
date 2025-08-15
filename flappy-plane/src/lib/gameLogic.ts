@@ -5,7 +5,7 @@ import { log } from './logger';
 export const GAME_CONFIG: GameSettings = {
   gravity: 350,      // píxeles/s² (reducido de 500)
   jumpVelocity: -230, // píxeles/s (reducido ligeramente)
-  obstacleSpeed: 127.5, // píxeles/s (reducido 15% de 150)
+  obstacleSpeed: 102, // píxeles/s (reducido 32% total de 150)
   obstacleGap: 150,
   planeSize: { width: 90, height: 68 },
   canvasSize: { width: 800, height: 600 } // Se actualiza dinámicamente en el cliente
