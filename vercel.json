@@ -1,5 +1,3 @@
 {
-  "buildCommand": "cd flappy-plane && npm run build",
-  "outputDirectory": "flappy-plane/.next",
-  "installCommand": "cd flappy-plane && npm install"
+  "version": 2
 }
