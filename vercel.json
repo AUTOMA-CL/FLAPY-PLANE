@@ -1,5 +1,11 @@
 {
   "framework": "nextjs",
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 10,
+      "memory": 512
+    }
+  },
   "headers": [
     {
       "source": "/images/(.*\\.(webp|avif|png|jpg|jpeg))",
