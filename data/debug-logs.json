@@ -1,0 +1,778 @@
+[
+  {
+    "timestamp": "2025-10-27T17:12:43.655Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.842s -> 1.836s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.655Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.84s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.655Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.84s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.661Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.836s -> 1.830s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.661Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.83s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.661Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.83s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.667Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.830s -> 1.824s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.667Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.82s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.667Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.82s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.673Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.824s -> 1.818s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.673Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.82s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.674Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.82s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.679Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.818s -> 1.812s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.679Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.81s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.680Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.81s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.685Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.812s -> 1.806s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.685Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.81s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.686Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.81s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.691Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.806s -> 1.800s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.691Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.80s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.692Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.80s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.697Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.800s -> 1.794s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.697Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.79s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.698Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.79s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.703Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.794s -> 1.788s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.704Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.79s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.704Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.79s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.709Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.788s -> 1.782s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.710Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.78s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.710Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.78s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.715Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.782s -> 1.776s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.716Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.78s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.716Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.78s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.721Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.776s -> 1.770s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.722Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.77s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.722Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.77s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.727Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.770s -> 1.764s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.728Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.76s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.728Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.76s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.733Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.764s -> 1.758s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.734Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.76s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.734Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.76s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.740Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.758s -> 1.752s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.740Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.75s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.740Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.75s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.746Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.752s -> 1.745s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.746Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.75s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.746Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.75s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.752Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.745s -> 1.739s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.752Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.74s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.752Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.74s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.758Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.739s -> 1.733s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.758Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.73s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.758Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.73s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.764Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.733s -> 1.727s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.764Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.73s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.764Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.73s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.771Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.727s -> 1.721s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.771Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.72s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.772Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.72s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.776Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.721s -> 1.715s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.776Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.72s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.776Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.72s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.782Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.71s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.783Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.71s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.788Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.709s -> 1.703s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.788Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.70s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.789Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.70s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.794Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.703s -> 1.697s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.794Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.70s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.794Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.70s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.800Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.697s -> 1.691s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.801Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.69s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.801Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.69s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.806Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.691s -> 1.685s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.807Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.68s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.807Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.68s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.812Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.685s -> 1.679s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.813Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.68s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.813Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.68s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.818Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.679s -> 1.673s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.819Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.67s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.819Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.67s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.824Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.673s -> 1.667s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.825Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.67s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.825Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.67s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.830Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.667s -> 1.661s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.831Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.66s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.837Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.661s -> 1.655s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.837Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.65s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.837Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.65s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.843Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.655s -> 1.649s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.843Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.65s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.843Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.65s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.849Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.649s -> 1.643s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.849Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.64s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.849Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.64s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.855Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.643s -> 1.636s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.855Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.64s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.855Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.64s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.861Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.636s -> 1.630s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.861Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.63s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.861Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.63s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.867Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.630s -> 1.624s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.867Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.62s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.867Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.62s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.873Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.624s -> 1.618s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.873Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.62s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.873Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.62s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.879Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.618s -> 1.612s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.879Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.61s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.879Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.61s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.885Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.612s -> 1.606s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.885Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.61s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.885Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.61s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.891Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.606s -> 1.600s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.892Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.60s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.891Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.60s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.897Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.600s -> 1.594s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.898Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.59s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.898Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.59s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.903Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.594s -> 1.588s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.904Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.59s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.904Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.59s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.909Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.588s -> 1.582s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.910Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.58s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.910Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.58s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.915Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.582s -> 1.576s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.916Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.58s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.916Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.58s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.921Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.576s -> 1.570s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.922Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.57s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.922Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.57s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.927Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.570s -> 1.564s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.928Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.56s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.928Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.56s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.933Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.564s -> 1.558s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.934Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.56s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.934Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.56s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.940Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.558s -> 1.552s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.940Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.55s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.940Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.55s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.946Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.552s -> 1.546s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.946Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.55s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.946Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.55s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.952Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.546s -> 1.539s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.952Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.54s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.952Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.54s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.958Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.539s -> 1.533s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.958Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.53s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.959Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.53s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.964Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.533s -> 1.527s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.964Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.53s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.964Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.53s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.970Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.527s -> 1.521s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.970Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.52s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.970Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.52s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.976Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.521s -> 1.515s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.976Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.52s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.976Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.52s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.982Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.515s -> 1.509s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.982Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.51s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.983Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.51s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.988Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.509s -> 1.503s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.988Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.50s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.989Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.50s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.994Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.503s -> 1.497s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.994Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.50s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:43.995Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.50s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.000Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.497s -> 1.491s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.000Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.49s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.001Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.49s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.006Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.491s -> 1.485s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.007Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.48s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.007Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.48s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.012Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.485s -> 1.479s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.013Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.48s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.013Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.48s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.018Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.479s -> 1.473s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.019Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.47s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.019Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.47s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.024Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.473s -> 1.467s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.025Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.47s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.025Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.47s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.031Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.467s -> 1.461s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.031Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.46s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.031Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.46s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.036Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.461s -> 1.455s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.037Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.45s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.037Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.45s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.043Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.455s -> 1.448s (delta: 0.006)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.043Z",
+    "message": "🔍 COLLISION CHECK: hasCollision=true, isInvulnerable=true, lives=2, invulTime=1.45s"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.043Z",
+    "message": "👻 GHOST MODE: Passing through obstacle (invulnerable for 1.45s)"
+  },
+  {
+    "timestamp": "2025-10-27T17:12:44.049Z",
+    "message": "⏱️ INVULNERABILITY UPDATE: 1.448s -> 1.442s (delta: 0.006)"
+  }
+]
