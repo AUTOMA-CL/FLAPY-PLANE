@@ -1,7 +1,5 @@
 {
-  "framework": "nextjs",
   "buildCommand": "cd flappy-plane && npm run build",
   "outputDirectory": "flappy-plane/.next",
-  "installCommand": "cd flappy-plane && npm install",
-  "devCommand": "cd flappy-plane && npm run dev"
+  "installCommand": "cd flappy-plane && npm install"
 }
