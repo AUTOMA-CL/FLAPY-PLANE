@@ -291,6 +291,11 @@ export default function HomePage() {
     procesarRegistrosPendientes();
   }, [procesarRegistrosPendientes]);
 
+  // FASE 6: Prefetch de ruta del juego para carga más rápida
+  useEffect(() => {
+    router.prefetch('/game');
+  }, [router]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
